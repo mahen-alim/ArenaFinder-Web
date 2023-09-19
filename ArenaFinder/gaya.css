@@ -1,0 +1,521 @@
+*{
+  font-family: 'Kanit', sans-serif;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* Mengganti warna teks item menu navbar */
+.navbar-nav .nav-link {
+  color: white; /* Gantilah dengan warna yang Anda inginkan */
+}
+
+.navbar-nav .nav-item .nav-link.active{
+  color: #A1FF9F;
+}
+
+.nav-item:hover a{
+  color: #A1FF9F;
+}
+
+  .tombol-daftar{
+  color: white; 
+  border-radius: 6px;
+  border: 1px solid white;
+  background-color: #02406D; 
+  margin-right: 20px; 
+  width: 100px;
+  height: 35px;
+  font-weight: regular;
+  }
+
+  .tombol-daftar:hover{
+  background-color: #02406D;
+  color: #A1FF9F;
+  border: 1px solid #A1FF9F;
+  transition: 1s;
+  }
+
+  .tombol-masuk{
+    color: #02406D; 
+    border: 0px;
+    border-radius: 6px;
+    background-color: white; 
+    margin-right: 10px; 
+    width: 80px;
+    height: 35px;
+    font-weight: regular;
+  }
+
+  .tombol-masuk:hover{
+      background-color: #A1FF9F;
+      color: #02406D;
+      border: 1px solid #A1FF9F;
+      transition: 1s;
+  }
+  
+  .img1 {
+    position: relative;
+    margin-top: 55px;
+    margin-bottom: 30px;
+    margin-right: 15in;
+    width: 700px;
+    height: 700px;
+    border: 1px solid white; 
+  } 
+  .img2{
+    margin-left: 690px;
+    position: relative;
+    top: -172mm;
+    width: 600px;
+    height: 500px;
+  }
+  .title{
+    margin-left: 690px;
+    position: relative;
+    top: -270mm;
+    color: #02406D;
+  }
+  .input-jenis-lapangan{
+    position: relative;
+    top: -62.5rem;
+    margin-left: 690px;
+    border-radius: 10px;
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+    border-color: #02406D;
+    color: #02406D;
+    border: 1px solid #02406D; /* Warna border */
+    transition: border-color 0.3s; /* Efek hover */
+
+  }
+
+  .input-jenis-lapangan:hover{
+    border-color: #02406D; 
+    cursor: pointer;
+  }
+
+ 
+  input[type="date"] {
+    position: relative;
+    top: -65.7rem;
+    margin-left: 960px;
+    border-radius: 10px;
+    width: 250px;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px; 
+    border-color: #02406D;
+    color: #02406D;
+    border: 1px solid #02406D; /* Warna border */
+    transition: border-color 0.3s; /* Efek hover */
+  }
+      
+  input[type="date"]:hover {
+    border-color: #02406D; /* Warna border saat hover */
+    cursor: pointer;
+  }
+
+  .button{
+    position: relative;
+    top: -68.8rem;
+    margin-left: 1230px;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px; 
+    border: 1px solid #02406D;
+    background-color: white;
+    color:#02406D;
+    font-weight: 600;
+  }
+
+  .button:hover{
+    background-color: #02406D;
+    color:white;
+  }
+  .persegi {
+    width: 88.5rem; /* Lebar persegi dalam piksel */
+    height: 20rem; /* Tinggi persegi dalam piksel */
+    background-color: #E7F5FF;  /* Warna latar belakang persegi */
+    position: relative;
+    top: -40rem;
+    border-top-right-radius: 10rem;
+    border-top-left-radius: 10rem;
+    margin-left: 0px;
+  }
+
+  .persegi::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px; /* Lebar bagian lengkungan di atas */
+    height: 320px; /* Tinggi bagian lengkungan di atas */
+    background-color: white; /* Warna latar belakang bagian lengkungan di atas */
+    border-bottom-right-radius: 10rem;
+    border-bottom-left-radius: 10rem;
+  }
+
+  .btn[type="button"]{
+    border-color: #02406D;
+    width: 200px; /* Lebar bagian lengkungan di atas */
+    height: 303px; 
+    margin-left: 15.5rem; 
+    font-weight: 600; 
+    position: relative; 
+    top: -60rem;
+    border-bottom-left-radius: 150px;
+    box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
+    padding-bottom: 0px;
+  }
+
+  .btn img{
+    vertical-align: 30px;
+    margin-top: 20px;
+    width:150px;
+    text-align: center;
+    
+  }
+
+  .btn[type="button"]:hover{
+    background-color: #02406D;
+    color: white;
+  }
+
+  .btn-1{
+    border: 1px solid #02406D;
+    background-color: white;
+    width: 200px; /* Lebar bagian lengkungan di atas */
+    height: 303px; 
+    margin-left: 2.2rem; 
+    font-weight: 600; 
+    position: relative; 
+    top: -66.3rem;
+    border-radius: 5.5px;
+    box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
+  }
+
+  .btn-1 img{
+    vertical-align: 0px; 
+    margin-top: 20px;
+    width:180px;
+    text-align: center;
+    
+  }
+
+  .btn-1:hover{
+    background-color: #02406D;
+    color: white;
+  }
+
+  .btn-2{
+    border: 1px solid #02406D;
+    background-color: white;
+    width: 200px; /* Lebar bagian lengkungan di atas */
+    height: 303px; 
+    margin-left: 45.5rem; 
+    font-weight: 600; 
+    position: relative; 
+    top: -85.3rem;
+    border-radius: 5.5px;
+    box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
+  }
+
+  .btn-2 img{
+    vertical-align: 30px;
+    margin-top: 20px;
+    width: 150px
+  }
+
+  .btn-2:hover{
+    background-color: #02406D;
+    color: white;
+  }
+
+  .btn-3{
+    border: 1px solid #02406D;
+    background-color: white;
+    width: 200px; /* Lebar bagian lengkungan di atas */
+    height: 303px; 
+    margin-left: 60.5rem; 
+    font-weight: 600; 
+    position: relative; 
+    top: -104.3rem;
+    border-bottom-right-radius: 150px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
+  }
+
+  .btn-3 img{
+    vertical-align: 30px;
+    margin-top: 20px;
+    width: 150px
+
+  }
+
+  .btn-3:hover{
+    background-color: #02406D;
+    color: white;
+  }
+
+  .persegi2 {
+    width: 88.5rem; /* Lebar persegi dalam piksel */
+    height: 28rem; /* Tinggi persegi dalam piksel */
+    background-color: white;  /* Warna latar belakang persegi */
+    position: relative;
+    top: -95rem;
+    border-top: 1px solid #02406D;
+  }
+
+  .persegi2::before {
+    content: "Jenis Olahraga";
+    font-size: 20px;
+    font-weight: regular;
+    text-align: center;
+    padding-top: 10px;
+    position: absolute;
+    color: white;
+    top: 0;
+    left: 8.7%;
+    border: 1px solid #02406D;
+    transform: translateX(-50%);
+    border-bottom-right-radius: 150px;
+    width: 250px; /* Lebar bagian lengkungan di atas */
+    height: 60px; /* Tinggi bagian lengkungan di atas */
+    background-color: #02406D; /* Warna latar belakang bagian lengkungan di atas */
+  }
+
+  .btn-4{
+    border:#02406D;
+    background-color: White;
+    position: relative; 
+    margin-left: 30px;
+    top: -117.5rem;
+    font-weight: 600; 
+    color: #02406D;
+  }
+ 
+  .btn-4 img{
+    width: 250px; /* Gambar akan mengisi seluruh lebar div */
+    height: 250px; /* Tinggi gambar akan menyesuaikan agar tidak terdistorsi */
+    display: block;
+    justify-content: center;
+    border-radius: 50%;
+    padding:20px;
+    transition: scale 1s;
+  }
+
+  .btn-4 img:hover{
+    scale: 105%;
+  }
+
+  .btn-5{
+    border:#02406D;
+    background-color: white;
+    position: relative; 
+    margin-left: 0px;
+    top: -117.5rem;
+    font-weight: 600; 
+    color: #02406D;
+  }
+
+  .btn-5 img{
+    width: 250px; /* Gambar akan mengisi seluruh lebar div */
+    height: 250px; /* Tinggi gambar akan menyesuaikan agar tidak terdistorsi */
+    display: block;
+    justify-content: center;
+    border-radius: 50%;
+    padding:20px;
+    transition: scale 1s;
+  }
+
+  .btn-5 img:hover{
+    scale: 105%;
+  }
+
+  .btn-6{
+    border: #02406D;
+    background-color: white;
+    position: relative; 
+    margin-left: 0px;
+    top: -117.5rem;
+    font-weight: 600; 
+    color: #02406D;
+  }
+
+  .btn-6 img{
+    width: 250px; /* Gambar akan mengisi seluruh lebar div */
+    height: 250px; /* Tinggi gambar akan menyesuaikan agar tidak terdistorsi */
+    display: block;
+    justify-content: center;
+    border-radius: 50%;
+    padding:20px;
+    transition: scale 1s;
+  }
+
+  .btn-6 img:hover{
+    scale: 105%;
+  }
+
+  .btn-7{
+    border: #02406D;
+    background-color: white;
+    position: relative; 
+    margin-left: 0px;
+    top: -117.5rem;
+    font-weight: 600; 
+    color: #02406D;
+  }
+
+  .btn-7 img{
+    width: 250px; /* Gambar akan mengisi seluruh lebar div */
+    height: 250px; /* Tinggi gambar akan menyesuaikan agar tidak terdistorsi */
+    display: block;
+    justify-content: center;
+    border-radius: 50%;
+    padding:20px;
+    transition: scale 1s;
+  }
+
+  .btn-7 img:hover{
+    scale: 105%;
+  }
+
+  .btn-8{
+    border: #02406D;
+    background-color: white;
+    position: relative; 
+    margin-left: 0px;
+    top: -117.5rem;
+    font-weight: 600; 
+    color: #02406D;
+  }
+
+  .btn-8 img{
+    width: 250px; /* Gambar akan mengisi seluruh lebar div */
+    height: 250px; /* Tinggi gambar akan menyesuaikan agar tidak terdistorsi */
+    display: block;
+    justify-content: center;
+    border-radius: 50%;
+    padding:20px;
+    transition: scale 1s;
+  }
+
+  .btn-8 img:hover{
+    scale: 105%;
+  }
+
+  .no-underline {
+    position: absolute;
+    width: 300px;
+    margin-top: -139.5rem;
+    margin-left: 78rem;
+    text-decoration: none;
+    color: #02406D;
+  }
+
+  .no-underline:hover{
+    text-decoration: underline;
+  }
+
+  .persegi3 {
+    width: 80rem; 
+    background-color: none;  /* Warna latar belakang persegi */
+    position: relative;
+    top: 25rem;
+    margin-left: 35px;
+    margin-right: 0px;
+  }
+
+  .community{
+    color: white;
+    width: 350px; /* Lebar bagian lengkungan di atas */
+    height: 60px;
+    font-size: 20px;
+    font-weight: regular;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #02406D;
+    position: relative;
+    top: -107rem;
+    border-bottom-right-radius: 150px;
+  }
+
+/* Mengurangi lebar Carousel */
+.carousel-inner {
+  max-width: 2450px; /* Ubah sesuai kebutuhan */
+  height: 500px;
+  margin-left: 45px;
+  border-radius: 20px;
+}
+
+/* Mengurangi ukuran gambar dalam Carousel */
+.carousel-inner img {
+  max-width: 100%; /* Gambar akan mengikuti lebar Carousel */
+  height: auto; /* Gambar akan menyesuaikan tinggi Carousel */
+  border-radius: 20px;
+}
+
+.card{
+  margin-top: 520px;
+  width: 20rem; 
+  height: 50rem; 
+  text-align: center; 
+  margin-left: 80px;
+  overflow: hidden;
+}
+
+.card img{
+  transition: scale 1s;
+}
+
+.card:hover img{
+  scale: 105%;
+  cursor: pointer;
+}
+
+.card-body h5{
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+.card-body h6{
+  margin-bottom: 5px; 
+  text-align: left;
+}
+
+.tombol-aktivitas{
+  margin-top: 40px; 
+  height: 30px;
+  width: 150px;
+  background-color: white; 
+  color: #02406D;
+  border: 1px solid #02406D;
+  border-radius: 20px;
+}
+
+.tombol-aktivitas:hover{
+  background-color: #02406D;
+  color: white;
+}
+
+.small-box{
+  background: white;
+  color: #02406D;
+  margin-top: -18.5px; 
+  border-top-left-radius: 5px; 
+  margin-left: 268px; 
+  width: 50px;
+  text-align: center;
+  z-index: 1; /* Tempatkan di atas gambar */
+}
+
+
+
+ 
