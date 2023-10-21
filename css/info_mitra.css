@@ -1,0 +1,330 @@
+* {
+  font-family: "Kanit", sans-serif;
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  overflow-x: hidden;
+}
+.nav-item {
+  display: flex;
+  align-item: center;
+  padding-left: 30px;
+}
+
+/* Mengganti warna teks item menu navbar */
+.navbar-nav .nav-link {
+  color: white; /* Gantilah dengan warna yang Anda inginkan */
+}
+
+.navbar-nav .nav-item .nav-link.active {
+  color: #a1ff9f;
+}
+
+.nav-item:hover a {
+  color: #a1ff9f;
+}
+
+.tombol-daftar {
+  color: white;
+  border-radius: 6px;
+  border: 1px solid #02406d;
+  background-color: #02406d;
+  margin-right: 20px;
+  width: 100px;
+  height: 35px;
+  font-weight: regular;
+  text-decoration: none;
+  padding: 5px;
+  padding-left: 15px;
+}
+
+.tombol-daftar:hover {
+  background-color: #02406d;
+  color: #a1ff9f;
+  border: 1px solid #a1ff9f;
+  transition: 1s;
+  transform: scale(1.1);
+}
+
+.tombol-masuk {
+  color: #02406d;
+  border: 0px;
+  border-radius: 6px;
+  background-color: white;
+  margin-right: 10px;
+  width: 80px;
+  height: 35px;
+  font-weight: regular;
+  text-decoration: none;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.tombol-masuk:hover {
+  background-color: #a1ff9f;
+  color: #02406d;
+  border: 1px solid #a1ff9f;
+  transition: 1s;
+  transform: scale(1.1);
+}
+
+.first-con {
+  margin-left: 50px;
+}
+.img-container img {
+  width: 100%;
+  height: 550px;
+  margin-left: -40px;
+}
+
+.img-container {
+  text-align: center; /* Untuk memastikan gambar tetap di tengah secara horizontal */
+  padding: 0px; /* Padding tambahan sesuai kebutuhan */
+}
+
+.box {
+  position: relative;
+  width: 32px;
+  height: 84px;
+}
+
+.box .group {
+  position: relative;
+  width: 32px;
+  height: 84px;
+  top: -470.5px;
+  left: -60px;
+}
+
+.box .rectangle {
+  height: 84px;
+  left: 20px;
+  background-color: #02406d;
+  position: absolute;
+  width: 13px;
+  margin-top: 29.4rem;
+  border-radius: 0px 0px 10px 10px;
+  animation: slideDown 2s ease-in-out;
+}
+
+.box .div {
+  height: 38px;
+  left: 38px;
+  background-color: #a1ff9f;
+  position: absolute;
+  width: 13px;
+  margin-top: 29.4rem;
+  border-radius: 0px 0px 10px 10px;
+  animation: slideDown 3s ease-in-out;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(0%); /* Elemen dimulai dari bawah */
+    opacity: 0; /* Elemen transparan saat dimulai */
+  }
+  50% {
+    transform: translateY(100%); /* Elemen dimulai dari bawah */
+    opacity: 1; /* Elemen transparan saat dimulai */
+  }
+}
+
+.title {
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+  margin-top: -60px;
+}
+
+.title button {
+  width: 100px;
+  margin-left: 20px;
+  border: 1px solid #02406d;
+  background-color: white;
+  color: #02406d;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.title button:hover {
+  color: white;
+  background-color: #02406d;
+}
+
+.title h5 {
+  margin-top: -10px;
+}
+
+.tentang-con {
+  margin-top: 50px;
+  margin-left: 150px;
+}
+
+.nav-body {
+  width: 80rem;
+  height: 50px;
+  margin-top: 100px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  text-align: justify;
+  border-top: 1px solid #02406d;
+  border-bottom: 1px solid #02406d;
+}
+
+.link-body {
+  display: flex;
+  padding-top: 10px;
+  gap: 50px;
+}
+
+.link-body a {
+  text-decoration: none;
+  margin-left: 60px;
+  color: grey;
+}
+
+.link-body ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.link-body li {
+  display: inline-block;
+  margin-right: 20px; /* Jarak antara tautan */
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #02406d;
+}
+
+.nav-body .link-body a:hover {
+  color: #02406d;
+}
+
+.nav-body .link-body .tentang {
+  color: #02406d;
+}
+
+.deskripsi {
+  margin-top: 20px;
+  margin-left: -120px;
+}
+
+.deskripsi h6 {
+  font-weight: light;
+  color: grey;
+  width: 550px;
+  margin-top: 20px;
+}
+
+.harga {
+  margin-top: 50px;
+}
+
+.harga button {
+  background-color: white;
+  border: 1px solid white;
+  margin-left: 20px;
+}
+
+.fasilitas {
+  margin-top: 50px;
+  margin-left: -120px;
+}
+
+/* Gaya untuk mengatur tata letak img dan h5 secara horizontal */
+#fasilitasTempat {
+  display: flex; /* Menggunakan display: flex; untuk membuat tampilan horizontal */
+  align-items: start; /* Untuk pusatkan elemen vertikal di dalam container */
+  gap: 30px;
+}
+
+#fasilitasTempat img {
+  margin: 0 10px; /* Spasi antara gambar */
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+
+#fasilitasTempat h5 {
+  margin: 0 10px; /* Spasi antara teks */
+  padding-top: 20px;
+}
+
+.pengelola {
+  margin-top: -720px;
+  margin-left: 720px;
+}
+
+/* CSS untuk memberi jarak antara gambar dan teks */
+.pengelola-item {
+  margin-bottom: 20px; /* Anda bisa mengatur nilai margin-bottom sesuai dengan kebutuhan Anda */
+  text-align: center;
+}
+
+/* CSS tambahan jika diperlukan */
+.pengelola img {
+  max-width: 100%; /* Membuat gambar sesuai lebar parent container */
+}
+
+/* Gaya untuk mengatur tata letak img dan h5 secara horizontal */
+#pengelolaTempat {
+  display: flex; /* Menggunakan display: flex; untuk membuat tampilan horizontal */
+  align-items: start; /* Untuk pusatkan elemen vertikal di dalam container */
+  gap: 30px;
+}
+
+#pengelolaTempat img {
+  margin: 0 20px; /* Spasi antara gambar */
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+
+#pengelolaTempat h5 {
+  margin: 0 10px; /* Spasi antara teks */
+  padding-top: 20px;
+}
+
+
+
+
+.footer {
+  height: 350px;
+  width: 100rem;
+  margin: 0px;
+  margin-top: 800px;
+  margin-left: -60px;
+  background-color: #02406d;
+  font-family: "Kanit", sans-serif;
+  color: white;
+  padding-left: 20px;
+  padding-top: 10px;
+  display: flex;
+}
+
+.hierarki {
+  display: flex;
+}
+
+.hierarki a {
+  display: flex;
+  font-size: 15px;
+  text-decoration: none;
+  color: white;
+}
+
+.hierarki a:hover {
+  color: #a1ff9f;
+}
