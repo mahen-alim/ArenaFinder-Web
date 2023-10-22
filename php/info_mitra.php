@@ -85,7 +85,6 @@ try {
     .title button:active {
       background-color: #02406D;
     }
-
   </style>
 </head>
 
@@ -115,14 +114,30 @@ try {
             <a class="nav-link active" aria-current="page">Info Mitra</a>
           </li>
         </ul>
-        <a class="tombol-daftar" type="button" href="/ArenaFinder/php/daftar.php"><i class="fa-solid fa-id-card fa-flip"
-            style="margin-right: 5px;"></i>
-          Daftar
-        </a>
-        <a class="tombol-masuk" type="button" href="/ArenaFinder/php/masuk.php"><i class="fa-solid fa-right-to-bracket"
-            style="margin-right: 5px;"></i>
-          Masuk
-        </a>
+        <li class="nav-item dropdown" style="margin-right: 20px; color: white;">
+          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+              class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+            Daftar
+          </a>
+          <ul class="dropdown-menu" style="background-color: white; border: 1px solid #02406D;">
+            <li><a class="dropdown-item"
+                href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar
+                sebagai Admin</a></li>
+            <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai User</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown" style="color: white; margin-right: 40px;">
+          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+              class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
+            Masuk
+          </a>
+          <ul class="dropdown-menu" style="background-color: white; border: 1px solid #02406D;">
+            <li><a class="dropdown-item"
+                href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.html">Masuk sebagai
+                Admin</a></li>
+            <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai User</a></li>
+          </ul>
+        </li>
         </form>
       </div>
     </div>

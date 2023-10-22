@@ -68,6 +68,9 @@
                             <div class="text-center">
                                 <a class="small" href="login.html">Sudah Memiliki Akun? Masuk Sekarang!</a>
                             </div>
+                            <div class="text-center">
+                                <a class="small" href="/ArenaFinder/html/beranda.html">Kembali ke Menu Beranda</a>
+                            </div>
                         </div>
                     </div>
                 </div>

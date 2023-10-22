@@ -11,6 +11,7 @@ if (!$koneksi) {
 
 $id = "";
 $nama = "";
+$jenis = "";
 $lokasi = "";
 $tanggal = "";
 $anggota = "";
@@ -43,6 +44,7 @@ if ($op == 'edit') {
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
     $nama = $r1['nama_aktivitas'];
+    $jenis = $r1['jenis_olga'];
     $lokasi = $r1['lokasi'];
     $tanggal = $r1['tanggal'];
     $anggota = $r1['keanggotaan'];
@@ -57,6 +59,7 @@ if ($op == 'edit') {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $nama = $_POST['nama'];
+    $jenis = $_POST['jenis_olga'];
     $lokasi = $_POST['lokasi'];
     $tanggal = $_POST['tanggal'];
     $anggota = $_POST['keanggotaan'];
@@ -78,10 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 
             if ($op == 'edit') {
                 // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
+                $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', jenis_olga = '$jenis', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
             } else {
                 // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
+                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
             }
 
             $q1 = mysqli_query($koneksi, $sql1);
@@ -451,7 +454,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 <?php echo $error ?>
                                             </div>
                                             <?php
-                                            header("refresh:2;url=aktivitas_crud.php"); // 2 = detik
+                                            header("refresh:2;url=aktivitas.php"); // 2 = detik
                                         
                                         }
                                         ?>
@@ -462,7 +465,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 <?php echo $sukses ?>
                                             </div>
                                             <?php
-                                            header("refresh:2;url=aktivitas_crud.php"); // 2 = detik
+                                            header("refresh:2;url=aktivitas.php"); // 2 = detik
                                         }
                                         ?>
 
@@ -472,6 +475,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="staticEmail" name="nama"
                                                         value="<?php echo $nama ?>">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="jenis_olga" class="col-sm-2 col-form-label">Jenis Olahraga</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="jenis_olga" id="jenis_olga">
+                                                        <option value="">-Pilih Jenis Olahraga-</option>
+                                                        <option value="Badminton" <?php if ($jenis == "Badminton")
+                                                            echo "selected" ?>>Badminton
+                                                            </option>
+                                                            <option value="Futsal" <?php if ($jenis == "Futsal")
+                                                            echo "selected" ?>>Futsal
+                                                            </option>
+                                                            <option value="Sepak Bola" <?php if ($jenis == "Sepak Bola")
+                                                            echo "selected" ?>>Sepak Bola
+                                                            </option>
+                                                            <option value="Bola Voli" <?php if ($jenis == "Bola Voli")
+                                                            echo "selected" ?>>Bola Voli
+                                                            </option>
+                                                            <option value="Bola Basket" <?php if ($jenis == "Bola Basket")
+                                                            echo "selected" ?>>Bola Basket
+                                                            </option>
+                                                            <option value="Tenis Lapangan" <?php if ($jenis == "Tenis Lapangan")
+                                                            echo "selected" ?>>Tenis Lapangan
+                                                            </option>
+                                                        </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -526,8 +555,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                             echo "selected" ?>>5 jam
                                                             </option>
                                                         </select>
-                                                    </div>
                                                 </div>
+                                            </div>
 
 
                                                 <div class=" mb-3 row">
@@ -597,6 +626,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 <tr>
                                                     <th scope="col">No.</th>
                                                     <th scope="col">Nama Aktivitas</th>
+                                                    <th scope="col">Jenis Olahraga</th>
                                                     <th scope="col">Lokasi</th>
                                                     <th scope="col">Tanggal Main</th>
                                                     <th scope="col">Keanggotaan</th>
@@ -614,6 +644,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 while ($r2 = mysqli_fetch_array($q2)) {
                                                     $id = $r2['id'];
                                                     $nama = $r2['nama_aktivitas'];
+                                                    $jenis = $r2['jenis_olga'];
                                                     $lokasi = $r2['lokasi'];
                                                     $tanggal = $r2['tanggal'];
                                                     $anggota = $r2['keanggotaan'];
@@ -627,6 +658,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                         </th>
                                                         <td scope="row">
                                                             <?php echo $nama ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $jenis ?>
                                                         </td>
                                                         <td scope="row">
                                                             <?php echo $lokasi ?>
@@ -647,9 +681,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                             <?php echo $gambar ?>
                                                         </td>
                                                         <td scope="row">
-                                                            <a href="aktivitas_crud.php?op=edit&id=<?php echo $id ?>"><button
+                                                            <a href="aktivitas.php?op=edit&id=<?php echo $id ?>"><button
                                                                     type="button" class="btn btn-warning">Edit</button></a>
-                                                            <a href="aktivitas_crud.php?op=delete&id=<?php echo $id ?>"
+                                                            <a href="aktivitas.php?op=delete&id=<?php echo $id ?>"
                                                                 onclick="return confirm('Yakin mau menghapus data ini?')"><button
                                                                     type="button" class="btn btn-danger">Delete</button></a>
                                                         </td>
