@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = $conn->query($sql);
   
-    header("Location: http://localhost/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/");
+    header("Location: /ArenaFinder/html/beranda.html");
     } else {
         echo "Email tidak ditemukan. <a href='login.php'>Coba lagi</a>";
     }

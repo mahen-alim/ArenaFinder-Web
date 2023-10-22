@@ -30,6 +30,84 @@ if (!$koneksi) {
     body {
       margin-top: 130px;
     }
+
+    #drop-menu {
+      background-color: #e7f5ff;
+      border: 1px solid white;
+      color: #02406D;
+    }
+
+    .dropdown-divider {
+      border: 1px solid white;
+    }
+
+    /* Saat dropdown-item di-hover */
+    .dropdown-menu a.dropdown-item:hover {
+      background-color: #02406D;
+      color: white;
+    }
+
+    /* Mengatur warna teks dan latar belakang default */
+    .dropdown-menu a.dropdown-item {
+      color: initial;
+      /* Atur warna teks kembali ke nilai default */
+      background-color: initial;
+      /* Atur latar belakang kembali ke nilai default */
+    }
+
+    #auth-con {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 75px;
+
+    }
+
+    #nav-down-item1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      color: white;
+      border: 1px solid white;
+      width: 100px;
+      height: 30px;
+      text-align: center;
+    }
+
+    #nav-down-item2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      color: #02406D;
+      background-color: #e7f5ff;
+      width: 100px;
+      height: 30px;
+      text-align: center;
+    }
+
+    #nav-down-item1:hover {
+      background-color: #e7f5ff;
+      color: #02406D;
+      transition: 0.5s;
+      transform: scale(1.1);
+    }
+
+    #nav-down-item1:active {
+      color: white;
+    }
+
+    #nav-down-item2:hover {
+      background-color: #e7f5ff;
+      color: #02406D;
+      transition: 0.5s;
+      transform: scale(1.1);
+    }
+
+    #nav-down-item2:active {
+      color: white;
+    }
   </style>
 </head>
 
@@ -59,30 +137,28 @@ if (!$koneksi) {
             <a class="nav-link" href="info_mitra.php">Info Mitra</a>
           </li>
         </ul>
-        <li class="nav-item dropdown" style="margin-right: 20px; color: white;">
-          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
-              class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-            Daftar
-          </a>
-          <ul class="dropdown-menu" style="background-color: white; border: 1px solid #02406D;">
-            <li><a class="dropdown-item"
-                href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar
-                sebagai Admin</a></li>
-            <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai User</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown" style="color: white; margin-right: 40px;">
-          <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
-              class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
-            Masuk
-          </a>
-          <ul class="dropdown-menu" style="background-color: white; border: 1px solid #02406D;">
-            <li><a class="dropdown-item"
-                href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.html">Masuk sebagai
-                Admin</a></li>
-            <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai User</a></li>
-          </ul>
-        </li>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="auth-con">
+          <li class="nav-item dropdown" id="nav-down1">
+            <a class="nav-link" id="nav-down-item1" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+              Daftar
+            </a>
+            <ul class="dropdown-menu" id="drop-menu">
+              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar sebagai Admin</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai Pengguna</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" id="nav-down">
+            <a class="nav-link" id="nav-down-item2" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
+              Masuk
+            </a>
+            <ul class="dropdown-menu" id="drop-menu">
+              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.html">Masuk sebagai Admin</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai Pengguna</a></li>
+            </ul>
+          </li>
+        </ul>
         </form>
       </div>
     </div>

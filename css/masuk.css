@@ -69,7 +69,7 @@
   background-color: #02406d;
   margin-top: 150px;
   gap: 20px;
-  animation: zoomIn 1s ease;
+  animation: zoomIn 2.5s ease;
 }
 
 @keyframes zoomIn {

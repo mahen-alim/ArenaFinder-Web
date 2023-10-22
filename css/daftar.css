@@ -78,7 +78,7 @@ th {
   background-color: #02406d;
   margin-top: 90px;
   gap: 20px;
-  animation: zoomIn 1s ease;
+  animation: zoomIn 3s ease;
 }
 
 @keyframes zoomIn {

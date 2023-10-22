@@ -22,50 +22,6 @@
   color: #a1ff9f;
 }
 
-.tombol-daftar {
-  color: white;
-  border-radius: 6px;
-  border: 1px solid #02406d;
-  background-color: #02406d;
-  margin-right: 20px;
-  width: 100px;
-  height: 35px;
-  font-weight: regular;
-  text-decoration: none;
-  padding: 5px;
-  padding-left: 15px;
-}
-
-.tombol-daftar:hover {
-  background-color: #02406d;
-  color: #a1ff9f;
-  border: 1px solid #a1ff9f;
-  transition: 1s;
-  transform: scale(1.1);
-}
-
-.tombol-masuk {
-  color: #02406d;
-  border: 0px;
-  border-radius: 6px;
-  background-color: white;
-  margin-right: 10px;
-  width: 80px;
-  height: 35px;
-  font-weight: regular;
-  text-decoration: none;
-  padding-top: 5px;
-  padding-left: 5px;
-}
-
-.tombol-masuk:hover {
-  background-color: #a1ff9f;
-  color: #02406d;
-  border: 1px solid #a1ff9f;
-  transition: 1s;
-  transform: scale(1.1);
-}
-
 .img1 {
   position: relative;
   margin-top: 55px;
