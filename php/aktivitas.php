@@ -31,6 +31,14 @@ if (!$koneksi) {
       margin-top: 130px;
     }
 
+    .fourth-sep{
+      margin-left: 175px;
+    }
+
+    .semua-act{
+      margin-left: 200px;
+    }
+
     #drop-menu {
       background-color: #e7f5ff;
       border: 1px solid white;
