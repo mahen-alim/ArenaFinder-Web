@@ -90,9 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             $q1 = mysqli_query($koneksi, $sql1);
 
             if ($q1) {
-                $sukses = "Data berhasil diupdate/ditambahkan";
+                echo $sukses = "Data berhasil diupdate/ditambahkan";
             } else {
-                $error = "Data gagal diupdate/ditambahkan";
+                echo $error = "Data gagal diupdate/ditambahkan";
             }
 
         } else {
@@ -103,9 +103,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     }
 }
 
+if ($error) {
+    // Set header sebelum mencetak pesan kesalahan
+    header("refresh:2;url=jadwal.php"); // 2 = detik
+    ?>
+    <div class="alert alert-danger" role="alert">
+        <?php echo $error ?>
+    </div>
+    <?php
+}
 
+if ($sukses) {
+    // Set header sebelum mencetak pesan sukses
+    header("refresh:2;url=jadwal.php"); // 2 = detik
+    ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $sukses ?>
+    </div>
+    <?php
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #02406d;">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -194,8 +211,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                 Notifikasi
             </div>
 
-                <!-- Nav Item - Pesanan -->
-                <li class="nav-item">
+            <!-- Nav Item - Pesanan -->
+            <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span>Pesanan</span></a>
@@ -269,7 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
                                         <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
+                                            placeholder="Search by Nama Aktivitas" aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
@@ -280,6 +297,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 </form>
                             </div>
                         </li>
+
+
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -447,28 +466,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <?php
-                                        if ($error) {
-                                            ?>
-                                            <div class="alert alert-danger" role="alert">
-                                                <?php echo $error ?>
-                                            </div>
-                                            <?php
-                                            header("refresh:2;url=aktivitas.php"); // 2 = detik
-                                        
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($sukses) {
-                                            ?>
-                                            <div class="alert alert-success" role="alert">
-                                                <?php echo $sukses ?>
-                                            </div>
-                                            <?php
-                                            header("refresh:2;url=aktivitas.php"); // 2 = detik
-                                        }
-                                        ?>
-
                                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
                                             <div class="mb-3 row">
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama Aktivitas</label>
@@ -478,7 +475,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="jenis_olga" class="col-sm-2 col-form-label">Jenis Olahraga</label>
+                                                <label for="jenis_olga" class="col-sm-2 col-form-label">Jenis
+                                                    Olahraga</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="jenis_olga" id="jenis_olga">
                                                         <option value="">-Pilih Jenis Olahraga-</option>
@@ -501,13 +499,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                             echo "selected" ?>>Tenis Lapangan
                                                             </option>
                                                         </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="staticEmail"
-                                                        name="lokasi" value="<?php echo $lokasi ?>">
+                                                <div class="mb-3 row">
+                                                    <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="staticEmail"
+                                                            name="lokasi" value="<?php echo $lokasi ?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -555,8 +553,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                             echo "selected" ?>>5 jam
                                                             </option>
                                                         </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
                                                 <div class=" mb-3 row">
@@ -566,11 +564,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                                             readonly value="<?php echo $harga ?>">
                                                 </div>
 
-                                                <div class=" mb-3 row">
-                                                    <label for="foto" class="col-sm-2 col-form-label"
-                                                        style="margin-top: 10px; margin-left: 12px;">Gambar</label>
-                                                    <input type="file" name="foto" required="required" multiple
-                                                        style="margin-left: 213px; margin-top: -30px;" />
+                                                <div class="mb-3 row" style="margin-top: 20px; margin-left: 12px;">
+                                                    <label for="formFile" class="col-sm-2 col-form-label"
+                                                        >Gambar</label>
+                                                    <input class="form-control" type="file" id="formFile" name="foto" required="required" multiple
+                                                        style="margin-left: 188px; margin-top: -30px;" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -621,6 +619,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <form action="aktivitas.php" method="GET">
+                                            <div class="form-group">
+                                                <input type="text" name="search" class="form-control"
+                                                placeholder="Cari Aktivitas" value="<?php echo isset($_GET['search']) ? $_GET['search'] : '';?>">
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Cari</button>
+                                            <?php if (isset($_GET['search'])): ?>
+                                                <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
+                                            <?php endif; ?>
+                                        </form>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
@@ -638,8 +646,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql2 = "SELECT * FROM aktivitas ORDER BY id DESC";
-                                                $q2 = mysqli_query($koneksi, $sql2);
+                                                if (isset($_GET['reset'])) {
+                                                    // Pengguna menekan tombol "Hapus Pencarian"
+                                                    header("Location: aktivitas.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                                    exit();
+                                                }
+
+                                                if (isset($_GET['search'])) {
+                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%'";
+                                                } else {
+                                                    $sql = "SELECT * FROM aktivitas ORDER BY id DESC";
+                                                }
+                                                $q2 = mysqli_query($koneksi, $sql);
                                                 $urut = 1;
                                                 while ($r2 = mysqli_fetch_array($q2)) {
                                                     $id = $r2['id'];

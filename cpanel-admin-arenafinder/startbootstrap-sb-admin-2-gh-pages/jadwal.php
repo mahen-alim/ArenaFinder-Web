@@ -80,6 +80,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     }
 
 }
+
+if ($error) {
+    // Set header sebelum mencetak pesan kesalahan
+    header("refresh:2;url=jadwal.php"); // 2 = detik
+    ?>
+    <div class="alert alert-danger" role="alert">
+        <?php echo $error ?>
+    </div>
+    <?php
+}
+
+if ($sukses) {
+    // Set header sebelum mencetak pesan sukses
+    header("refresh:2;url=jadwal.php"); // 2 = detik
+    ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $sukses ?>
+    </div>
+    <?php
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +132,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+            style="background-color: #02406d;">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -422,36 +443,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <?php
-                                        ob_start();
-
-                                        if ($error) {
-                                            // Set header sebelum mencetak pesan kesalahan
-                                            header("refresh:2;url=jadwal.php"); // 2 = detik
-                                        
-                                            // Cetak pesan kesalahan
-                                            ?>
-                                            <div class="alert alert-danger" role="alert">
-                                                <?php echo $error ?>
-                                            </div>
-                                            <?php
-                                        }
-
-                                        if ($sukses) {
-                                            // Set header sebelum mencetak pesan sukses
-                                            header("refresh:2;url=jadwal.php"); // 2 = detik
-                                        
-                                            // Cetak pesan sukses
-                                            ?>
-                                            <div class="alert alert-success" role="alert">
-                                                <?php echo $sukses ?>
-                                            </div>
-                                            <?php
-                                        }
-
-                                        ob_end_flush();
-                                        ?>
-
                                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off"
                                             onsubmit="return validasiForm()" required>
                                             <div class="mb-3 row">
@@ -579,9 +570,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 });
                             </script>
 
-
-
-
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4" style="width: 71.5rem;">
                                 <div class="card-header py-3">
@@ -589,6 +577,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <form action="jadwal.php" method="GET">
+                                            <div class="form-group">
+                                                <input type="text" name="search" id="searchInput" class="form-control"
+                                                    placeholder="Cari Jadwal"
+                                                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Cari</button>
+                                            <?php if (isset($_GET['search'])): ?>
+                                                <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
+                                                    Pencarian</a>
+                                            <?php endif; ?>
+                                        </form>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
@@ -604,8 +604,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql2 = "SELECT * FROM jadwal ORDER BY id DESC";
-                                                $q2 = mysqli_query($koneksi, $sql2);
+                                                if (isset($_GET['reset'])) {
+                                                    // Pengguna menekan tombol "Hapus Pencarian"
+                                                    header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                                    exit();
+                                                }
+
+                                                if (isset($_GET['search'])) {
+                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%'";
+                                                } else {
+                                                    $sql = "SELECT * FROM jadwal ORDER BY id DESC";
+                                                }
+
+                                                $q2 = mysqli_query($koneksi, $sql);
                                                 $urut = 1;
                                                 while ($r2 = mysqli_fetch_array($q2)) {
                                                     $id = $r2['id'];
