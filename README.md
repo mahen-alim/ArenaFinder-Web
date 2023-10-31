@@ -3,7 +3,9 @@ Website ArenaFinder
 
 Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang tidak ingin repot dalaam mencari sebuah tempat olahraga favorit mereka, dengan website ini juga pengelola tempat olahraga dapat dimudahkan untuk mengelola tempat olahraga mereka dengan berbagai fitur manajemen usaha yang sedang kami kembangkan.
 
-![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/edc015e8-08e2-4743-832d-51279f5bd458) ![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/4673653d-d61a-4a45-ac41-6114a794b3b3)
+![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/edc015e8-08e2-4743-832d-51279f5bd458) 
+![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/13c03aa8-8475-429f-b7cc-5defd19dbc9a)
+
 
 ---
 
