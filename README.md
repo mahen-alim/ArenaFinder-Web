@@ -43,8 +43,6 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 
 ---
 
-## Lainnya
+## Kontak Developer
 >Anda dapat memberitahu kami di alamat email ini arenafinder.app@gmail.com
-
-This project is licensed under the terms of the **MIT** license.
 
