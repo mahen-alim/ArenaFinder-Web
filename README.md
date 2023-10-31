@@ -44,6 +44,6 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 ---
 
 ## Kontak Developer
--Anda dapat memberitahu kami di alamat email ini arenafinder.app@gmail.com
--Anda dapat melihat progres dari aplikasi mobile kami di https://github.com/haqiachd/ArenaFinder-Mobile
+- Anda dapat memberitahu kami di alamat email ini arenafinder.app@gmail.com
+- Anda dapat melihat progres dari aplikasi mobile kami di https://github.com/haqiachd/ArenaFinder-Mobile
 
