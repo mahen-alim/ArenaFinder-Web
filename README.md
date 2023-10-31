@@ -1,8 +1,8 @@
-Node.JS Chat
+Website ArenaFinder
 ============
 [![GitHub Stars](https://img.shields.io/github/stars/IgorAntun/node-chat.svg)](https://github.com/IgorAntun/node-chat/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/IgorAntun/node-chat.svg)](https://github.com/IgorAntun/node-chat/issues) [![Current Version](https://img.shields.io/badge/version-1.0.7-green.svg)](https://github.com/IgorAntun/node-chat) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://igorantun.com/chat) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/IgorAntun/node-chat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-This is a node.js chat application powered by SockJS and Express that provides the main functions you'd expect from a chat, such as emojis, private messages, an admin system, etc.
+Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang tidak ingin repot dalaam mencari sebuah tempat olahraga favorit mereka, dengan website ini juga pengelola tempat olahraga dapat dimudahkan untuk mengelola tempat olahraga mereka dengan berbagai fitur manajemen usaha yang sedang kami kembangkan.
 
 ![Chat Preview](http://i.imgur.com/lgRe8z4.png)
 
@@ -15,33 +15,33 @@ Whether you use this project, have learned something from it, or just like it, p
 
 ---
 
-## Features
-- Material Design
-- Emoji support
-- User @mentioning
-- Private messaging
-- Message deleting (for admins)
-- Ability to kick/ban users (for admins)
-- See other user's IPs (for admins)
-- Other awesome features yet to be implemented
+## Fitur untuk User
+- Pencarian Jadwal Lapangan
+- Melihat rekomendasi tempat olahraga sesuai kategori olahraga yang dipilih
+- Melihat aktivitas dari sebuah komunitas olahraga 
+- Akses info dan kontak dari pengelola usaha olahraga
+
+## Fitur untuk Admin
+- Melihat jadwal yang sudah dipesan maupun yang belum dipesan
+- Melihat notifikasi pesanan yang telah user pesan di aplikasi mobile kami
+- Edit aktivitas, jadwal lapangan melalui sistem CRUD (Create, Read, Update, Delete)
+- Mengecek data statistik tentang kalkulasi pemesanan lapangan
+
 
 ![User Features](http://i.imgur.com/WbF1fi2.png)
 
 ![Admin Features](http://i.imgur.com/xQFaadt.png)
 
 
-#### There are 3 admin levels:
-- **Helper:** Can delete chat messages
-- **Moderator:** The above plus the ability to kick and ban users
-- **Administrator:** All the above plus send global alerts and promote/demote users
+#### Terdapat 3 level user, antara lain:
+- **End-User:** Pihak pemesan lapangan atau masyarakat umum, dapat melihat informasi di website
+- **Admin:** Pihak pengelola tempat, dapat mengelola tempat usaha olahraga 
+- **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi dan dapat memberi pemberitahuan kepada mitra aplikasi
 
 ---
 
 ## Setup
-Clone this repo to your desktop and run `npm install` to install all the dependencies.
-
-You might want to look into `config.json` to make change the port you want to use and set up a SSL certificate.
-
+- Import database terlebih dahulu 
 ---
 
 ## Usage
