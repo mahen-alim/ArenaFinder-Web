@@ -20,12 +20,6 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 - Edit aktivitas, jadwal lapangan melalui sistem CRUD (Create, Read, Update, Delete)
 - Mengecek data statistik tentang kalkulasi pemesanan lapangan
 
-
-![User Features](http://i.imgur.com/WbF1fi2.png)
-
-![Admin Features](http://i.imgur.com/xQFaadt.png)
-
-
 #### Terdapat 3 level user, antara lain:
 - **End-User:** Pihak pemesan lapangan atau masyarakat umum, dapat melihat informasi di website
 - **Admin:** Pihak pengelola tempat, dapat mengelola tempat usaha olahraga 
