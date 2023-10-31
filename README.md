@@ -30,7 +30,7 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 
 ## Instalasi
 
-**Saat ini layanan website masih dalam tahap pengembangan. **
+>Saat ini layanan website masih dalam tahap pengembangan. 
 
 ---
 
