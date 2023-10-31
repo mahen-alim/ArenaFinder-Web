@@ -15,6 +15,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Email tidak ditemukan. <a href='login.php'>Coba lagi</a>";
     }
 
-
 $conn->close();
 ?>

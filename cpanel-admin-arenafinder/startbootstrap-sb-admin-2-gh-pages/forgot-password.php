@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,13 +44,13 @@
                                         <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kita
                                             akan kirimkan sebuah link ke email anda untuk merubah sandi!</p>
                                     </div>
-                                    <form class="user" method="POST" action="send_password.php">
+                                    <form class="user" action="#" method="POST" name="recover_psw">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" placeholder="Alamat Email" name="email">
                                         </div>
                                         <input class="btn btn-primary btn-user btn-block" type="submit"
-                                            value="Ganti Sandi">
+                                            value="Ganti Sandi" name="recover">
 
                                     </form>
                                     <hr>
@@ -57,7 +58,7 @@
                                         <a class="small" href="register.php">Buat Akun Anda!</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="login.html">Sudah Memiliki Akun? Masuk Sekarang!</a>
+                                        <a class="small" href="login.php">Sudah Memiliki Akun? Masuk Sekarang!</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,3 +85,82 @@
 </body>
 
 </html>
+
+<?php
+if (isset($_POST["recover"])) {
+    include('database.php');
+    $email = $_POST["email"];
+
+    $sql = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $query = mysqli_num_rows($sql);
+    $fetch = mysqli_fetch_assoc($sql);
+
+    if (mysqli_num_rows($sql) <= 0) {
+        ?>
+        <script>
+            alert("<?php echo "Maaf, email tidak tersedia " ?>");
+        </script>
+        <?php
+    } else if ($fetch["is_verified"] == 0) {
+        ?>
+            <script>
+                alert("Maaf, akun anda harus diverifikasi terlebih dahulu sebelum mengganti sandi!");
+                window.location.replace("index.html");
+            </script>
+        <?php
+    } else {
+        // generate token by binaryhexa 
+        $token = bin2hex(random_bytes(50));
+
+        //session_start ();
+        $_SESSION['token'] = $token;
+        $_SESSION['email'] = $email;
+
+        require "Mail/phpmailer/PHPMailerAutoload.php";
+        $mail = new PHPMailer;
+
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+
+        // h-hotel account
+        $mail->Username = 'mahennekkers27@gmail.com';
+        $mail->Password = 'fxqa zwoq vuji mhlk';
+
+        // send by h-hotel email
+        $mail->setFrom('arenafinder.app@gmail.com', 'Password Reset');
+        // get email from input
+        $mail->addAddress($_POST["email"]);
+        //$mail->addReplyTo('lamkaizhe16@gmail.com');
+
+        // HTML body
+        $mail->isHTML(true);
+        $mail->Subject = "Ganti Sandi Akun";
+        $mail->Body = "<b>Kepada Admin</b>
+                        <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
+                        <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
+                        http://localhost/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/reset_psw.php
+                        <br><br>
+                        <p>Berikan pesan anda lewat email ini,</p>
+                        <b>arenafinder.app@gmail.com</b>";
+
+        if (!$mail->send()) {
+            ?>
+                <script>
+                    alert("<?php echo "Email salah" ?>");
+                </script>
+            <?php
+        } else {
+            ?>
+                <script>
+                    window.location.replace("notification.html");
+                </script>
+            <?php
+        }
+    }
+}
+
+
+?>

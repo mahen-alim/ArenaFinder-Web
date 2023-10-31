@@ -84,15 +84,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                 $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', jenis_olga = '$jenis', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
             } else {
                 // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
+                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$jenis', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
+
             }
 
             $q1 = mysqli_query($koneksi, $sql1);
 
             if ($q1) {
-                echo $sukses = "Data berhasil diupdate/ditambahkan";
+                $sukses = "Data berhasil diupdate/ditambahkan";
             } else {
-                echo $error = "Data gagal diupdate/ditambahkan";
+                $error = "Data gagal diupdate/ditambahkan";
             }
 
         } else {
@@ -105,22 +106,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
-    header("refresh:2;url=jadwal.php"); // 2 = detik
-    ?>
-    <div class="alert alert-danger" role="alert">
-        <?php echo $error ?>
-    </div>
-    <?php
+    header("refresh:2;url=aktivitas.php"); // 2 = detik
+?>
+<?php
 }
 
 if ($sukses) {
     // Set header sebelum mencetak pesan sukses
-    header("refresh:2;url=jadwal.php"); // 2 = detik
-    ?>
-    <div class="alert alert-success" role="alert">
-        <?php echo $sukses ?>
-    </div>
-    <?php
+    header("refresh:2;url=aktivitas.php"); // 2 = detik
+?>
+<?php
 }
 ?>
 <!DOCTYPE html>
@@ -154,12 +149,12 @@ if ($sukses) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #02406d;">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #02406d;">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fa-solid fa-clipboard"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">ArenaFInder <sup>Admin</sup></div>
             </a>
@@ -169,8 +164,8 @@ if ($sukses) {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="index.php">
+                    <i class="fa-solid fa-house-user"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -196,13 +191,6 @@ if ($sukses) {
                     <span>Aktivitas</span></a>
             </li>
 
-            <!-- Nav Item - Referensi Menu -->
-            <li class="nav-item ">
-                <a class="nav-link" href="referensi.php">
-                    <i class="fa-solid fa-asterisk"></i>
-                    <span>Referensi</span></a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -214,22 +202,10 @@ if ($sukses) {
             <!-- Nav Item - Pesanan -->
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-cart-shopping">
+                        <span class="badge badge-danger badge-counter">New</span>
+                    </i>
                     <span>Pesanan</span></a>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
             </li>
 
             <!-- Divider -->
@@ -253,168 +229,17 @@ if ($sukses) {
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"
+                        style="color: #02406d;">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-3">
+                        <i class="fa-solid fa-fire mt-3 mr-3" style="color: #02406d;"></i>
+                        <h1 class="h3 mr-2 mt-4" style="color: #02406d; font-size: 20px; font-weight: bold;">Aktivitas</h1>
+                    </div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search by Nama Aktivitas" aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -454,18 +279,21 @@ if ($sukses) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Kelola Aktivitas Olahraga</h1>
-
                     <div class="row">
 
                         <div class="col-lg-6">
-                            <div class="card shadow mb-4" style="width: 71.5rem;">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tambah/Edit Aktivitas</h6>
+                            <div class="card shadow mb-4" style="width: 72rem;">
+                                <div class="card-header py-3" style="background-color: #02406d; color: white" >
+                                    <h6 class="m-0 font-weight-bold">Tambah/Edit Aktivitas</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <?php if ($error || $sukses): ?>
+                                            <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>"
+                                                role="alert">
+                                                <?php echo $error ? $error : $sukses; ?>
+                                            </div>
+                                        <?php endif; ?>
                                         <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
                                             <div class="mb-3 row">
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama Aktivitas</label>
@@ -533,7 +361,7 @@ if ($sukses) {
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label for="jam main" class="col-sm-2 col-form-label">Jam Main</label>
+                                                <label for="jam main" class="col-sm-2 col-form-label" style="cursor: pointer">Jam Main</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="jam_main" id="jam_main">
                                                         <option value="">-Jam Main-</option>
@@ -566,9 +394,9 @@ if ($sukses) {
 
                                                 <div class="mb-3 row" style="margin-top: 20px; margin-left: 12px;">
                                                     <label for="formFile" class="col-sm-2 col-form-label"
-                                                        >Gambar</label>
-                                                    <input class="form-control" type="file" id="formFile" name="foto" required="required" multiple
-                                                        style="margin-left: 188px; margin-top: -30px;" />
+                                                        style="margin-left: -12px;">Gambar</label>
+                                                    <input type="file" id="foto" name="foto" required="required"
+                                                        multiple style="margin-left: 188px; margin-top: -30px;" />
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -613,21 +441,23 @@ if ($sukses) {
                             </script>
 
                             <!-- DataTales Example -->
-                            <div class="card shadow mb-4" style="width: 71.5rem;">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tabel Jadwal</h6>
+                            <div class="card shadow mb-4" style="width: 72rem;">
+                                <div class="card-header py-3" style="color: #02406d; background-color: #e7f5ff;">
+                                    <h6 class="m-0 font-weight-bold">Tabel Aktivitas</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <form action="aktivitas.php" method="GET">
-                                            <div class="form-group">
+                                            <div class="form-group" style="display: flex; gap: 10px;">
                                                 <input type="text" name="search" class="form-control"
-                                                placeholder="Cari Aktivitas" value="<?php echo isset($_GET['search']) ? $_GET['search'] : '';?>">
+                                                    style="width: 30%;" placeholder="Cari Aktivitas"
+                                                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                                                <button type="submit" class="btn btn-info">Cari</button>
+                                                <?php if (isset($_GET['search'])): ?>
+                                                    <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
+                                                <?php endif; ?>
                                             </div>
-                                            <button type="submit" class="btn btn-info">Cari</button>
-                                            <?php if (isset($_GET['search'])): ?>
-                                                <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
-                                            <?php endif; ?>
+
                                         </form>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -766,7 +596,7 @@ if ($sukses) {
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

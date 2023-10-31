@@ -28,14 +28,14 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #02406d;">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fa-solid fa-clipboard"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">ArenaFInder <sup>Admin</sup></div>
             </a>
 
             <!-- Divider -->
@@ -46,8 +46,8 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="index.php">
+                    <i class="fa-solid fa-house-user"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -61,7 +61,7 @@
 
             <!-- Nav Item - Jadwal Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="jadwal.php">
                     <i class="fa-solid fa-calendar-days"></i>
                     <span>Jadwal Lapangan</span></a>
             </li>
@@ -71,13 +71,6 @@
                 <a class="nav-link" href="aktivitas.php">
                     <i class="fa-solid fa-fire"></i>
                     <span>Aktivitas</span></a>
-            </li>
-
-            <!-- Nav Item - Referensi Menu -->
-            <li class="nav-item ">
-                <a class="nav-link" href="referensi.php">
-                    <i class="fa-solid fa-asterisk"></i>
-                    <span>Referensi</span></a>
             </li>
 
             <!-- Divider -->
@@ -91,23 +84,13 @@
             <!-- Nav Item - Pesanan -->
             <li class="nav-item active">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-cart-shopping">
+                        <span class="badge badge-danger badge-counter">New</span>
+                    </i>
+
                     <span>Pesanan</span></a>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -134,19 +117,10 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-3">
+                        <i class="fa-solid fa-cart-shopping mt-3 mr-3" style="color: #02406d;"></i>
+                        <h1 class="h3 mr-2 mt-4" style="color: #02406d; font-size: 20px; font-weight: bold;">Pesanan</h1>
+                    </div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -336,147 +310,32 @@
 
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Annual) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tasks Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
                         <div class="col-lg-6">
 
-                            <!-- Default Card Example -->
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    Default Card Example
-                                </div>
-                                <div class="card-body">
-                                    This card uses Bootstrap's default styling with no utility classes added. Global
-                                    styles are the only things modifying the look and feel of this default card example.
-                                </div>
-                            </div>
-
-                            <!-- Basic Card Example -->
+                            <!-- Collapsable Card Example -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
-                                </div>
-                                <div class="card-body">
-                                    The styling for this basic card example is created by using default Bootstrap
-                                    utility classes. By using utility classes, the style of the card component can be
-                                    easily modified with no need for any custom CSS!
-                                </div>
-                            </div>
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
+                                        Futsal-Person A</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body" style="display: flex; flex-direction: column;">
+                                        <h6>Keanggotaan : <strong>Member</strong></h6>
+                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
+                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
+                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
+                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
+                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
 
-                        </div>
-
-                        <div class="col-lg-6">
-
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="d-flex justify-content-end mt-auto">
+                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
+                                            <button type="button" class="btn btn-danger">Batalkan</button>
                                         </div>
+                                       
                                     </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Dropdown menus can be placed in the card header in order to extend the functionality
-                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
-                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
                                 </div>
                             </div>
 
@@ -485,14 +344,51 @@
                                 <!-- Card Header - Accordion -->
                                 <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
                                     role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold text-primary">Collapsable Card Example</h6>
+                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
+                                        Futsal-Person B</h6>
                                 </a>
                                 <!-- Card Content - Collapse -->
                                 <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body">
-                                        This is a collapsable card example using Bootstrap's built in collapse
-                                        functionality. <strong>Click on the card header</strong> to see the card body
-                                        collapse and expand!
+                                    <div class="card-body" style="display: flex; flex-direction: column;">
+                                        <h6>Keanggotaan : <strong>Member</strong></h6>
+                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
+                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
+                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
+                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
+                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
+
+                                        <div class="d-flex justify-content-end mt-auto">
+                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
+                                            <button type="button" class="btn btn-danger">Batalkan</button>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Collapsable Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
+                                        Futsal-Person C</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body" style="display: flex; flex-direction: column;">
+                                        <h6>Keanggotaan : <strong>Member</strong></h6>
+                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
+                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
+                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
+                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
+                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
+
+                                        <div class="d-flex justify-content-end mt-auto">
+                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
+                                            <button type="button" class="btn btn-danger">Batalkan</button>
+                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -542,7 +438,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

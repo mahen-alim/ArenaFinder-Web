@@ -66,7 +66,15 @@ class AssistantGroundingRankerMediaGroundingProviderFeatures extends \Google\Mod
   /**
    * @var bool
    */
+  public $isSelfReportedSvodProvider;
+  /**
+   * @var bool
+   */
   public $isYoutubeMusicSeeking;
+  /**
+   * @var string
+   */
+  public $mediaAccountType;
   /**
    * @var string
    */
@@ -240,6 +248,20 @@ class AssistantGroundingRankerMediaGroundingProviderFeatures extends \Google\Mod
   /**
    * @param bool
    */
+  public function setIsSelfReportedSvodProvider($isSelfReportedSvodProvider)
+  {
+    $this->isSelfReportedSvodProvider = $isSelfReportedSvodProvider;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsSelfReportedSvodProvider()
+  {
+    return $this->isSelfReportedSvodProvider;
+  }
+  /**
+   * @param bool
+   */
   public function setIsYoutubeMusicSeeking($isYoutubeMusicSeeking)
   {
     $this->isYoutubeMusicSeeking = $isYoutubeMusicSeeking;
@@ -250,6 +272,20 @@ class AssistantGroundingRankerMediaGroundingProviderFeatures extends \Google\Mod
   public function getIsYoutubeMusicSeeking()
   {
     return $this->isYoutubeMusicSeeking;
+  }
+  /**
+   * @param string
+   */
+  public function setMediaAccountType($mediaAccountType)
+  {
+    $this->mediaAccountType = $mediaAccountType;
+  }
+  /**
+   * @return string
+   */
+  public function getMediaAccountType()
+  {
+    return $this->mediaAccountType;
   }
   /**
    * @param string

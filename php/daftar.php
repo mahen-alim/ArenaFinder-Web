@@ -1,3 +1,83 @@
+<?php
+// Koneksi ke database
+$servername = "localhost";
+$username_db = "root";
+$password_db = "";
+$dbname = "arenafinder";
+
+$conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+if ($conn->connect_error) {
+  die("Koneksi ke database gagal: " . $conn->connect_error);
+}
+
+// Menggunakan Google API Client Library
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Inisialisasi client OAuth 2.0
+$client = new Google_Client();
+$client->setAuthConfig('config_client.json'); // Gantilah dengan file konfigurasi OAuth Google Anda
+$client->setRedirectUri('http://localhost/ArenaFinder/php/masuk.php');
+$client->addScope('email');
+$client->addScope('profile');
+
+// Inisialisasi session
+session_start();
+
+if (isset($_GET['code'])) {
+  // Mendapatkan akses token setelah otorisasi Google
+  $client->authenticate($_GET['code']);
+  $_SESSION['access_token'] = $client->getAccessToken();
+  header('Location: http://localhost/ArenaFinder/php/masuk.php'); // Redirect ke halaman callback
+}
+
+if (isset($_SESSION['access_token'])) {
+  // Akses token masih berlaku, gunakan untuk mengambil data pengguna
+  $client->setAccessToken($_SESSION['access_token']);
+  $plus = new Google_Service_Plus($client);
+  $userProfile = $plus->people->get('me');
+
+  // Ambil data pengguna
+  $googleUserId = $userProfile->getId();
+  $googleEmail = $userProfile->getEmails()[0]->getValue();
+  $googleDisplayName = $userProfile->getDisplayName();
+
+  // Simpan data pengguna ke dalam database
+  $sql = "INSERT INTO users (id_users, email, full_name) VALUES (?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("sss", $googleUserId, $googleEmail, $googleDisplayName);
+
+  if ($stmt->execute()) {
+    echo "Registrasi berhasil (dengan Google).";
+  } else {
+    echo "Error: " . $stmt->error;
+  }
+
+  $stmt->close();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Registrasi manual
+  $manualUsername = $_POST['username'];
+  $manualEmail = $_POST['email'];
+  $manualPassword = $_POST['password'];
+
+  // Simpan data manual ke dalam database
+  $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $hashedPassword = password_hash($manualPassword, PASSWORD_BCRYPT);
+  $stmt->bind_param("sss", $manualUsername, $manualEmail, $hashedPassword);
+
+  if ($stmt->execute()) {
+    echo "Registrasi manual berhasil.";
+  } else {
+    echo "Error: " . $stmt->error;
+  }
+
+  $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +102,13 @@
       align-items: center;
     }
   </style>
+  <script>
+    function registerWithGoogle() {
+      // Redirect ke halaman Google Login
+      window.location.href = '<?php echo $authUrl; ?>';
+    }
+  </script>
+
 </head>
 
 <body>
@@ -61,8 +148,14 @@
       </div>
     </div>
   </nav>
-
-  <form method="POST" action="proses_daftar.php" onsubmit="return validasiForm()">
+  <h1>Registrasi dengan Google</h1>
+  <?php
+  if (!isset($_SESSION['access_token'])) {
+    $authUrl = $client->createAuthUrl();
+    echo "<a href='$authUrl'>Daftar dengan Google</a>";
+  }
+  ?>
+  <form method="POST" action="" onsubmit="return validasiForm()">
     <div class="container">
       <div class="judul">
         <h1 class="daftar">Daftar</h1>
@@ -80,39 +173,39 @@
         <input type="password" name="password" required>
       </div>
       <div class="username">Konfirmasi Sandi
-        <input type="password" name="konfirmasi_password" required>
+        <input type="password" name="confirm_password" required>
       </div>
       <div class="separator2">
         <div class="line-1"></div>
         <div class="line-2"></div>
       </div>
       <div class="google-area">
-        <button class="google-button">
+        <button class="google-button" onclick="registerWithGoogle()">
           <img src="/ArenaFinder/img_asset/google.png" alt="">
-          <a href="" style="text-decoration: none; color: #02406D;">Daftar dengan Google</a>
+          Daftar dengan Google
         </button>
       </div>
       <div class="username">
         <button class="tombol-daftar-body">Daftar</button>
       </div>
     </div>
-    <input type="hidden" name="level" value="END USER" id="level"/>
+    <input type="hidden" name="level" value="END USER" id="level" />
   </form>
   <p id="pesan-error" style="color: red;"></p>
 
   <script>
-        function validasiForm() {
-            var password = document.getElementById("password").value;
-            var konfirmasiPassword = document.getElementById("konfirmasi_password").value;
-            var pesanError = document.getElementById("pesan-error");
+    function validasiForm() {
+      var password = document.getElementById("password").value;
+      var konfirmasiPassword = document.getElementById("konfirmasi_password").value;
+      var pesanError = document.getElementById("pesan-error");
 
-            if (password !== konfirmasiPassword) {
-                pesanError.innerHTML = "Konfirmasi Kata Sandi harus sama dengan Kata Sandi!";
-                return false; // Mencegah pengiriman formulir jika ada kesalahan
-            }
-            return true; // Kirim formulir jika konfirmasi kata sandi sama dengan kata sandi
-        }
-    </script>
+      if (password !== konfirmasiPassword) {
+        pesanError.innerHTML = "Konfirmasi Kata Sandi harus sama dengan Kata Sandi!";
+        return false; // Mencegah pengiriman formulir jika ada kesalahan
+      }
+      return true; // Kirim formulir jika konfirmasi kata sandi sama dengan kata sandi
+    }
+  </script>
 
 </body>
 

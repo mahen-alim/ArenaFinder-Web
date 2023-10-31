@@ -97,25 +97,6 @@
   cursor: pointer;
 }
 
-input[type="date"] {
-  position: relative;
-  top: -65.7rem;
-  margin-left: 960px;
-  border-radius: 10px;
-  width: 250px;
-  height: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #02406d;
-  border: 1px solid #e7f5ff; /* Warna border */
-  transition: border-color 0.3s; /* Efek hover */
-}
-
-input[type="date"]:hover {
-  border-color: #02406d; /* Warna border saat hover */
-  cursor: pointer;
-}
-
 .button {
   position: relative;
   top: -68.8rem;

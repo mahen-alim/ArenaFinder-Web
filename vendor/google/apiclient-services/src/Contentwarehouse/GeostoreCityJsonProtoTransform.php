@@ -20,7 +20,7 @@ namespace Google\Service\Contentwarehouse;
 class GeostoreCityJsonProtoTransform extends \Google\Model
 {
   public $scale;
-  protected $translateType = GeostoreCityJsonProtoTransformXyzVector::class;
+  protected $translateType = GeostoreCityJsonProtoTransformTranslate::class;
   protected $translateDataType = '';
 
   public function setScale($scale)
@@ -32,14 +32,14 @@ class GeostoreCityJsonProtoTransform extends \Google\Model
     return $this->scale;
   }
   /**
-   * @param GeostoreCityJsonProtoTransformXyzVector
+   * @param GeostoreCityJsonProtoTransformTranslate
    */
-  public function setTranslate(GeostoreCityJsonProtoTransformXyzVector $translate)
+  public function setTranslate(GeostoreCityJsonProtoTransformTranslate $translate)
   {
     $this->translate = $translate;
   }
   /**
-   * @return GeostoreCityJsonProtoTransformXyzVector
+   * @return GeostoreCityJsonProtoTransformTranslate
    */
   public function getTranslate()
   {

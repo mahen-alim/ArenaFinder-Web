@@ -87,27 +87,25 @@ try {
     }
 
     #drop-menu {
-      background-color: #e7f5ff;
-      border: 1px solid white;
-      color: #02406D;
+      background-color: white;
+      border: 1px solid #02406D;
     }
 
     .dropdown-divider {
-      border: 1px solid white;
+      border: 1px solid #02406D;
     }
 
     /* Saat dropdown-item di-hover */
     .dropdown-menu a.dropdown-item:hover {
       background-color: #02406D;
-      color: white;
+      color: #A1FF9F;
     }
 
     /* Mengatur warna teks dan latar belakang default */
     .dropdown-menu a.dropdown-item {
-      color: initial;
-      /* Atur warna teks kembali ke nilai default */
-      background-color: initial;
-      /* Atur latar belakang kembali ke nilai default */
+      color: initial;     /* Atur warna teks kembali ke nilai default */
+      background-color: initial;     /* Atur latar belakang kembali ke nilai default */
+      color: #02406D;
     }
 
     #auth-con {
@@ -136,14 +134,14 @@ try {
       align-items: center;
       border-radius: 6px;
       color: #02406D;
-      background-color: #e7f5ff;
+      background-color: #A1FF9F;
       width: 100px;
       height: 30px;
       text-align: center;
     }
 
     #nav-down-item1:hover {
-      background-color: #e7f5ff;
+      background-color: white;
       color: #02406D;
       transition: 0.5s;
       transform: scale(1.1);
@@ -154,7 +152,7 @@ try {
     }
 
     #nav-down-item2:hover {
-      background-color: #e7f5ff;
+      background-color: #A1FF9F;
       color: #02406D;
       transition: 0.5s;
       transform: scale(1.1);
@@ -208,7 +206,7 @@ try {
               Masuk
             </a>
             <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.html">Masuk sebagai Admin</a></li>
+              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk sebagai Admin</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai Pengguna</a></li>
             </ul>
