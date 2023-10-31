@@ -47,7 +47,7 @@ Saat ini layanan website masih dalam tahap pengembangan.
 ---
 
 ## Lainnya
->Anda dapat memberitahu kami di alamat email ini [here](https://github.com/IgorAntun/node-chat/blob/master/LICENSE)
+>Anda dapat memberitahu kami di alamat email ini arenafinder.app@gmail.com
 
 This project is licensed under the terms of the **MIT** license.
 
