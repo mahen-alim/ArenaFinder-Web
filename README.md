@@ -4,7 +4,7 @@ Website ArenaFinder
 
 Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang tidak ingin repot dalaam mencari sebuah tempat olahraga favorit mereka, dengan website ini juga pengelola tempat olahraga dapat dimudahkan untuk mengelola tempat olahraga mereka dengan berbagai fitur manajemen usaha yang sedang kami kembangkan.
 
-![Chat Preview](http://i.imgur.com/lgRe8z4.png)
+![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/edc015e8-08e2-4743-832d-51279f5bd458)
 
 ---
 ## Buy me a coffee
