@@ -7,13 +7,6 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 ![image](https://github.com/mahen-alim/ArenaFinder-Web/assets/124986850/edc015e8-08e2-4743-832d-51279f5bd458)
 
 ---
-## Buy me a coffee
-
-Whether you use this project, have learned something from it, or just like it, please consider supporting it by buying me a coffee, so I can dedicate more time on open-source projects like this :)
-
-<a href="https://www.buymeacoffee.com/igorantun" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-
----
 
 ## Fitur untuk User
 - Pencarian Jadwal Lapangan
@@ -40,21 +33,21 @@ Whether you use this project, have learned something from it, or just like it, p
 
 ---
 
-## Setup
-- Import database terlebih dahulu 
+## Instalasi
+Saat ini layanan website masih dalam tahap pengembangan. 
 ---
 
-## Usage
-After you clone this repo to your desktop, go to its root directory and run `npm install` to install its dependencies.
-
-Once the dependencies are installed, you can run  `npm start` to start the application. You will then be able to access it at localhost:3000
-
-To give yourself administrator permissions on the chat, you will have to type `/role [your-name]` in the app console.
+## Developer
+- Ninik Yuniarsih
+- Widyasari Salsabila
+- Ahmad Baihaqi
+- Afrizal Wahyu Alkautsar
+- Syafrizal Wd Mahendra
 
 ---
 
-## License
->You can check out the full license [here](https://github.com/IgorAntun/node-chat/blob/master/LICENSE)
+## Lainnya
+>Anda dapat memberitahu kami di alamat email ini [here](https://github.com/IgorAntun/node-chat/blob/master/LICENSE)
 
 This project is licensed under the terms of the **MIT** license.
 
