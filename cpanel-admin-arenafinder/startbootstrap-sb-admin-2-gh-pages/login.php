@@ -1,0 +1,138 @@
+<?php
+include('database.php');
+
+if (isset($_POST["login"])) {
+  $email = mysqli_real_escape_string($conn, trim($_POST['email']));
+  $password = trim($_POST['password']);
+
+  $sql = mysqli_query($conn, "SELECT * FROM users where email = '$email'");
+  $count = mysqli_num_rows($sql);
+
+  if ($count > 0) {
+    $fetch = mysqli_fetch_assoc($sql);
+    $hashpassword = $fetch["password"];
+
+    if ($fetch["is_verified"] == 0) {
+      ?>
+      <script>
+        alert("Tolong Verifikasi Akun Email sebelum Login.");
+      </script>
+      <?php
+    } else if (password_verify($password, $hashpassword)) {
+      ?>
+        <script>
+          window.location.replace("index.php");
+        </script>
+      <?php
+    } else {
+      ?>
+        <script>
+          alert("Email atau Password Salah, Mohon Coba Lagi.");
+          window.location.replace("login.php");
+        </script>
+      <?php
+    }
+  }
+
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>SB Admin 2 - Login</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+  <style>
+    #btn-login {
+      background-color: #e7f5ff;
+      color: #02406d;
+    }
+
+    #btn-login:hover {
+      background-color: #02406d;
+      color: #e7f5ff;
+      border: 1px solid #e7f5ff;
+    }
+
+    #card-email {
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient" style="background-color: #e7f5ff">
+  <div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+      <div class="col-sm-10 col-md-5 ">
+        <div class="card o-hidden border-0 shadow-lg my-4" style="height: 700px;">
+          <div class="card-body p-10" id="card-email">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-10 mx-auto p-2">
+                <div class="p-3">
+                  <div class="text-center">
+                    <h1 class="h2 text-gray-900 mb-2 ">Masuk Akun</h1>
+                    <img src="/ArenaFinder/img_asset/login.png" alt=""
+                      style="width: 200px; height: auto; margin-bottom: 20px" />
+                  </div>
+
+                  <form class="user" method="POST" action="#" autocomplete="off" name="login">
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="email-input" name="email"
+                        aria-describedby="emailHelp" placeholder="Enter Email Address..." autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="exampleInputPassword"
+                        placeholder="Password" name="password" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-user btn-block" id="btn-login" name="login">Masuk</button>
+                    </div>
+                  </form>
+
+                  <hr />
+                  <div class="text-center">
+                    <a class="small" href="forgot-password.php">Lupa Sandi?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.php">Buat Akun Anda!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>
