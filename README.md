@@ -1,4 +1,3 @@
-=======
 Website ArenaFinder
 ============
 
