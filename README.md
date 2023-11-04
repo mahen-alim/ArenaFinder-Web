@@ -21,7 +21,6 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 - Mengecek data statistik tentang kalkulasi pemesanan lapangan
 
 #### Terdapat 3 level user, antara lain:
-- **End-User:** Pihak pemesan lapangan atau masyarakat umum, dapat melihat informasi di website
 - **Admin:** Pihak pengelola tempat, dapat mengelola tempat usaha olahraga 
 - **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi dan dapat memberi pemberitahuan kepada mitra aplikasi
 
