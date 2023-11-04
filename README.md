@@ -8,16 +8,10 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 
 ---
 
-## Fitur untuk User
-- Pencarian Jadwal Lapangan
-- Melihat rekomendasi tempat olahraga sesuai kategori olahraga yang dipilih
-- Melihat aktivitas dari sebuah komunitas olahraga 
-- Akses info dan kontak dari pengelola usaha olahraga
-
 ## Fitur untuk Admin
 - Melihat jadwal yang sudah dipesan maupun yang belum dipesan
 - Melihat notifikasi pesanan yang telah user pesan di aplikasi mobile kami
-- Edit aktivitas, jadwal lapangan melalui sistem CRUD (Create, Read, Update, Delete)
+- Edit aktivitas, jadwal lapangan, keanggotaan, dsb. Melalui sistem CRUD (Create, Read, Update, Delete)
 - Mengecek data statistik tentang kalkulasi pemesanan lapangan
 
 #### Terdapat 3 level user, antara lain:
