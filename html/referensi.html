@@ -96,6 +96,41 @@
         color: white;
       }
 
+      .tipe-lap {
+        display: flex;
+        width: 500px;
+        height: 100%;
+        gap: 20px;
+        margin-top: -48px;
+        margin-left: 2.5rem;
+      }
+
+      #ref-btn{
+        width: 200px;
+      }
+
+      #ref-btn:hover{
+        background-color: #02406D;
+        color: white;
+        transition: 1s;
+      }
+      .tipe-lap img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .tipe-lap button:hover img {
+        top: 0;
+        opacity: 1;
+        transition: 1s;
+        transform: scale(1.1);
+      }
+
     </style>
 </head>
 <body>
@@ -138,8 +173,6 @@
                 </a>
                 <ul class="dropdown-menu" id="drop-menu">
                   <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar sebagai Admin</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai Pengguna</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown" id="nav-down">
@@ -148,8 +181,6 @@
                 </a>
                 <ul class="dropdown-menu" id="drop-menu">
                   <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk sebagai Admin</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai Pengguna</a></li>
                 </ul>
               </li>
             </ul>
@@ -206,6 +237,7 @@
         <button>Outdoor
           <img src="/ArenaFinder/img_asset/outdoor.jpg" alt="">
         </button>
+        <button id="ref-btn">Tambah Referensi <strong style="font-size: larger;">+</strong></button>
       </div>
     </div>
     

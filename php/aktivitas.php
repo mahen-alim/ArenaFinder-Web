@@ -31,11 +31,11 @@ if (!$koneksi) {
       margin-top: 130px;
     }
 
-    .fourth-sep{
+    .fourth-sep {
       margin-left: 175px;
     }
 
-    .semua-act{
+    .semua-act {
       margin-left: 200px;
     }
 
@@ -56,8 +56,10 @@ if (!$koneksi) {
 
     /* Mengatur warna teks dan latar belakang default */
     .dropdown-menu a.dropdown-item {
-      color: initial;/* Atur warna teks kembali ke nilai default */
-      background-color: initial;/* Atur latar belakang kembali ke nilai default */
+      color: initial;
+      /* Atur warna teks kembali ke nilai default */
+      background-color: initial;
+      /* Atur latar belakang kembali ke nilai default */
       color: #02406D;
     }
 
@@ -114,6 +116,16 @@ if (!$koneksi) {
     #nav-down-item2:active {
       color: white;
     }
+
+    .card-text {
+      text-align: center;
+      /* Menengahkan teks */
+    }
+
+    .fa-location-dot {
+      margin-right: 10px;
+      /* Memberikan jarak antara logo dan teks */
+    }
   </style>
 </head>
 
@@ -145,23 +157,25 @@ if (!$koneksi) {
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="auth-con">
           <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+            <a class="nav-link" id="nav-down-item1" href="" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
               Daftar
             </a>
             <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar sebagai Admin</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai Pengguna</a></li>
+              <li><a class="dropdown-item"
+                  href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar
+                  sebagai Admin</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown" id="nav-down">
-            <a class="nav-link" id="nav-down-item2" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
+            <a class="nav-link" id="nav-down-item2" href="" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
               Masuk
             </a>
             <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk sebagai Admin</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai Pengguna</a></li>
+              <li><a class="dropdown-item"
+                  href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk
+                  sebagai Admin</a></li>
             </ul>
           </li>
         </ul>
@@ -226,15 +240,15 @@ if (!$koneksi) {
       }
 
       // Card untuk data
-      echo '<div class="card" style="width: 350px; margin-top: 50px; display: flex;">';
+      echo '<div class="card" style="width: 250px; height:auto; margin-top: 50px; display: flex; text-align: center;">';
       echo '<div class="card-body">';
 
       $namaGambar = $row['gambar'];
       $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
-      echo '<img src="' . $gambarURL . '" alt="Gambar" style="width: 100%; height: 250px">';
-      echo '<h5 class="card-title">' . $row['nama_aktivitas'] . '</h5>';
-      echo '<p class="card-text">' . $row['lokasi'] . '</p>';
+      echo '<img src="' . $gambarURL . '" alt="Gambar" style="width: 100%; height: 150px">';
+      echo '<h5 class="card-title mt-2">' . $row['nama_aktivitas'] . '</h5>';
+      echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['lokasi'] . '</p>';
       echo '<p class="card-text">' . $row['tanggal'] . '</p>';
       echo '<p class="card-text">' . $row['jam'] . '</p>';
       echo '<p class="card-text">Harga : Rp ' . $row['harga'] . '</p>';

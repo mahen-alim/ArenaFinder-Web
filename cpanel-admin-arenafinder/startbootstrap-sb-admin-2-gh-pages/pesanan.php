@@ -51,6 +51,13 @@
                     <span>Dashboard</span></a>
             </li>
 
+            <!-- Nav Item - Web -->
+            <li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/html/beranda.html">
+                    <i class="fa-brands fa-edge"></i>
+                    <span>Lihat Website</span></a>
+            </li>
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -71,6 +78,13 @@
                 <a class="nav-link" href="aktivitas.php">
                     <i class="fa-solid fa-fire"></i>
                     <span>Aktivitas</span></a>
+            </li>
+
+            <!-- Nav Item - Keanggotaan -->
+            <li class="nav-item ">
+                <a class="nav-link" href="keanggotaan.php">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Keanggotaan</span></a>
             </li>
 
             <!-- Divider -->
@@ -119,7 +133,8 @@
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-3">
                         <i class="fa-solid fa-cart-shopping mt-3 mr-3" style="color: #02406d;"></i>
-                        <h1 class="h3 mr-2 mt-4" style="color: #02406d; font-size: 20px; font-weight: bold;">Pesanan</h1>
+                        <h1 class="h3 mr-2 mt-4" style="color: #02406d; font-size: 20px; font-weight: bold;">Pesanan
+                        </h1>
                     </div>
 
                     <!-- Topbar Navbar -->
@@ -334,7 +349,7 @@
                                             <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
                                             <button type="button" class="btn btn-danger">Batalkan</button>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -361,7 +376,7 @@
                                             <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
                                             <button type="button" class="btn btn-danger">Batalkan</button>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -388,7 +403,7 @@
                                             <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
                                             <button type="button" class="btn btn-danger">Batalkan</button>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>

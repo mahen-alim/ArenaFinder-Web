@@ -56,6 +56,7 @@ if (isset($_SESSION['access_token'])) {
   $stmt->close();
 }
 
+// Regis Google
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Registrasi manual
   $manualUsername = $_POST['username'];
@@ -70,6 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($stmt->execute()) {
     echo "Registrasi manual berhasil.";
+    header('Location: http://localhost/ArenaFinder/php/masuk.php'); // Redirect ke halaman callback
+
   } else {
     echo "Error: " . $stmt->error;
   }
@@ -148,13 +151,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
   </nav>
-  <h1>Registrasi dengan Google</h1>
-  <?php
-  if (!isset($_SESSION['access_token'])) {
-    $authUrl = $client->createAuthUrl();
-    echo "<a href='$authUrl'>Daftar dengan Google</a>";
-  }
-  ?>
   <form method="POST" action="" onsubmit="return validasiForm()">
     <div class="container">
       <div class="judul">
