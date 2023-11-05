@@ -224,11 +224,33 @@ if ($sukses) {
             color: white;
         }
 
-        .navbar-nav {
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+        /* Untuk tampilan seluler */
+        @media (max-width: 768px) {
+            .navbar-collapse.collapse.show {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .navbar-nav {
+                margin-top: 10px;
+                text-align: left;
+            }
+
+            .navbar-nav #nav-down1 {
+                margin-top: 10px;
+                margin-right: 620px;
+            }
+
+        }
+
+        /* Untuk tampilan penuh */
+        @media (min-width: 769px) {
+            .navbar-nav {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
         }
     </style>
 </head>
@@ -256,7 +278,7 @@ if ($sukses) {
                         <a class="nav-link" href="/ArenaFinder/php/aktivitas.php">Aktivitas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Referensi</a>
+                        <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ArenaFinder/php/info_mitra.php">Info Mitra</a>

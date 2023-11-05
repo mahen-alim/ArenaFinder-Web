@@ -50,9 +50,11 @@ try {
       display: flex;
       align-item: center;
       justify-content: center;
-      width: 1300px;
-      height: 400px;
-      margin-left: -40px;
+      margin-top: 50px;
+      max-width: 100%;
+      height: 500px;
+      border-bottom-right-radius: 50px;
+      border-bottom-left-radius: 50px;
     }
 
     /* Gaya untuk menyembunyikan teks h3 secara default */
@@ -74,7 +76,7 @@ try {
     }
 
     .title-con {
-      margin-left: 53.3px;
+      margin-left: 200px;
     }
 
     /* Menyembunyikan semua bagian kecuali section1 */
@@ -103,18 +105,13 @@ try {
 
     /* Mengatur warna teks dan latar belakang default */
     .dropdown-menu a.dropdown-item {
-      color: initial;     /* Atur warna teks kembali ke nilai default */
-      background-color: initial;     /* Atur latar belakang kembali ke nilai default */
+      color: initial;
+      /* Atur warna teks kembali ke nilai default */
+      background-color: initial;
+      /* Atur latar belakang kembali ke nilai default */
       color: #02406D;
     }
 
-    #auth-con {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 75px;
-
-    }
 
     #nav-down-item1 {
       display: flex;
@@ -161,22 +158,88 @@ try {
     #nav-down-item2:active {
       color: white;
     }
+
+    .main-con {
+      margin-left: 45px;
+    }
+
+    .social-buttons {
+      text-align: end;
+      margin-top: -75px;
+      margin-right: 200px;
+    }
+
+    .social-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      text-align: end;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      font-size: 24px;
+      transition: transform 0.2s;
+      /* Sesuaikan ukuran ikon */
+    }
+
+    .facebook {
+      background-color: #1877F2;
+      /* Warna Facebook */
+    }
+
+    .twitter {
+      background-color: #1DA1F2;
+      /* Warna Twitter */
+    }
+
+    .instagram {
+      background-color: #E4405F;
+      /* Warna Instagram */
+    }
+
+    .social-button:hover {
+      background-color: #333;
+      transform: translateY(-5px);
+      /* Warna latar belakang saat tombol dihover */
+    }
+
+
+    @media (max-width: 900px) {
+      .img-container img {
+        margin-left: -20px;
+        border-bottom-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+      }
+
+      .title-con {
+        margin-left: 80px;
+      }
+      .social-buttons {
+        text-align: end;
+        margin-top: -65px;
+        margin-right: 60px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <nav class="navbar fixed-top navbar-expand-lg" style="background-color: #02406D;">
-    <div class="container-fluid">
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: white; margin-right: -235px;">Arena</a>
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: #A1FF9F; margin-left: 235px;">Finder</a>
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: white; padding-right: 300px;">|</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"
-        style="margin-top: 0px; background-color: white; color-scheme: #02406D;">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #02406D;">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <span style="font-family: 'Kanit', sans-serif; color: white;">Arena</span>
+        <span style="font-family: 'Kanit', sans-serif; color: #A1FF9F;">Finder</span>
+        <span style="font-family: 'Kanit', sans-serif; color: white;">|</span>
+      </a>
+
+      <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto my-auto">
           <li class="nav-item">
             <a class="nav-link" href="/ArenaFinder/html/beranda.html">Beranda</a>
           </li>
@@ -187,32 +250,18 @@ try {
             <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page">Info Mitra</a>
+            <a class="nav-link active" href="">Info Mitra</a>
           </li>
         </ul>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="auth-con">
+        <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
           <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-              Daftar
+            <a class="nav-link" id="nav-down-item1"
+              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 150px;">
+              <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+              Panel Admin
             </a>
-            <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar sebagai Admin</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/ArenaFinder/php/daftar.php">Daftar sebagai Pengguna</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" id="nav-down">
-            <a class="nav-link" id="nav-down-item2" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
-              Masuk
-            </a>
-            <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk sebagai Admin</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/ArenaFinder/php/masuk.php">Masuk sebagai Pengguna</a></li>
-            </ul>
           </li>
         </ul>
-        </form>
       </div>
     </div>
   </nav>
@@ -220,7 +269,7 @@ try {
   <div class="first-con">
     <div class="img-container">
       <div>
-        <img src="/ArenaFinder/img_asset/outdoor.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/blessing.png" alt="">
       </div>
     </div>
 
@@ -239,303 +288,320 @@ try {
       </div>
     </div>
 
-      <script>
-        function simpanPerubahan() {
-          // Ambil teks yang diedit dan simpan dalam variabel
-          var editedText = document.getElementById('editableText').innerText;
-          var harga1 = document.getElementById('harga1').innerText;
-          var harga2 = document.getElementById('harga2').innerText;
-          var harga3 = document.getElementById('harga3').innerText;
-          var harga4 = document.getElementById('harga4').innerText;
+    <div class="social-buttons">
+      <a href="#" class="social-button facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-button instagram"><i class="fab fa-instagram"></i></a>
+    </div>
 
-          // Tampilkan notifikasi atau lakukan apa yang Anda inginkan dengan teks yang diedit
-          alert('Perubahan Teks: ' + editedText + '\nHarga 1: ' + harga1 + '\nHarga 2: ' + harga2 + '\nHarga 3: ' + harga3 + '\nHarga 4: ' + harga4);
-        }
-      </script>
 
-      <div class="nav-body">
-        <div class="link-body">
-          <nav>
-            <ul>
-              <li><a class="link" id="link1" href="#section1" data-target="section1">TENTANG</a></li>
-              <li><a class="link" id="link2" href="#section2" data-target="section2">AKTIVITAS</a></li>
-              <li><a class="link" id="link3" href="#section3" data-target="section3">MEMBER</a></li>
-              <li><a class="link" id="link4" href="#section4" data-target="section4">GALERI</a></li>
-              <li><a class="link" id="link5" href="#section5" data-target="section5">KONTAK</a></li>
-            </ul>
-          </nav>
-        </div>
+
+  </div>
+
+  <script>
+    function simpanPerubahan() {
+      // Ambil teks yang diedit dan simpan dalam variabel
+      var editedText = document.getElementById('editableText').innerText;
+      var harga1 = document.getElementById('harga1').innerText;
+      var harga2 = document.getElementById('harga2').innerText;
+      var harga3 = document.getElementById('harga3').innerText;
+      var harga4 = document.getElementById('harga4').innerText;
+
+      // Tampilkan notifikasi atau lakukan apa yang Anda inginkan dengan teks yang diedit
+      alert('Perubahan Teks: ' + editedText + '\nHarga 1: ' + harga1 + '\nHarga 2: ' + harga2 + '\nHarga 3: ' + harga3 + '\nHarga 4: ' + harga4);
+    }
+  </script>
+
+  <div class="main-con">
+    <div class="nav-body">
+      <div class="link-body">
+        <nav>
+          <ul>
+            <li><a class="link" id="link1" href="#section1" data-target="section1">TENTANG</a></li>
+            <li><a class="link" id="link2" href="#section2" data-target="section2">AKTIVITAS</a></li>
+            <li><a class="link" id="link3" href="#section3" data-target="section3">MEMBER</a></li>
+            <li><a class="link" id="link4" href="#section4" data-target="section4">GALERI</a></li>
+            <li><a class="link" id="link5" href="#section5" data-target="section5">KONTAK</a></li>
+          </ul>
+        </nav>
       </div>
+    </div>
 
-      <section id="section1">
-        <div class="tentang-con">
-          <div class="deskripsi">
-            <h3>Deskripsi</h3>
-            <h6 id="editableText">Blessing Futsal merupakan tempat penyewaan lapangan futsal yang dimana didirikan
-              oleh Mr... dan sekarang tetap menjadi bagian layanan olahraga terbaik untuk masyarakat di Kabupaten
-              Nganjuk dan sekitarnya.
-            </h6>
+    <section id="section1">
+      <div class="tentang-con">
+        <div class="deskripsi">
+          <h3>Deskripsi</h3>
+          <h6 id="editableText">Blessing Futsal merupakan tempat penyewaan lapangan futsal yang dimana didirikan
+            oleh Mr... dan sekarang tetap menjadi bagian layanan olahraga terbaik untuk masyarakat di Kabupaten
+            Nganjuk dan sekitarnya.
+          </h6>
 
-            <div class="harga">
-              <h3>Rincian Harga
-                <div id="rincianHarga">
-                  <h6>Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
-                    <h6><strong>Rp. 90.000/Jam</strong></h6>
-                  </h6>
-                  <h6>Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
-                    <h6><strong>Rp. 120.000/Jam</strong></h6>
-                  </h6>
-                  <h6>Non Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
-                    <h6><strong>Rp. 105.000/Jam</strong></h6>
-                  </h6>
-                  <h6>Non Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
-                    <h6><strong>Rp. 135.000/Jam</strong></h6>
-                  </h6>
-                </div>
-              </h3>
-            </div>
-
-            <div class="fasilitas">
-              <h3>Fasilitas Tempat</h3>
-              <div id="fasilitasTempat">
-                <div style="margin-bottom: 20px;">
-                  <img src="/ArenaFinder/img_asset/toilet.jpg" alt="">
-                  <h5 style="text-align: center;">Toilet</h5>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                  <img src="/ArenaFinder/img_asset/kursi.jpg" alt="">
-                  <h5 style="text-align: center; width: 80px;">Kursi Penonton</h5>
-                </div>
-                <div style="margin-bottom: 20px;">
-                  <img src="/ArenaFinder/img_asset/parkiran.jpg" alt="">
-                  <h5 style="text-align: center;">Area Parkir</h5>
-                </div>
-                <div style="margin-bottom: 20px;">
-                  <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
-                  <h5 style="text-align: center; width: 80px;">Lapangan Futsal</h5>
-                </div>
-              </div>
-            </div>
-
-            <div class="pengelola">
-              <h3>Pengelola</h3>
-              <div id="pengelolaTempat">
-                <div class="pengelola-item">
-                  <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
-                  <h5>Admin</h5>
-                </div>
-                <div class="pengelola-item">
-                  <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
-                  <h5>Super Admin</h5>
-                </div>
-              </div>
-            </div>
-
-            <script src="script.js"></script>
-          </div>
-        </div>
-      </section>
-
-      <section id="section2">
-        <div class="tentang-con">
-          <div class="deskripsi" style="width: 100%; margin-left: -65px;">
-            <div class="card"
-              style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: 1px solid white;">
-              <div class="card-body">
-                <h3>Blessing Futsal Activity</h3>
-                <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                    style="color: #A1FF9F;">Mr. Robert</strong>
+          <div class="harga">
+            <h3>Rincian Harga
+              <div id="rincianHarga">
+                <h6>Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
+                  <h6><strong>Rp. 90.000/Jam</strong></h6>
+                </h6>
+                <h6>Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
+                  <h6><strong>Rp. 120.000/Jam</strong></h6>
+                </h6>
+                <h6>Non Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
+                  <h6><strong>Rp. 105.000/Jam</strong></h6>
+                </h6>
+                <h6>Non Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
+                  <h6><strong>Rp. 135.000/Jam</strong></h6>
                 </h6>
               </div>
-            </div>
-            <h3 style="margin-top: 30px;">Semua Aktivitas</h3>
+            </h3>
           </div>
 
-          <div class="card-con" style="display: flex; justify-content: space-between; margin: 10px;">
-            <div class="card" style="width: 18rem; margin-left: -65px;">
-              <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-              <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                  card's content.</p>
+          <div class="fasilitas">
+            <h3>Fasilitas Tempat</h3>
+            <div id="fasilitasTempat">
+              <div style="margin-bottom: 20px;">
+                <img src="/ArenaFinder/img_asset/toilet.jpg" alt="">
+                <h5 style="text-align: center;">Toilet</h5>
               </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-              <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-              <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                  card's content.</p>
+
+              <div style="margin-bottom: 20px;">
+                <img src="/ArenaFinder/img_asset/kursi.jpg" alt="">
+                <h5 style="text-align: center; width: 80px;">Kursi Penonton</h5>
               </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-              <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-              <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                  card's content.</p>
+              <div style="margin-bottom: 20px;">
+                <img src="/ArenaFinder/img_asset/parkiran.jpg" alt="">
+                <h5 style="text-align: center;">Area Parkir</h5>
               </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-              <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-              <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                  card's content.</p>
+              <div style="margin-bottom: 20px;">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <h5 style="text-align: center; width: 80px;">Lapangan Futsal</h5>
               </div>
             </div>
           </div>
 
+          <div class="pengelola">
+            <h3>Pengelola</h3>
+            <div id="pengelolaTempat">
+              <div class="pengelola-item">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <h5>Admin</h5>
+              </div>
+              <div class="pengelola-item">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <h5>Super Admin</h5>
+              </div>
+            </div>
+          </div>
 
+          <script src="script.js"></script>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="section3">
-        <div class="tentang-con">
-          <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-            <div class="card" style="color: black;  border: 1px solid white;">
-              <div class="card-body" style="background-color: white;">
-                <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
-                <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
-                  <div class="card-body" style="display: flex; align-items: center;">
-                    <img src="/ArenaFinder/img_asset/img-c2.jpeg" alt="" style="width: 20%; border-radius: 5px;">
-                    <h3 style="margin-left: 20px;">K.C2</h3>
-                    <h6 style="margin-left: -48px; margin-top: 50px;">@C2_nich</h6>
-                    <div class="card"
-                      style="display: flex; width: 250px; text-align: center; height: 30px; background-color: #02406D; color: white;">
-                      Super Admin
-                    </div>
+    <section id="section2">
+      <div class="tentang-con">
+        <div class="deskripsi" style="width: 100%; margin-left: -65px;">
+          <div class="card"
+            style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: 1px solid white;">
+            <div class="card-body">
+              <h3>Blessing Futsal Activity</h3>
+              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
+                  style="color: #A1FF9F;">Mr. Robert</strong>
+              </h6>
+            </div>
+          </div>
+          <h3 style="margin-top: 30px;">Semua Aktivitas</h3>
+        </div>
+
+        <div class="card-con" style="display: flex; justify-content: space-between; margin: 10px;">
+          <div class="card" style="width: 18rem; margin-left: -65px;">
+            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem;">
+            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem;">
+            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem;">
+            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                card's content.</p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <section id="section3">
+      <div class="tentang-con">
+        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
+          <div class="card" style="color: black;  border: 1px solid white;">
+            <div class="card-body" style="background-color: white;">
+              <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
+              <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
+                <div class="card-body" style="display: flex; align-items: center;">
+                  <img src="/ArenaFinder/img_asset/img-c2.jpeg" alt="" style="width: 20%; border-radius: 5px;">
+                  <h3 style="margin-left: 20px;">K.C2</h3>
+                  <h6 style="margin-left: -48px; margin-top: 50px;">@C2_nich</h6>
+                  <div class="card"
+                    style="display: flex; width: 250px; text-align: center; height: 30px; background-color: #02406D; color: white;">
+                    Super Admin
                   </div>
                 </div>
-
               </div>
 
             </div>
-          </div>
 
-        </div>
-      </section>
-
-      <section id="section4">
-        <div class="tentang-con">
-          <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-            <div class="card" style="color: black;  border: 1px solid white;">
-              <div class="card-body" style="background-color: white;">
-                <form action="upload.php" method="post" enctype="multipart/form-data">
-                  <label for="fileUpload">Pilih Gambar:</label>
-                  <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
-                  <button type="submit" name="submit">Upload dan Simpan</button>
-                </form>
-
-                <?php foreach ($images as $image) { ?>
-                  <div class="card">
-                    <img src="data:image/jpeg;base64,<?= base64_encode($image['data_gambar']); ?>" alt="Gambar">
-                    <div class="card-body">
-                      <h5 class="card-title">Gambar ID
-                        <?= $image['id']; ?>
-                      </h5>
-                      <p class="card-text">Deskripsi gambar atau informasi lainnya.</p>
-                    </div>
-                  </div>
-                <?php } ?>
-
-
-              </div>
-
-            </div>
           </div>
         </div>
-      </section>
 
-      <section id="section5">
-        <div class="tentang-con">
-          <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-            <div class="card" style="color: black;  border: 1px solid white;">
-              <div class="card-body" style="background-color: white;">
-                <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
-                <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
-                  <div class="card-body" style="display: flex; align-items: center;">
-                    <img src="/ArenaFinder/img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
-                    <h3 style="margin-left: 20px;">08958074xxxxx</h3>
-                    <div class="card"
-                      style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
-                      Super Admin
-                    </div>
+      </div>
+    </section>
 
+    <section id="section4">
+      <div class="tentang-con">
+        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
+          <div class="card" style="color: black;  border: 1px solid white;">
+            <div class="card-body" style="background-color: white;">
+              <form action="upload.php" method="post" enctype="multipart/form-data">
+                <label for="fileUpload">Pilih Gambar:</label>
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
+                <button type="submit" name="submit">Upload dan Simpan</button>
+              </form>
 
-
-
+              <?php foreach ($images as $image) { ?>
+                <div class="card">
+                  <img src="data:image/jpeg;base64,<?= base64_encode($image['data_gambar']); ?>" alt="Gambar">
+                  <div class="card-body">
+                    <h5 class="card-title">Gambar ID
+                      <?= $image['id']; ?>
+                    </h5>
+                    <p class="card-text">Deskripsi gambar atau informasi lainnya.</p>
                   </div>
                 </div>
+              <?php } ?>
 
-              </div>
 
             </div>
-          </div>
 
-        </div>
-      </section>
-
-
-
-      <script>
-        // Ambil semua tautan di dalam navigasi
-        const navLinks = document.querySelectorAll(".link");
-
-        // Tambahkan event listener untuk setiap tautan navigasi
-        navLinks.forEach((link) => {
-          link.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            // Ambil target dari atribut data-target
-            const targetId = link.getAttribute("data-target");
-
-            // Sembunyikan semua bagian
-            const sections = document.querySelectorAll("section");
-            sections.forEach((section) => {
-              section.style.display = "none";
-            });
-
-            // Tampilkan bagian yang sesuai dengan tautan yang diklik
-            const targetSection = document.getElementById(targetId);
-            targetSection.style.display = "block";
-
-            // Hapus kelas "active" dari semua tautan
-            navLinks.forEach((navLink) => {
-              navLink.classList.remove("active");
-            });
-
-            // Tambahkan kelas "active" ke tautan yang diklik
-            link.classList.add("active");
-          });
-        });
-
-
-
-      </script>
-
-      <div class="container">
-        <div class="footer">
-          <h1 style="font-size: 20px; color: white;">Arena</h1>
-          <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-          <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
-              <a href="" style="margin-top: 10px;">Beranda</a>
-              <a href="">Aktivitas</a>
-              <a href="">Referensi</a>
-              <a href="">Info Mitra</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
-              <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-              <a href="">Siapa target penggunanya?</a>
-              <a href="">Bagaimana sistem ini bekerja?</a>
-              <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-              <a href="">Masuk aplikasi??</a>
-              <a href="">Daftar aplikasi??</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
-              <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
-            </p>
           </div>
         </div>
       </div>
+    </section>
+
+    <section id="section5">
+      <div class="tentang-con">
+        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
+          <div class="card" style="color: black;  border: 1px solid white;">
+            <div class="card-body" style="background-color: white;">
+              <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
+              <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
+                <div class="card-body" style="display: flex; align-items: center;">
+                  <img src="/ArenaFinder/img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
+                  <h3 style="margin-left: 20px;">08958074xxxxx</h3>
+                  <div class="card"
+                    style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
+                    Super Admin
+                  </div>
+
+
+
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <script>
+    // Ambil semua tautan di dalam navigasi
+    const navLinks = document.querySelectorAll(".link");
+
+    // Tambahkan event listener untuk setiap tautan navigasi
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        // Ambil target dari atribut data-target
+        const targetId = link.getAttribute("data-target");
+
+        // Sembunyikan semua bagian
+        const sections = document.querySelectorAll("section");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Tampilkan bagian yang sesuai dengan tautan yang diklik
+        const targetSection = document.getElementById(targetId);
+        targetSection.style.display = "block";
+
+        // Hapus kelas "active" dari semua tautan
+        navLinks.forEach((navLink) => {
+          navLink.classList.remove("active");
+        });
+
+        // Tambahkan kelas "active" ke tautan yang diklik
+        link.classList.add("active");
+      });
+    });
+
+
+
+  </script>
+
+  <div class="container">
+    <div class="footer">
+      <h1 style="font-size: 20px; color: white;">Arena</h1>
+      <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+      <div class="hierarki">
+        <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
+          <a href="" style="margin-top: 10px;">Beranda</a>
+          <a href="">Aktivitas</a>
+          <a href="">Referensi</a>
+          <a href="">Info Mitra</a>
+        </p>
+        <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
+          <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+          <a href="">Siapa target penggunanya?</a>
+          <a href="">Bagaimana sistem ini bekerja?</a>
+          <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
+          <a href="">Masuk aplikasi??</a>
+          <a href="">Daftar aplikasi??</a>
+        </p>
+        <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
+          <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 
 </body>

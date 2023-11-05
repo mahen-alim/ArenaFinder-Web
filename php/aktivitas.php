@@ -126,27 +126,51 @@ if (!$koneksi) {
       margin-right: 10px;
       /* Memberikan jarak antara logo dan teks */
     }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      width: 250px;
+      margin-top: 50px;
+      text-align: center;
+      border: none;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      border-radius: 10px;
+    }
+
   </style>
 </head>
 
 <body>
-  <nav class="navbar fixed-top navbar-expand-lg" style="background-color: #02406D;">
-    <div class="container-fluid">
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: white; margin-right: -235px;">Arena</a>
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: #A1FF9F; margin-left: 235px;">Finder</a>
-      <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: white; padding-right: 300px;">|</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"
-        style="margin-top: 0px; background-color: white; color-scheme: #02406D;">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #02406D;">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <span style="font-family: 'Kanit', sans-serif; color: white;">Arena</span>
+        <span style="font-family: 'Kanit', sans-serif; color: #A1FF9F;">Finder</span>
+        <span style="font-family: 'Kanit', sans-serif; color: white;">|</span>
+      </a>
+
+      <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto my-auto">
           <li class="nav-item">
             <a class="nav-link" href="/ArenaFinder/html/beranda.html">Beranda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page">Aktivitas</a>
+            <a class="nav-link active" href="">Aktivitas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
@@ -155,28 +179,13 @@ if (!$koneksi) {
             <a class="nav-link" href="info_mitra.php">Info Mitra</a>
           </li>
         </ul>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="auth-con">
+        <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
           <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1" href="" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false"><i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-              Daftar
+            <a class="nav-link" id="nav-down-item1"
+              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 150px;">
+              <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+              Panel Admin
             </a>
-            <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item"
-                  href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar
-                  sebagai Admin</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" id="nav-down">
-            <a class="nav-link" id="nav-down-item2" href="" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false"><i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>
-              Masuk
-            </a>
-            <ul class="dropdown-menu" id="drop-menu">
-              <li><a class="dropdown-item"
-                  href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk
-                  sebagai Admin</a></li>
-            </ul>
           </li>
         </ul>
       </div>
@@ -236,17 +245,17 @@ if (!$koneksi) {
     while ($row = mysqli_fetch_array($q3)) {
       // Membuka baris baru setiap kali 4 kartu telah ditampilkan
       if ($count % 3 == 0) {
-        echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+        echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
       }
 
       // Card untuk data
-      echo '<div class="card" style="width: 250px; height:auto; margin-top: 50px; display: flex; text-align: center;">';
+      echo '<div class="card">';
       echo '<div class="card-body">';
 
       $namaGambar = $row['gambar'];
       $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
-      echo '<img src="' . $gambarURL . '" alt="Gambar" style="width: 100%; height: 150px">';
+      echo '<img src="' . $gambarURL . '" alt="Gambar">';
       echo '<h5 class="card-title mt-2">' . $row['nama_aktivitas'] . '</h5>';
       echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['lokasi'] . '</p>';
       echo '<p class="card-text">' . $row['tanggal'] . '</p>';
@@ -284,6 +293,11 @@ if (!$koneksi) {
           <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
         </p>
       </div>
+      <!-- Include Bootstrap JS and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

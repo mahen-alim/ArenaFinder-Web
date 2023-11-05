@@ -78,26 +78,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
         if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
             // Jika pengunggahan berhasil, lanjutkan dengan query SQL
             // Periksa apakah file gambar diunggah
-
-            if ($tanggal == "-Pilih Tanggal-") {
-                if ($op == 'edit') {
-                    // Perbarui data jika ini adalah operasi edit
-                    $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', jenis_olga = '$jenis', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
-                } else {
-                    // Tambahkan data jika ini adalah operasi insert
-                    $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$jenis', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
-
-                }
-
-                $q1 = mysqli_query($koneksi, $sql1);
-
-                if ($q1) {
-                    $sukses = "Data berhasil diupdate/ditambahkan";
-                } else {
-                    $error = "Data gagal diupdate/ditambahkan";
-                }
+            if ($op == 'edit') {
+                // Perbarui data jika ini adalah operasi edit
+                $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', jenis_olga = '$jenis', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
             } else {
-                $error = "Harap pilih tanggal sebelum menyimpan";
+                // Tambahkan data jika ini adalah operasi insert
+                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$jenis', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
+
+            }
+
+            $q1 = mysqli_query($koneksi, $sql1);
+
+            if ($q1) {
+                $sukses = "Data berhasil diupdate/ditambahkan";
+            } else {
+                $error = "Data gagal diupdate/ditambahkan";
             }
 
         } else {
@@ -146,14 +141,14 @@ if ($sukses) {
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
-        #save-btn{
-            background-color: #e7f5ff; 
+        #save-btn {
+            background-color: #e7f5ff;
             color: #02406d;
             font-weight: bold;
         }
 
-        #save-btn:hover{
-            background-color: #02406d; 
+        #save-btn:hover {
+            background-color: #02406d;
             color: white;
         }
     </style>
@@ -338,7 +333,8 @@ if ($sukses) {
                                                 <label for="jenis_olga" class="col-sm-2 col-form-label">Jenis
                                                     Olahraga</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" name="jenis_olga" id="jenis_olga" required>
+                                                    <select class="form-control" name="jenis_olga" id="jenis_olga"
+                                                        required>
                                                         <option value="">-Pilih Jenis Olahraga-</option>
                                                         <option value="Badminton" <?php if ($jenis == "Badminton")
                                                             echo "selected" ?>>Badminton
@@ -359,17 +355,17 @@ if ($sukses) {
                                                             echo "selected" ?>>Tenis Lapangan
                                                             </option>
                                                         </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="staticEmail"
+                                                            name="lokasi" value="<?php echo $lokasi ?>" required>
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3 row">
-                                                <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="staticEmail"
-                                                        name="lokasi" value="<?php echo $lokasi ?>" required>
-                                                </div>
-                                            </div>
-                                            
                                             <div class="mb-3 row">
                                                 <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
                                                 <div class="col-sm-10" onclick="">
@@ -400,8 +396,8 @@ if ($sukses) {
                                                     style="cursor: pointer">Jam Main</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="jam_main" id="jam_main" required>
-                                                            <option value="">-Jam Main-</option>
-                                                            <option value="1 jam" <?php if ($jam == "1 jam")
+                                                        <option value="">-Jam Main-</option>
+                                                        <option value="1 jam" <?php if ($jam == "1 jam")
                                                             echo "selected" ?>>1 jam
                                                             </option>
                                                             <option value="2 jam" <?php if ($jam == "2 jam")
@@ -416,33 +412,33 @@ if ($sukses) {
                                                             <option value="5 jam" <?php if ($jam == "5 jam")
                                                             echo "selected" ?>>5 jam
                                                             </option>
-                                                    </select>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="harga" name="harga"
+                                                            readonly value="<?php echo $harga ?>">
                                                 </div>
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="harga" name="harga"
-                                                        readonly value="<?php echo $harga ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 row" >
                                                 <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
                                                 <div class="col-sm-10">
                                                     <input class="col-xxl-8 col-12" type="file" id="foto" name="foto"
-                                                        required="required" multiple/>
+                                                        required="required" multiple />
                                                 </div>
                                             </div>
-                                                
+
                                             <div class="row">
                                                 <div class="col-xxl-8 col-12">
                                                     <input type="submit" name="simpan" value="Simpan Data"
                                                         class="btn w-100 mt-5" id="save-btn">
                                                 </div>
                                             </div>
-                                                                       
+
                                         </form>
                                     </div>
                                 </div>
@@ -493,7 +489,8 @@ if ($sukses) {
                                                 <input type="text" name="search" class="form-control" id="searchInput"
                                                     style="width: 30%;" placeholder="Cari Aktivitas"
                                                     value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                                                <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
+                                                <button type="submit" class="btn btn-info"
+                                                    id="searchButton">Cari</button>
                                                 <?php if (isset($_GET['search'])): ?>
                                                     <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
                                                 <?php endif; ?>
@@ -508,9 +505,9 @@ if ($sukses) {
                                                     event.preventDefault(); // Mencegah pengiriman form jika field pencarian kosong
                                                     searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
                                                     searchInput.style.borderColor = 'red'; // Mengubah warna border field
-                                                    
+
                                                 } else {
-                                                    searchInput.style.borderColor = ''; 
+                                                    searchInput.style.borderColor = '';
                                                 }
                                             });
 
@@ -607,7 +604,7 @@ if ($sukses) {
 
 
                         </div>
-                    
+
 
 
 
