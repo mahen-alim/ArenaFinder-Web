@@ -90,9 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             $q1 = mysqli_query($koneksi, $sql1);
 
             if ($q1) {
-                $sukses = "Data berhasil diupdate/ditambahkan";
+                $sukses = "Data aktivitas berhasil diupdate/ditambahkan";
             } else {
-                $error = "Data gagal diupdate/ditambahkan";
+                $error = "Data aktivitas gagal diupdate/ditambahkan";
             }
 
         } else {

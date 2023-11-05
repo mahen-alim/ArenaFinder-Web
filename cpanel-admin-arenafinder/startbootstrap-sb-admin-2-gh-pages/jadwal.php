@@ -79,9 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             $q1 = mysqli_query($koneksi, $sql1);
 
             if ($q1) {
-                $sukses = "Data berhasil diupdate/ditambahkan";
+                $sukses = "Data jadwal berhasil diupdate/ditambahkan";
             } else {
-                $error = "Data gagal diupdate/ditambahkan";
+                $error = "Data jadwal gagal diupdate/ditambahkan";
             }
         } else {
             $error = "Terdapat kesalahan input waktu";

@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
-    $hari = $_POST['hari_main'];
+    $hari = implode(",", $_POST['hari_main']);
     $waktu = $_POST['waktu_main'];
     $durasi = $_POST['durasi_main'];
     $harga = $_POST['harga'];
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $q1 = mysqli_query($koneksi, $sql1);
 
     if ($q1) {
-        $sukses = "Data member baru telah terdaftar";
+        $sukses = "Data member berhasil diupdate/ditambahkan";
     } else {
         $error = "Data member gagal diupdate/ditambahkan";
     }
@@ -450,43 +450,43 @@ if ($sukses) {
                                                     style="cursor: pointer">Hari Main</label>
                                                 <div class="col-sm-10 d-flex">
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="senin" value="Senin" <?php if ($hari == "Senin")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="senin">Senin</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="selasa" value="Selasa" <?php if ($hari == "Selasa")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="selasa">Selasa</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="rabu" value="Rabu" <?php if ($hari == "Rabu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="rabu">Rabu</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="kamis" value="Kamis" <?php if ($hari == "Kamis")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="kamis">Kamis</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="jum'at" value="Jum'at" <?php if ($hari == "Jum'at")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="jum'at">Jum'at</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="sabtu" value="Sabtu" <?php if ($hari == "Sabtu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="sabtu">Sabtu</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main"
+                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
                                                             id="minggu" value="Minggu" <?php if ($hari == "Minggu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="rabu">Minggu</label>
