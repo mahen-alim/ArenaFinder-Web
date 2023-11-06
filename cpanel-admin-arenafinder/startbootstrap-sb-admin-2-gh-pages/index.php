@@ -219,11 +219,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Pengeluaran (bulanan)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 50.000.xxx</div>
+                                                Jumlah Member</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">xx member</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fa-solid fa-users fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>

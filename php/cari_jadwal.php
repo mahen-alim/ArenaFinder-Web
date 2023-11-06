@@ -292,10 +292,18 @@ if (!$koneksi) {
             background-color: #02406D;
             color: white;
             padding: 10px;
+            margin-top: auto;
+            margin-bottom: -15.5px;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
         }
 
         .card {
+            width: 220px; 
+            margin-top: 50px; 
+            display: flex; 
             transition: transform 0.2s;
+            border: 1px solid #02406D;
         }
 
         .card:hover {
@@ -316,6 +324,9 @@ if (!$koneksi) {
                 border: 1px solid #02406D;
                 border-radius: 5px;
                 color: #02406D;
+            }
+            #label2{
+                margin-left: 10px;
             }
         }
     </style>
@@ -394,9 +405,9 @@ if (!$koneksi) {
                 <select id="inputOpsi" class="form-control" name="jenis_lapangan">
                     <option value="">Jenis Lapangan</option>
                     <option value="Futsal">Futsal</option>
-                    <option value="Sepak Bola">Sepak Bola</option>
+                    <option value="Badminton">Badminton</option>
                     <option value="Voli">Voli</option>
-                    <option value="Bulutangkis">Bulutangkis</option>
+                    <option value="Sepak Bola">Sepak Bola</option>
                     <option value="Tenis Lapangan">Tenis Lapangan</option>
                 </select>
                 <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail"
@@ -442,7 +453,7 @@ if (!$koneksi) {
                     echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
                 }
                 // Card untuk data
-                echo '<div class="card" style="width: 220px; margin-top: 50px; display: flex;">';
+                echo '<div class="card shadow">';
                 echo '<div class="card-body">';
                 echo '<h5 class="card-title">' . $row['keanggotaan'] . '</h5>';
                 echo '<p class="card-text" id="date-card">' . $row['tanggal'] . '</p>';
@@ -451,7 +462,7 @@ if (!$koneksi) {
                 echo '<span class="card-text" id="time-card">' . $row['waktu_selesai'] . '</span>';
                 echo '</div>';
                 echo '<p class="card-text" id="price-card">Rp. ' . $row['harga'] . ' /Jam</p>';
-                echo '<p class="card-text" id="status-card">' . $row['status_pemesanan'] . '</p>';
+                echo '<p class="card-text" id="status-card" style="margin-top: auto;">' . $row['status_pemesanan'] . '</p>';
 
                 echo '</div></div>';
 

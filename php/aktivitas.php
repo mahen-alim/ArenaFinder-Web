@@ -127,7 +127,7 @@ if (!$koneksi) {
       /* Memberikan jarak antara logo dan teks */
     }
 
-    .cards-container {
+    .card-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -141,12 +141,20 @@ if (!$koneksi) {
       border: none;
     }
 
-    .card img {
-      width: 100%;
-      height: 150px;
-      border-radius: 10px;
+    .card-text{
+      margin: 5px;
     }
 
+    .card img {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      transition: transform 1s;
+    }
+
+    .card img:hover{
+      transform: scale(1.1);
+    }
   </style>
 </head>
 
@@ -244,7 +252,7 @@ if (!$koneksi) {
     
     while ($row = mysqli_fetch_array($q3)) {
       // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-      if ($count % 3 == 0) {
+      if ($count % 4 == 0) {
         echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
       }
 
@@ -256,7 +264,7 @@ if (!$koneksi) {
       $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
       echo '<img src="' . $gambarURL . '" alt="Gambar">';
-      echo '<h5 class="card-title mt-2">' . $row['nama_aktivitas'] . '</h5>';
+      echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
       echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['lokasi'] . '</p>';
       echo '<p class="card-text">' . $row['tanggal'] . '</p>';
       echo '<p class="card-text">' . $row['jam'] . '</p>';

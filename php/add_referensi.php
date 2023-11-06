@@ -10,13 +10,11 @@ if (!$koneksi) {
 }
 
 $id = "";
-$anggota = "";
-$jenis_lap = "";
-$tanggal = "";
-$waktu_mulai = "";
-$waktu_selesai = "";
-$harga = "";
-$status = "";
+$nama = "";
+$lokasi = "";
+$jumlah_lap = "";
+$harga_sewa = "";
+$tipe_lap = "";
 $sukses = "";
 $error = "";
 
@@ -28,7 +26,7 @@ if (isset($_GET['op'])) {
 
 if ($op == 'delete') {
     $id = $_GET['id'];
-    $sql1 = "DELETE FROM jadwal WHERE id = '$id'";
+    $sql1 = "DELETE FROM referensi WHERE id_referensi = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
@@ -39,17 +37,14 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM jadwal WHERE id = '$id'";
+    $sql1 = "SELECT * FROM referensi WHERE id_referensi = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
-    $anggota = $r1['keanggotaan'];
-    $jenis_lap = $r1['jenis_lapangan'];
-    $tanggal = $r1['tanggal'];
-    $waktu_mulai = $r1['waktu_mulai'];
-    $waktu_selesai = $r1['waktu_selesai'];
-    $harga = $r1['harga'];
-    $status = $r1['status_pemesanan'];
-
+    $nama = $r1['nama_tempat'];
+    $lokasi = $r1['lokasi'];
+    $jumlah_lap = $r1['jumlah_lap'];
+    $harga_sewa = $r1['harga_sewa'];
+    $tipe_lap = $r1['tipe_lap'];
 
     if ($anggota == '') {
         $error = "Data tidak ditemukan";
@@ -57,50 +52,39 @@ if ($op == 'edit') {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
-    $anggota = $_POST['keanggotaan'];
-    $jenis_lap = $_POST['jenis_lap'];
-    $tanggal = $_POST['tanggal'];
-    $waktu_mulai = $_POST['waktu_mulai'];
-    $waktu_selesai = $_POST['waktu_selesai'];
-    $harga = $_POST['harga'];
-    $status = $_POST['status'];
+    $nama = $_POST['nama_tempat'];
+    $lokasi = $_POST['lokasi'];
+    $jumlah_lap = $_POST['jumlah_lap'];
+    $harga_sewa = $_POST['harga_sewa'];
+    $tipe_lap = $_POST['tipe_lap'];
 
-
-    if ($tanggal == "-Pilih Tanggal-") {
-        if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
-            if ($op == 'edit') {
-                // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', tanggal = '$tanggal', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
-            } else {
-                // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tanggal', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
-            }
-
-            $q1 = mysqli_query($koneksi, $sql1);
-
-            if ($q1) {
-                $sukses = "Data berhasil diupdate/ditambahkan";
-            } else {
-                $error = "Data gagal diupdate/ditambahkan";
-            }
-        } else {
-            $error = "Terdapat kesalahan input waktu";
-        }
+    if ($op == 'edit') {
+        // Perbarui data jika ini adalah operasi edit
+        $sql1 = "UPDATE referensi SET nama_tempat = '$nama', lokasi = '$lokasi', jumlah_lap = '$jumlah_lap', harga_sewa = '$harga_sewa', tipe_lap = '$tipe_lap' WHERE id_referensi = '$id'";
     } else {
-        $error = "Harap pilih tanggal sebelum menyimpan";
+        // Tambahkan data jika ini adalah operasi insert
+        $sql1 = "INSERT INTO referensi (nama_tempat, lokasi, jumlah_lap, harga_sewa, tipe_lap) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap')";
+    }
+
+    $q1 = mysqli_query($koneksi, $sql1);
+
+    if ($q1) {
+        $sukses = "Data referensi berhasil diupdate/ditambahkan";
+    } else {
+        $error = "Data referensi gagal diupdate/ditambahkan";
     }
 }
 
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
-    header("refresh:2;url=jadwal.php"); // 2 = detik
+    header("refresh:2;url=add_referensi.php"); // 2 = detik
 ?>
 <?php
 }
 
 if ($sukses) {
     // Set header sebelum mencetak pesan sukses
-    header("refresh:2;url=jadwal.php"); // 2 = detik
+    header("refresh:2;url=add_referensi.php"); // 2 = detik
 ?>
 <?php
 }
@@ -307,103 +291,187 @@ if ($sukses) {
                         Tambah/Edit Data Referensi
                     </div>
                     <div class="card-body">
+                        <?php if ($error || $sukses): ?>
+                            <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>" role="alert">
+                                <?php echo $error ? $error : $sukses; ?>
+                            </div>
+                        <?php endif; ?>
                         <!-- Form -->
                         <form action="" method="POST" autocomplete="off" onsubmit="return validasiForm()">
                             <div class="mb-3 row">
-                                <label for="keanggotaan" class="col-sm-2 col-form-label">Keanggotaan</label>
+                                <label for="nama" class="col-sm-2 col-form-label">Nama Tempat</label>
                                 <div class="col-sm-10">
-                                    <input type="radio" id="member" name="keanggotaan" value="Member" <?php if ($anggota == "Member")
+                                    <input type="text" class="form-control" id="nama_tempat" name="nama_tempat"
+                                        value="<?php echo $nama ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="staticEmail" name="lokasi"
+                                        value="<?php echo $lokasi ?>" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="jumlah_lap" class="col-sm-2 col-form-label">Jumlah Lapangan</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="jumlah_lap" name="jumlah_lap"
+                                        value="<?php echo $jumlah_lap ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="harga_sewa" class="col-sm-2 col-form-label">Harga Sewa</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="harga_sewa" name="harga_sewa"
+                                        value="<?php echo $harga_sewa ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="tipe_lap" class="col-sm-2 col-form-label">Tipe Lapangan</label>
+                                <div class="col-sm-10">
+                                    <input type="radio" id="indoor" name="tipe_lap" value="Indoor" <?php if ($tipe_lap == "Indoor")
                                         echo "checked"; ?> required>
-                                    <label for="member">Member</label>
+                                    <label for="indoor">Indoor</label>
 
-                                    <input type="radio" id="nonmember" name="keanggotaan" value="Non Member"
-                                        style="margin-left: 20px;" <?php if ($anggota == "Non Member")
+                                    <input type="radio" id="outdoor" name="tipe_lap" value="Outdoor"
+                                        style="margin-left: 20px;" <?php if ($tipe_lap == "Outdoor")
                                             echo "checked"; ?> required>
-                                    <label for="nonmember">Non Member</label>
+                                    <label for="outdoor">Outdoor</label>
                                 </div>
                             </div>
-                            <div class="mb-3 row">
-                                <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis
-                                    Lapangan</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="jenis_lap" id="jenis_lap" required>
-                                        <option value="">-Jenis Lapangan-</option>
-                                        <option value="Badminton" <?php if ($jenis_lap == "Badminton")
-                                            echo "selected" ?>>Badminton
-                                            </option>
-                                            <option value="Futsal" <?php if ($jenis_lap == "Futsal")
-                                            echo "selected" ?>>Futsal
-                                            </option>
-                                            <option value="Sepak Bola" <?php if ($jenis_lap == "Sepak Bola")
-                                            echo "selected" ?>>Sepak Bola
-                                            </option>
-                                            <option value="Bola Voli" <?php if ($jenis_lap == "Bola Voli")
-                                            echo "selected" ?>>Bola Voli
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 row">
-                                    <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
-                                    <div class="col-sm-10">
-                                        <input type="datetime-local" placeholder="-Pilih Tanggal-" class="form-control"
-                                            id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
-                                    Mulai</label>
-                                <div class="col-sm-10">
-                                    <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
-                                        id="waktu-mulai" name="waktu_mulai" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
-                                    Selesai</label>
-                                <div class="col-sm-10">
-                                    <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
-                                        id="waktu-selesai" name="waktu_selesai" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="harga" name="harga" readonly>
-                                    <input type="text" class="form-control" id="status" name="status" readonly hidden
-                                        value="Belum Dipesan">
-                                </div>
-                            </div>
-
-
 
                             <input type="submit" name="simpan" value="Simpan Data" class="btn w-100" id="save-btn">
-
-
                         </form>
 
-                        <!-- Tabel -->
-                        <table class="table mt-4">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>johndoe@example.com</td>
-                                </tr>
-                                <!-- Tambahkan baris tabel sesuai kebutuhan -->
-                            </tbody>
-                        </table>
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                style="color: white; background-color: #02406d;">
+                                <h6 class="m-0 font-weight-bold">Tabel Jadwal</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <form action="jadwal.php" method="GET">
+                                        <div class="form-group" style="display: flex; gap: 10px;">
+                                            <input type="text" name="search" id="searchInput" style="width: 30%;"
+                                                class="form-control" placeholder="Cari Tempat Olahraga"
+                                                value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+
+                                            <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
+                                            <?php if (isset($_GET['search'])): ?>
+                                                <a href="add_referensi.php" class="btn btn-secondary" id="resetSearch">Hapus
+                                                    Pencarian</a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </form>
+
+                                    <script>
+                                        document.getElementById('searchButton').addEventListener('click', function (event) {
+                                            var searchInput = document.getElementById('searchInput');
+
+                                            if (searchInput.value === '') {
+                                                event.preventDefault(); // Mencegah pengiriman form jika field pencarian kosong
+                                                searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
+                                                searchInput.style.borderColor = 'red'; // Mengubah warna border field
+
+                                            } else {
+                                                searchInput.style.borderColor = '';
+                                            }
+                                        });
+
+                                        document.getElementById('searchInput').addEventListener('click', function () {
+                                            var searchInput = document.getElementById('searchInput');
+                                            searchInput.placeholder = 'Cari Jadwal'; // Mengembalikan placeholder ke default saat input diklik
+                                            searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
+                                        });
+                                    </script>
+
+                                    <div class="container">
+                                        <table class="table text-nowrap mb-0 table-centered table-hover"
+                                            cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No.</th>
+                                                    <th scope="col">Nama Tempat</th>
+                                                    <th scope="col">Lokasi</th>
+                                                    <th scope="col">Jumlah Lapangan</th>
+                                                    <th scope="col">Harga Sewa</th>
+                                                    <th scope="col">Tipe Lapangan</th>
+                                                    <th scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="hoverable">
+                                                <?php
+                                                if (isset($_GET['reset'])) {
+                                                    // Pengguna menekan tombol "Hapus Pencarian"
+                                                    header("Location: add_referensi.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                                    exit();
+                                                }
+
+                                                if (isset($_GET['search'])) {
+                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT * FROM referensi WHERE nama_tempat LIKE '%$searchTerm%'";
+                                                } else {
+                                                    $sql = "SELECT * FROM referensi ORDER BY id_referensi DESC";
+                                                }
+
+                                                $q2 = mysqli_query($koneksi, $sql);
+                                                $urut = 1;
+                                                while ($r2 = mysqli_fetch_array($q2)) {
+                                                    $id = $r2['id_referensi'];
+                                                    $nama = $r2['nama_tempat'];
+                                                    $lokasi = $r2['lokasi'];
+                                                    $jumlah_lap = $r2['jumlah_lap'];
+                                                    $harga_sewa = $r2['harga_sewa'];
+                                                    $tipe_lap = $r2['tipe_lap'];
+                                                    ?>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?php echo $urut++ ?>
+                                                        </th>
+                                                        <td scope="row">
+                                                            <?php echo $nama ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $lokasi ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $jumlah_lap ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $harga_sewa ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a href="add_referensi.php?op=status&id="><button type="button"
+                                                                    class="btn btn-info" id="editButton" disabled>
+                                                                    <?php echo $tipe_lap ?>
+                                                                </button></a>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a href="add_referensi.php?op=edit&id=<?php echo $id ?>"><button
+                                                                    type="button" class="btn btn-warning"
+                                                                    id="editButton">Edit</button></a>
+                                                            <a href="add_referensi.php?op=delete&id=<?php echo $id ?>"
+                                                                onclick="return confirm('Yakin mau menghapus data ini?')"><button
+                                                                    type="button" class="btn btn-danger">Delete</button></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

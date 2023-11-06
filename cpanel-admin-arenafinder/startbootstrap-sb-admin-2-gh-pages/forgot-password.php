@@ -137,7 +137,7 @@ if (isset($_POST["recover"])) {
 
         // HTML body
         $mail->isHTML(true);
-        $mail->Subject = "Ganti Sandi Akun";
+        $mail->Subject = "Ganti sandi akun";
         $mail->Body = "<b>Kepada Admin</b>
                         <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
                         <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
