@@ -208,6 +208,19 @@ if ($sukses) {
             color: white;
         }
 
+        .breadcrumb-item a {
+            text-decoration: none;
+            color: #ccc;
+        }
+
+        .breadcrumb-item a:hover{
+            color: #02406D;
+        }
+
+        #ref-nav{
+            color: #02406D;
+        }
+
         /* Untuk tampilan seluler */
         @media (max-width: 768px) {
             .navbar-collapse.collapse.show {
@@ -282,8 +295,21 @@ if ($sukses) {
         </div>
     </nav>
 
-
     <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/ArenaFinder/html/referensi.html">Referensi</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" id="ref-nav">Tambah Referensi</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
@@ -385,7 +411,7 @@ if ($sukses) {
 
                                         document.getElementById('searchInput').addEventListener('click', function () {
                                             var searchInput = document.getElementById('searchInput');
-                                            searchInput.placeholder = 'Cari Jadwal'; // Mengembalikan placeholder ke default saat input diklik
+                                            searchInput.placeholder = 'Cari Tempat Olahraga'; // Mengembalikan placeholder ke default saat input diklik
                                             searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
                                         });
                                     </script>

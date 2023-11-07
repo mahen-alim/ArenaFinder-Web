@@ -31,10 +31,6 @@ if (!$koneksi) {
       margin-top: 130px;
     }
 
-    .fourth-sep {
-      margin-left: 175px;
-    }
-
     .semua-act {
       margin-left: 200px;
     }
@@ -135,25 +131,234 @@ if (!$koneksi) {
     }
 
     .card {
-      width: 250px;
+      width: 300px;
       margin-top: 50px;
       text-align: center;
       border: none;
     }
 
-    .card-text{
+    .card-text {
       margin: 5px;
     }
 
     .card img {
       width: 100%;
-      height: 250px;
+      height: 300px;
       border-radius: 10px;
       transition: transform 1s;
     }
 
-    .card img:hover{
+    .card img:hover {
       transform: scale(1.1);
+    }
+
+    .con-type {
+      width: 90%;
+      display: flex;
+      overflow: hidden;
+      white-space: nowrap;
+      touch-action: cross-slide-x;
+      user-select: none;
+      margin-top: 50px;
+      margin-right: 20px;
+      margin-left: 50px;
+      position: relative;
+    }
+
+    .con-type button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .con-type img {
+      max-width: 100%;
+      height: auto;
+      /* Atur ukuran margin sesuai preferensi Anda */
+    }
+
+    button.semua {
+      width: 60px;
+      height: 60px;
+      margin-top: 20px;
+      margin-left: 0px;
+      text-align: center;
+      border: 1px solid #02406d;
+      border-radius: 10px;
+      background-color: white;
+      color: #02406d;
+      font-size: 25px;
+      font-weight: regular;
+      animation: slideRight 2s ease-in-out;
+    }
+
+    .semua {
+      margin-top: 30px;
+      margin-left: 0px;
+      border: 1px solid #02406d;
+      border-radius: 10px;
+      background-color: white;
+      color: #02406d;
+      font-size: 25px;
+      font-weight: regular;
+      animation: slideRight 2s ease-in-out;
+    }
+
+    button.all {
+      width: 100px;
+      height: 100px;
+    }
+
+    .all img {
+      width: 60px;
+      height: 60px;
+      border: 1px solid white;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: scale 1s;
+    }
+
+    .all img:hover {
+      scale: 105%;
+    }
+
+    .semua-act {
+      display: flex;
+      text-align: justify;
+      justify-content: flex-start;
+      background-color: #02406D;
+      color: white;
+      margin-left: 50px;
+      height: 50px;
+      width: fit-content;
+      border-radius: 10px;
+    }
+
+    .con-main {
+      margin-left: 30px;
+    }
+
+    #swipe-btn {
+      position: absolute;
+      right: 0;
+      margin-right: 150px;
+      margin-top: 30px;
+      font-size: 12px;
+      animation: slideRight 2s ease-in-out;
+      font-weight: lighter;
+      color: #02406D;
+    }
+
+    @keyframes slideRight {
+      0% {
+        transform: translateX(100%);
+        /* Elemen dimulai dari bawah */
+        opacity: 0;
+        /* Elemen transparan saat dimulai */
+      }
+
+      100% {
+        transform: translateX(0%);
+        /* Elemen dimulai dari bawah */
+        opacity: 1;
+        /* Elemen transparan saat dimulai */
+      }
+    }
+
+    @media (max-width: 900px) {
+      .con-type {
+        width: 85%;
+        display: flex;
+        overflow: hidden;
+        white-space: nowrap;
+        touch-action: pan-y;
+        user-select: none;
+        margin-top: 50px;
+        margin-right: 20px;
+        margin-left: 50px;
+        position: relative;
+      }
+
+      .con-type button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      .con-type img {
+        max-width: 100%;
+        height: auto;
+        /* Atur ukuran margin sesuai preferensi Anda */
+      }
+
+      button.semua {
+        width: 60px;
+        height: 60px;
+        margin-top: 20px;
+        margin-left: 0px;
+        border: 1px solid #02406d;
+        border-radius: 10px;
+        background-color: white;
+        color: #02406d;
+        font-size: 25px;
+        font-weight: regular;
+        animation: slideRight 2s ease-in-out;
+      }
+
+      .all img {
+        width: 60px;
+        height: 60px;
+        border: 1px solid white;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: scale 1s;
+      }
+
+      .all img:hover {
+        scale: 105%;
+      }
+
+      .semua-act {
+        display: flex;
+        text-align: justify;
+        justify-content: flex-start;
+        background-color: #02406D;
+        color: white;
+        margin-left: 50px;
+        height: 50px;
+        width: fit-content;
+        border-radius: 10px;
+      }
+
+      .con-main {
+        margin-left: 10px;
+      }
+
+      .semua-act {
+        margin-left: 35px;
+      }
+
+      .footer {
+        margin-left: -100px;
+      }
+
+      #swipe-btn {
+        position: absolute;
+        right: 0;
+        margin-right: 20px;
+        margin-top: 30px;
+        font-size: 12px;
+        animation: slideRight 2s ease-in-out;
+        font-weight: lighter;
+        color: #02406D;
+
+      }
     }
   </style>
 </head>
@@ -207,42 +412,123 @@ if (!$koneksi) {
     </div>
   </div>
 
-  </div>
-  <div class="title_activity"> Aktivitas Komunitas
-  </div>
-  <div class="sub_title_activity"> Berbagai macam akitivitas olahraga yang sedang berlangsung dan
-    yang telah usai dilaksanakan, disajikan sesuai dengan
-    kategori olahraga yang anda minati
-  </div>
-  <div class="third-sep"></div>
-  <button class="semua">All</button>
-  <button class="all" type="submit">
-    <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
-    Futsal
-  </button>
-  <button class="all" type="submit">
-    <img src="/ArenaFinder/img_asset/badmin.jpg" alt="">
-    Bulutangkis
-  </button>
-  <button class="all" type="submit">
-    <img src="/ArenaFinder/img_asset/voli.jpg" alt="">
-    Bola Voli
-  </button>
-  <button class="all" type="submit">
-    <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-    Bola Basket
-  </button>
-  <button class="all" type="submit">
-    <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-    Sepak Bola
-  </button>
+  <div class="con-main">
+    <div class="title_activity"> Aktivitas Komunitas
+    </div>
+    <div class="sub_title_activity"> Berbagai macam akitivitas olahraga yang sedang berlangsung dan
+      yang telah usai dilaksanakan, disajikan sesuai dengan
+      kategori olahraga yang anda minati
+    </div>
 
-  <div class="semua-act">
-    <div class="all-activity">Semua</div>
-    <div class="all-activity1">Aktivitas</div>
+    <p id="swipe-btn">Swipe >></p>
+
+    <div class="con-type">
+      <button class="semua">All</button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/futsal.jpg" alt="">
+        <span>Bola Futsal</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/badmin.jpg" alt="">
+        <span>Badminton</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/voli.jpg" alt="">
+        <span>Bola Voli</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button><button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button><button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button><button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <span>Bola Basket</span>
+      </button>
+      <button class="all" type="submit">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <span>Sepak Bola</span>
+      </button>
+    </div>
+
+    <script>
+      const container = document.querySelector('.con-type');
+      let isDragging = false;
+      let startX, currentX, scrollLeft;
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+        container.style.scrollBehavior = 'auto';
+      });
+
+      container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.scrollBehavior = 'smooth';
+      });
+
+      container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.scrollBehavior = 'smooth';
+      });
+
+      container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.pageX - container.offsetLeft;
+        const scrollX = currentX - startX;
+        container.scrollLeft = scrollLeft - scrollX;
+      });
+
+    </script>
+
+    <div class="semua-act">
+      <div class="all-activity">Semua</div>
+      <div class="all-activity1">Aktivitas</div>
+    </div>
   </div>
 
-  <div class="fourth-sep"></div>
 
   <div class="cards-container">
     <?php
