@@ -85,9 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
-
-
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
     header("refresh:2;url=keanggotaan.php"); // 2 = detik
@@ -101,6 +98,17 @@ if ($sukses) {
 ?>
 <?php
 }
+
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
+    header("Location: login.php");
+    exit();
+}
+
+// Pengguna sudah masuk, Anda dapat mengakses data sesi
+$email = $_SESSION['email'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -256,13 +264,14 @@ if ($sukses) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
+                                    <?php echo $email ?>
+                                </span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profil.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -314,7 +323,7 @@ if ($sukses) {
                                                         value="<?php echo $nama ?>" required>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="mb-3 row">
                                                 <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                                                 <div class="col-sm-10">
@@ -341,18 +350,15 @@ if ($sukses) {
                                                                         <img src="https://cdn-icons-png.flaticon.com/512/323/323372.png"
                                                                             width="20" height="auto" alt="" title=""
                                                                             class="img-small">+62 (Indonesia)</a></li>
-                                                                <li><a class="dropdown-item" href="#" data-code="+1">
-                                                                        <img src="   https://cdn-icons-png.flaticon.com/512/10576/10576632.png "
+                                                                <li><a class="dropdown-item" href="#" data-code="+970">
+                                                                        <img src="https://cdn-icons-png.flaticon.com/512/6157/6157447.png "
                                                                             width="20" height="auto" alt="" title=""
-                                                                            class="img-small">+1 (United States)</a>
-                                                                </li>
-
+                                                                            class="img-small">+970 (Palestina)</a></li>
                                                                 <li><a class="dropdown-item" href="#"
-                                                                        data-code="+44"><img
-                                                                            src="   https://cdn-icons-png.flaticon.com/512/197/197374.png "
+                                                                        data-code="+65"><img
+                                                                            src="   https://cdn-icons-png.flaticon.com/512/12339/12339650.png "
                                                                             width="20" height="auto" alt="" title=""
-                                                                            class="img-small">+44 (United Kingdom)</a>
-                                                                </li>
+                                                                            class="img-small">+65 (Singapura)</a></li>
                                                                 <li><a class="dropdown-item" href="#"
                                                                         data-code="+91"><img
                                                                             src="   https://cdn-icons-png.flaticon.com/512/10597/10597864.png "
@@ -378,7 +384,6 @@ if ($sukses) {
                                                                             src="   https://cdn-icons-png.flaticon.com/512/197/197604.png "
                                                                             width="20" height="auto" alt="" title=""
                                                                             class="img-small">+81 (Japan)</a></li>
-                                                                <!-- Tambahkan lebih banyak negara dan kode nomor telepon di sini -->
                                                             </ul>
                                                         </div>
                                                         <input type="text" class="form-control" id="selectedCountryCode"
@@ -451,44 +456,44 @@ if ($sukses) {
                                                     style="cursor: pointer">Hari Main</label>
                                                 <div class="col-sm-10 d-flex">
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="senin" value="Senin" <?php if ($hari == "Senin")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="senin" value="Senin" <?php if ($hari == "Senin")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="senin">Senin</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="selasa" value="Selasa" <?php if ($hari == "Selasa")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="selasa" value="Selasa" <?php if ($hari == "Selasa")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="selasa">Selasa</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="rabu" value="Rabu" <?php if ($hari == "Rabu")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="rabu" value="Rabu" <?php if ($hari == "Rabu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="rabu">Rabu</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="kamis" value="Kamis" <?php if ($hari == "Kamis")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="kamis" value="Kamis" <?php if ($hari == "Kamis")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="kamis">Kamis</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="jum'at" value="Jum'at" <?php if ($hari == "Jum'at")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="jum'at" value="Jum'at" <?php if ($hari == "Jum'at")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="jum'at">Jum'at</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="sabtu" value="Sabtu" <?php if ($hari == "Sabtu")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="sabtu" value="Sabtu" <?php if ($hari == "Sabtu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="sabtu">Sabtu</label>
                                                     </div>
                                                     <div class="form-check mx-3">
-                                                        <input class="form-check-input" type="checkbox" name="hari_main[]"
-                                                            id="minggu" value="Minggu" <?php if ($hari == "Minggu")
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="hari_main[]" id="minggu" value="Minggu" <?php if ($hari == "Minggu")
                                                                 echo "checked"; ?>>
                                                         <label class="form-check-label" for="rabu">Minggu</label>
                                                     </div>

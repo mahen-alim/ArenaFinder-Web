@@ -16,6 +16,7 @@ if ($sql) {
     $user_data = mysqli_fetch_assoc($sql);
     $name = $user_data['username'];
     $level = $user_data['level'];
+    // Simpan level pengguna dalam sesi
 } else {
     // Handle database error
     die("Database error: " . mysqli_error($conn));
@@ -71,6 +72,13 @@ if ($sql) {
                     <span>Dashboard</span></a>
             </li>
 
+            <!-- Nav Item - Web -->
+            <li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
+                    <i class="fa-brands fa-edge"></i>
+                    <span>Lihat Website</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -91,6 +99,13 @@ if ($sql) {
                 <a class="nav-link" href="aktivitas.php">
                     <i class="fa-solid fa-fire"></i>
                     <span>Aktivitas</span></a>
+            </li>
+
+            <!-- Nav Item - Keanggotaan -->
+            <li class="nav-item ">
+                <a class="nav-link" href="keanggotaan.php">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Keanggotaan</span></a>
             </li>
 
             <!-- Divider -->
@@ -145,13 +160,15 @@ if ($sql) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    Halo, <?php echo $email ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item active" href="profil.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -198,19 +215,21 @@ if ($sql) {
                                         </h6>
                                     </div>
                                     <div class="card-body">
-                                        <h1>Profil Pengguna</h1>
                                         <p><strong>Username:</strong>
                                             <?php echo $name ?>
                                         </p>
                                         <p><strong>Email:</strong>
                                             <?php echo $email ?>
                                         </p>
-                                        <p><strong>Level:</strong>
-                                            <?php echo $level; ?>
-                                        </p>
-                                        <a href="login.php">Logout</a>
+                                        <p name="level"><strong>Level:</strong><span id="levelText">
+                                                <?php echo $level; ?>
+                                            </span></p>
 
+                                        <a href="login.php">
+                                            <button class="btn-danger"
+                                                style="border: none; border-radius: 5px; width: 70px; height: auto;">Logout</button></a>
                                     </div>
+                
                                 </div>
 
                             </div>

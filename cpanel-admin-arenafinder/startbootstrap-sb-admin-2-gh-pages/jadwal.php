@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             // Tambahkan data jika ini adalah operasi insert
             $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tanggal', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
-        
+
         $q1 = mysqli_query($koneksi, $sql1);
 
         if ($q1) {
@@ -99,6 +99,18 @@ if ($sukses) {
 ?>
 <?php
 }
+
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
+    header("Location: login.php");
+    exit();
+}
+
+// Pengguna sudah masuk, Anda dapat mengakses data sesi
+$email = $_SESSION['email'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,13 +266,13 @@ if ($sukses) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo, <?php echo $email; ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profil.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

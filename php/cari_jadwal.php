@@ -299,9 +299,9 @@ if (!$koneksi) {
         }
 
         .card {
-            width: 220px; 
-            margin-top: 50px; 
-            display: flex; 
+            width: 220px;
+            margin-top: 50px;
+            display: flex;
             transition: transform 0.2s;
             border: 1px solid #02406D;
         }
@@ -325,7 +325,8 @@ if (!$koneksi) {
                 border-radius: 5px;
                 color: #02406D;
             }
-            #label2{
+
+            #label2 {
                 margin-left: 10px;
             }
         }
@@ -348,16 +349,26 @@ if (!$koneksi) {
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/ArenaFinder/html/beranda.html">Beranda</a>
+                        <a class="nav-link" href="beranda.php">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="aktivitas.php">Aktivitas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
+                        <a class="nav-link" href="referensi.php">Referensi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="info_mitra.php">Info Mitra</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
+                    <li class="nav-item dropdown" id="nav-down1">
+                        <a class="nav-link" id="nav-down-item1"
+                            href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/"
+                            style="width: 150px;">
+                            <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                            Panel Pengelola
+                        </a>
                     </li>
                 </ul>
             </div>

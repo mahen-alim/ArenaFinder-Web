@@ -241,13 +241,13 @@ try {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto my-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/ArenaFinder/html/beranda.html">Beranda</a>
+            <a class="nav-link" href="beranda.php">Beranda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="aktivitas.php">Aktivitas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
+            <a class="nav-link" href="referensi.php">Referensi</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="">Info Mitra</a>
@@ -258,7 +258,7 @@ try {
             <a class="nav-link" id="nav-down-item1"
               href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 150px;">
               <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-              Panel Admin
+              Panel Pengelola
             </a>
           </li>
         </ul>

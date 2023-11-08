@@ -77,7 +77,7 @@ $email = $_SESSION['email'];
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/html/beranda.html">
+                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>
@@ -168,9 +168,12 @@ $email = $_SESSION['email'];
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo, <?php echo $email; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
+                                    <?php echo $email; ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
+
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">

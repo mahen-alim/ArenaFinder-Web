@@ -14,6 +14,11 @@ if (isset($_POST["login"])) {
     $fetch = mysqli_fetch_assoc($sql);
     $hashpassword = $fetch["password"];
 
+    // Ambil level pengguna dari database
+    $userLevel = $fetch["level"];
+
+    $_SESSION['level'] = $userLevel; // Setel sesi dengan level pengguna
+
     if ($fetch["is_verified"] == 0) {
       $_SESSION['message'] = "Tolong Verifikasi Akun Email sebelum Login.";
       header("Location: login.php");

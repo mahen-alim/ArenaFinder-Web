@@ -269,13 +269,13 @@ if ($sukses) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto my-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/ArenaFinder/html/beranda.html">Beranda</a>
+                        <a class="nav-link" href="/ArenaFinder/php/beranda.php">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ArenaFinder/php/aktivitas.php">Aktivitas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ArenaFinder/html/referensi.html">Referensi</a>
+                        <a class="nav-link" href="/ArenaFinder/php/referensi.php">Referensi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ArenaFinder/php/info_mitra.php">Info Mitra</a>
@@ -287,7 +287,7 @@ if ($sukses) {
                             href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/"
                             style="width: 150px;">
                             <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-                            Panel Admin
+                            Panel Pengelola
                         </a>
                     </li>
                 </ul>
@@ -300,7 +300,7 @@ if ($sukses) {
             <div class="col-lg-8">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/ArenaFinder/html/referensi.html">Referensi</a></li>
+                        <li class="breadcrumb-item"><a href="/ArenaFinder/php/referensi.php">Referensi</a></li>
                         <li class="breadcrumb-item active" aria-current="page" id="ref-nav">Tambah Referensi</li>
                     </ol>
                 </nav>
