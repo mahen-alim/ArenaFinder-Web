@@ -11,7 +11,6 @@ if (isset($_POST["register"])) {
   $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
   $rowCount = mysqli_num_rows($check_query);
 
-
   if ($rowCount > 0) {
     ?>
     <script>

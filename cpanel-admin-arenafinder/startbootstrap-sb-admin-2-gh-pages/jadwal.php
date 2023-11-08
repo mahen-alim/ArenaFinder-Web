@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             // Tambahkan data jika ini adalah operasi insert
             $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tanggal', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
-
+        
         $q1 = mysqli_query($koneksi, $sql1);
 
         if ($q1) {

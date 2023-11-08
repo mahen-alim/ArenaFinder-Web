@@ -1,3 +1,26 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    // Redirect user to the login page if they are not logged in
+    header("Location: login.php");
+    exit();
+}
+
+include('database.php'); // Include your database connection code here
+
+$email = $_SESSION['email'];
+
+$sql = mysqli_query($conn, "SELECT username, level FROM users WHERE email = '$email'");
+if ($sql) {
+    $user_data = mysqli_fetch_assoc($sql);
+    $name = $user_data['username'];
+    $level = $user_data['level'];
+} else {
+    // Handle database error
+    die("Database error: " . mysqli_error($conn));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +32,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>SB Admin 2 - Profil</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -170,38 +193,23 @@
                                 <!-- Approach -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 mt-2" style="color: #02406d;"></i>
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 mt-2" style="color: #02406d;"></i>
                                         <h6 class="m-0 font-weight-bold" style="color: #02406d;">Profil Akun
                                         </h6>
                                     </div>
                                     <div class="card-body">
-                                        <?php
-                                        // Sertakan file koneksi ke database
-                                        include 'database.php'; // Gantilah 'koneksi.php' dengan nama file koneksi yang sesuai
-                                        
-                                        // Inisialisasi variabel
-                                        $username = $email = $level = "";
+                                        <h1>Profil Pengguna</h1>
+                                        <p><strong>Username:</strong>
+                                            <?php echo $name ?>
+                                        </p>
+                                        <p><strong>Email:</strong>
+                                            <?php echo $email ?>
+                                        </p>
+                                        <p><strong>Level:</strong>
+                                            <?php echo $level; ?>
+                                        </p>
+                                        <a href="login.php">Logout</a>
 
-                                        // Level yang ingin Anda ambil, ganti dengan level yang sesuai
-                                        $levelToRetrieve = 'ADMIN';
-
-                                        // Query SQL untuk mengambil data dari tabel users
-                                        $query = "SELECT username, email, level FROM users WHERE level = ?";
-                                        $stmt = $conn->prepare($query);
-                                        $stmt->bind_param("s", $levelToRetrieve); // Gantilah dengan ID pengguna yang sesuai
-                                        $stmt->execute();
-                                        $stmt->bind_result($username, $email, $level);
-
-                                        // Fetch data dari hasil query
-                                        while ($stmt->fetch()) {
-                                            // Tampilkan data dalam label dan elemen <span>
-                                            echo "<label for='username'>Username: </label><span> $username</span><br>";
-                                            echo "<label for='email'>Email: </label><span> $email</span><br>";
-                                            echo "<label for='level'>Level: </label><span> $level</span><br>";
-                                        }
-                                        
-                                        $stmt->close();                                        
-                                        ?>
                                     </div>
                                 </div>
 

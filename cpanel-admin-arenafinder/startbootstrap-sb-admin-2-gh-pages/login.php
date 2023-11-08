@@ -1,9 +1,11 @@
 <?php
+session_start();
 include('database.php');
 
 if (isset($_POST["login"])) {
-  $email = mysqli_real_escape_string($conn, trim($_POST['email']));
-  $password = trim($_POST['password']);
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $level = $_POST['level'];
 
   $sql = mysqli_query($conn, "SELECT * FROM users where email = '$email'");
   $count = mysqli_num_rows($sql);
@@ -13,30 +15,24 @@ if (isset($_POST["login"])) {
     $hashpassword = $fetch["password"];
 
     if ($fetch["is_verified"] == 0) {
-      ?>
-      <script>
-        alert("Tolong Verifikasi Akun Email sebelum Login.");
-      </script>
-      <?php
+      $_SESSION['message'] = "Tolong Verifikasi Akun Email sebelum Login.";
+      header("Location: login.php");
+      exit();
     } else if (password_verify($password, $hashpassword)) {
-      ?>
-        <script>
-          window.location.replace("index.php");
-        </script>
-      <?php
+      $_SESSION['user_id'] = $fetch['id']; // Simpan ID pengguna dalam session
+      $_SESSION['email'] = $email; // Simpan email dalam session
+      $_SESSION['level'] = $level;
+      header("Location: index.php");
+      exit();
     } else {
-      ?>
-        <script>
-          alert("Email atau Password Salah, Mohon Coba Lagi.");
-          window.location.replace("login.php");
-        </script>
-      <?php
+      $_SESSION['message'] = "Email atau Password Salah, Mohon Coba Lagi.";
+      header("Location: login.php");
+      exit();
     }
   }
-
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
