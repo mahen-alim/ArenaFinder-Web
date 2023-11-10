@@ -14,9 +14,9 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 - Edit aktivitas, jadwal lapangan, keanggotaan, dsb. Melalui sistem CRUD (Create, Read, Update, Delete)
 - Mengecek data statistik tentang kalkulasi pemesanan lapangan
 
-#### Terdapat 3 level user, antara lain:
+#### Terdapat 2 level user, antara lain:
 - **Admin:** Pihak pengelola tempat, dapat mengelola tempat usaha olahraga 
-- **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi dan dapat memberi pemberitahuan kepada mitra aplikasi
+- **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi dan dapat menambahkan referensi tempat olahraga
 
 ---
 
