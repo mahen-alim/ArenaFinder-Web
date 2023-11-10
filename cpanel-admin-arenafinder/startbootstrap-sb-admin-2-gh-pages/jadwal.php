@@ -147,6 +147,20 @@ $email = $_SESSION['email'];
             color: white;
         }
     </style>
+
+    <script>
+        // JavaScript code to focus on the search input when "F" key is pressed
+        document.addEventListener('keydown', function (event) {
+            // Check if the pressed key is 'F' (case-insensitive)
+            if (event.key.toLowerCase() === 'f') {
+                // Focus on the search input
+                document.getElementById('searchInput').focus();
+
+                // Prevent the default behavior of the key press
+                event.preventDefault();
+            }
+        });
+    </script>
 </head>
 
 <body id="page-top">
@@ -480,7 +494,7 @@ $email = $_SESSION['email'];
                                                 <div class="form-group" style="display: flex; gap: 10px;">
                                                     <input type="text" name="search" id="searchInput"
                                                         style="width: 30%;" class="form-control"
-                                                        placeholder="Cari Jadwal"
+                                                        placeholder="Tekan F untuk Mencari Jadwal"
                                                         value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 
                                                     <button type="submit" class="btn btn-info"
@@ -538,16 +552,59 @@ $email = $_SESSION['email'];
                                                             exit();
                                                         }
 
+                                                        $jumlahDataPerHalaman = 10;
+
+                                                        // Perform the query to get the total number of rows
+                                                        $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
+                                                        $countResult = mysqli_fetch_assoc($queryCount);
+                                                        $jumlahData = $countResult['total'];
+
+                                                        // Calculate the total number of pages
+                                                        $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+
+                                                        // Get the current page
+                                                        $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+                                                        // Calculate the starting data index for the current page
+                                                        $awalData = ($page - 1) * $jumlahDataPerHalaman;
+
+                                                        // Perform the query to get data for the current page
+                                                        $jadwal = mysqli_query($koneksi, "SELECT * FROM jadwal LIMIT $awalData, $jumlahDataPerHalaman");
+
+                                                        echo "<nav aria-label='Page navigation'>";
+                                                        echo "<ul class='pagination'>";
+
+                                                        // Previous page link
+                                                        if ($page > 1) {
+                                                            echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                                        }
+
+                                                        // Numbered pagination links
+                                                        for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                            echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='jadwal.php?page=$i'>$i</a></li>";
+                                                        }
+
+                                                        // Next page link
+                                                        if ($page < $jumlahHalaman) {
+                                                            echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                                        }
+
+                                                        echo "</ul>";
+                                                        echo "</nav>";
+
                                                         if (isset($_GET['search'])) {
                                                             $searchTerm = $koneksi->real_escape_string($_GET['search']);
+
                                                             $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%'";
                                                         } else {
+
                                                             $sql = "SELECT * FROM jadwal ORDER BY id DESC";
                                                         }
 
                                                         $q2 = mysqli_query($koneksi, $sql);
-                                                        $urut = 1;
-                                                        while ($r2 = mysqli_fetch_array($q2)) {
+                                                        $urut = 1 + $awalData;
+
+                                                        while ($r2 = mysqli_fetch_array($jadwal)) {
                                                             $id = $r2['id'];
                                                             $anggota = $r2['keanggotaan'];
                                                             $jenis_lap = $r2['jenis_lapangan'];
@@ -599,6 +656,7 @@ $email = $_SESSION['email'];
                                                         }
                                                         ?>
                                                     </tbody>
+
                                                 </table>
 
                                             </div>

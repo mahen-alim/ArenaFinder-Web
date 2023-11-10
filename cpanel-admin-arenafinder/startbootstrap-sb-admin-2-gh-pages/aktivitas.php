@@ -103,6 +103,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     }
 }
 
+// Check connection
+if ($koneksi->connect_error) {
+    // If there's an error, return an error message as JSON
+    echo json_encode(['error' => 'Connection failed: ' . $koneksi->connect_error]);
+    exit();
+}
+// Handle the AJAX request
+if (isset($_GET['checkValue'])) {
+    $searchValue = $_GET['checkValue'];
+
+    // Use prepared statements to prevent SQL injection
+    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bind_param('s', $searchValue);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+
+
+    // Return the result as JSON
+    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
+
+    // Close the database connection
+    $stmt->close();
+    $koneksi->close();
+
+    exit();
+}
+
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
     header("refresh:2;url=aktivitas.php"); // 2 = detik
@@ -163,6 +192,21 @@ $email = $_SESSION['email'];
             color: white;
         }
     </style>
+
+    <script>
+        // JavaScript code to focus on the search input when "F" key is pressed
+        document.addEventListener('keydown', function (event) {
+            // Check if the pressed key is 'F' (case-insensitive)
+            if (event.key.toLowerCase() === 'f') {
+                // Focus on the search input
+                document.getElementById('searchInput').focus();
+                searchInput.placeholder = 'Cari Aktivitas';
+                searchInput.style.borderColor = '';
+                // Prevent the default behavior of the key press
+                event.preventDefault();
+            }
+        });
+    </script>
 </head>
 
 <body id="page-top">
@@ -282,7 +326,9 @@ $email = $_SESSION['email'];
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo, <?php echo $email; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
+                                    <?php echo $email; ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -498,7 +544,7 @@ $email = $_SESSION['email'];
                                         <form action="aktivitas.php" method="GET">
                                             <div class="form-group" style="display: flex; gap: 10px;">
                                                 <input type="text" name="search" class="form-control" id="searchInput"
-                                                    style="width: 30%;" placeholder="Cari Aktivitas"
+                                                    style="width: 30%;" placeholder="Tekan F untuk Mencari Aktivitas"
                                                     value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                                                 <button type="submit" class="btn btn-info"
                                                     id="searchButton">Cari</button>
@@ -513,21 +559,52 @@ $email = $_SESSION['email'];
                                                 var searchInput = document.getElementById('searchInput');
 
                                                 if (searchInput.value === '') {
-                                                    event.preventDefault(); // Mencegah pengiriman form jika field pencarian kosong
+                                                    event.preventDefault(); // Prevent form submission if the search field is empty
                                                     searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                                    searchInput.style.borderColor = 'red'; // Mengubah warna border field
-
+                                                    searchInput.style.borderColor = 'red'; // Change border color to red
                                                 } else {
-                                                    searchInput.style.borderColor = '';
+                                                    // Perform AJAX request to check if the value exists in the database
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+
+                                                    xhr.onload = function () {
+                                                        if (xhr.status === 200) {
+                                                            console.log(xhr.responseText);
+                                                            var response = JSON.parse(xhr.responseText);
+                                                            if (response.count === 0) {
+                                                                // Value not found in the database
+                                                                event.preventDefault();
+                                                                searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                                searchInput.style.borderColor = 'red';
+                                                            } else {
+                                                                // Reset styles
+                                                                searchInput.placeholder = 'Cari Aktivitas';
+                                                                searchInput.style.borderColor = '';
+                                                            }
+                                                        }
+                                                    };
+
+                                                    xhr.send();
                                                 }
                                             });
 
                                             document.getElementById('searchInput').addEventListener('click', function () {
                                                 var searchInput = document.getElementById('searchInput');
-                                                searchInput.placeholder = 'Cari Aktivitas'; // Mengembalikan placeholder ke default saat input diklik
-                                                searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
+                                                searchInput.placeholder = 'Cari Aktivitas';
+                                                searchInput.style.borderColor = '';
+                                            });
+
+                                            document.addEventListener('keydown', function (event) {
+                                                var searchInput = document.getElementById('searchInput');
+
+                                                // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                                if (event.key.toLowerCase() === 'f' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                                    searchInput.placeholder = 'Cari Aktivitas';
+                                                    searchInput.style.borderColor = '';
+                                                }
                                             });
                                         </script>
+
 
                                         <table class="table text-nowrap table-centered table-hover" id="dataTable"
                                             width="100%" cellspacing="0">
@@ -552,6 +629,46 @@ $email = $_SESSION['email'];
                                                     exit();
                                                 }
 
+                                                $jumlahDataPerHalaman = 3;
+
+                                                // Perform the query to get the total number of rows
+                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
+                                                $countResult = mysqli_fetch_assoc($queryCount);
+                                                $jumlahData = $countResult['total'];
+
+                                                // Calculate the total number of pages
+                                                $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+
+                                                // Get the current page
+                                                $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+                                                // Calculate the starting data index for the current page
+                                                $awalData = ($page - 1) * $jumlahDataPerHalaman;
+
+                                                // Perform the query to get data for the current page
+                                                $aktivitas = mysqli_query($koneksi, "SELECT * FROM aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
+
+                                                echo "<nav aria-label='Page navigation'>";
+                                                echo "<ul class='pagination'>";
+
+                                                // Previous page link
+                                                if ($page > 1) {
+                                                    echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                                }
+
+                                                // Numbered pagination links
+                                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='aktivitas.php?page=$i'>$i</a></li>";
+                                                }
+
+                                                // Next page link
+                                                if ($page < $jumlahHalaman) {
+                                                    echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                                }
+
+                                                echo "</ul>";
+                                                echo "</nav>";
+
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
                                                     $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%'";
@@ -559,8 +676,9 @@ $email = $_SESSION['email'];
                                                     $sql = "SELECT * FROM aktivitas ORDER BY id DESC";
                                                 }
                                                 $q2 = mysqli_query($koneksi, $sql);
-                                                $urut = 1;
-                                                while ($r2 = mysqli_fetch_array($q2)) {
+                                                $urut = 1 + $awalData;
+
+                                                while ($r2 = mysqli_fetch_array($aktivitas)) {
                                                     $id = $r2['id'];
                                                     $nama = $r2['nama_aktivitas'];
                                                     $jenis = $r2['jenis_olga'];

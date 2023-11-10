@@ -659,6 +659,46 @@ $email = $_SESSION['email'];
                                                     exit();
                                                 }
 
+                                                $jumlahDataPerHalaman = 3;
+
+                                                // Perform the query to get the total number of rows
+                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
+                                                $countResult = mysqli_fetch_assoc($queryCount);
+                                                $jumlahData = $countResult['total'];
+
+                                                // Calculate the total number of pages
+                                                $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+
+                                                // Get the current page
+                                                $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+                                                // Calculate the starting data index for the current page
+                                                $awalData = ($page - 1) * $jumlahDataPerHalaman;
+
+                                                // Perform the query to get data for the current page
+                                                $member = mysqli_query($koneksi, "SELECT * FROM keanggotaan LIMIT $awalData, $jumlahDataPerHalaman");
+
+                                                echo "<nav aria-label='Page navigation'>";
+                                                echo "<ul class='pagination'>";
+
+                                                // Previous page link
+                                                if ($page > 1) {
+                                                    echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                                }
+
+                                                // Numbered pagination links
+                                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='keanggotaan.php?page=$i'>$i</a></li>";
+                                                }
+
+                                                // Next page link
+                                                if ($page < $jumlahHalaman) {
+                                                    echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                                }
+
+                                                echo "</ul>";
+                                                echo "</nav>";
+
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
                                                     $sql = "SELECT * FROM keanggotaan WHERE nama LIKE '%$searchTerm%'";
@@ -666,8 +706,8 @@ $email = $_SESSION['email'];
                                                     $sql = "SELECT * FROM keanggotaan ORDER BY id_anggota DESC";
                                                 }
                                                 $q2 = mysqli_query($koneksi, $sql);
-                                                $urut = 1;
-                                                while ($r2 = mysqli_fetch_array($q2)) {
+                                                $urut = 1 + $awalData;
+                                                while ($r2 = mysqli_fetch_array($member)) {
                                                     $id = $r2['id_anggota'];
                                                     $nama = $r2['nama'];
                                                     $alamat = $r2['alamat'];
