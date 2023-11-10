@@ -46,7 +46,7 @@ if ($op == 'edit') {
     $harga_sewa = $r1['harga_sewa'];
     $tipe_lap = $r1['tipe_lap'];
 
-    if ($anggota == '') {
+    if ($nama == '') {
         $error = "Data tidak ditemukan";
     }
 }
@@ -58,20 +58,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $harga_sewa = $_POST['harga_sewa'];
     $tipe_lap = $_POST['tipe_lap'];
 
-    if ($op == 'edit') {
-        // Perbarui data jika ini adalah operasi edit
-        $sql1 = "UPDATE referensi SET nama_tempat = '$nama', lokasi = '$lokasi', jumlah_lap = '$jumlah_lap', harga_sewa = '$harga_sewa', tipe_lap = '$tipe_lap' WHERE id_referensi = '$id'";
-    } else {
-        // Tambahkan data jika ini adalah operasi insert
-        $sql1 = "INSERT INTO referensi (nama_tempat, lokasi, jumlah_lap, harga_sewa, tipe_lap) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap')";
-    }
 
-    $q1 = mysqli_query($koneksi, $sql1);
+    if (!empty($_FILES['foto']['name'])) {
+        $nama_file = $_FILES['foto']['name'];
+        $tmp = $_FILES['foto']['tmp_name'];
 
-    if ($q1) {
-        $sukses = "Data referensi berhasil diupdate/ditambahkan";
+        // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
+        $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
+
+        // Pindahkan file gambar ke folder tujuan
+        if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
+
+            if ($op == 'edit') {
+                // Perbarui data jika ini adalah operasi edit
+                $sql1 = "UPDATE referensi SET nama_tempat = '$nama', lokasi = '$lokasi', jumlah_lap = '$jumlah_lap', harga_sewa = '$harga_sewa', tipe_lap = '$tipe_lap', gambar = '$nama_file' WHERE id_referensi = '$id'";
+            } else {
+                // Tambahkan data jika ini adalah operasi insert
+                $sql1 = "INSERT INTO referensi (nama_tempat, lokasi, jumlah_lap, harga_sewa, tipe_lap, gambar) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap', '$nama_file')";
+            }
+
+            $q1 = mysqli_query($koneksi, $sql1);
+
+            if ($q1) {
+                $sukses = "Data referensi berhasil diupdate/ditambahkan";
+            } else {
+                $error = "Data referensi gagal diupdate/ditambahkan";
+            }
+        } else {
+            $error = "Harap pilih gambar yang akan diunggah";
+        }
     } else {
-        $error = "Data referensi gagal diupdate/ditambahkan";
+        $error = "Harap pilih gambar yang akan diunggah";
     }
 }
 
@@ -213,11 +230,11 @@ if ($sukses) {
             color: #ccc;
         }
 
-        .breadcrumb-item a:hover{
+        .breadcrumb-item a:hover {
             color: #02406D;
         }
 
-        #ref-nav{
+        #ref-nav {
             color: #02406D;
         }
 
@@ -285,7 +302,7 @@ if ($sukses) {
                     <li class="nav-item dropdown" id="nav-down1">
                         <a class="nav-link" id="nav-down-item1"
                             href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/"
-                            style="width: 150px;">
+                            style="width: 200px;">
                             <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                             Panel Pengelola
                         </a>
@@ -323,7 +340,8 @@ if ($sukses) {
                             </div>
                         <?php endif; ?>
                         <!-- Form -->
-                        <form action="" method="POST" autocomplete="off" onsubmit="return validasiForm()">
+                        <form action="" method="POST" autocomplete="off" onsubmit="return validasiForm()"
+                            enctype="multipart/form-data">
                             <div class="mb-3 row">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Tempat</label>
                                 <div class="col-sm-10">
@@ -367,6 +385,14 @@ if ($sukses) {
                                         style="margin-left: 20px;" <?php if ($tipe_lap == "Outdoor")
                                             echo "checked"; ?> required>
                                     <label for="outdoor">Outdoor</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
+                                <div class="col-sm-10">
+                                    <input class="col-xxl-8 col-12" type="file" id="foto" name="foto"
+                                        required="required" multiple />
                                 </div>
                             </div>
 

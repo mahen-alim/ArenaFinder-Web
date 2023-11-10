@@ -4,11 +4,11 @@
   margin: 0px;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
-.nav-item{
+.nav-item {
   display: flex;
   align-item: center;
   padding-left: 30px;
@@ -180,6 +180,45 @@ body{
   background-color: #02406d;
   color: white;
   transition: 1s;
+}
+
+.all {
+  height: 100px;
+  width: 100px;
+  border: 1px solid white;
+  border-radius: 100px;
+  background-color: white;
+  color: #02406d;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 25px;
+  font-weight: regular;
+  font-size: 15px;
+  animation: slideRight 2s ease-in-out;
+}
+
+.all img {
+  height: 100px;
+  width: 100px;
+  border: 1px solid white;
+  border-radius: 100px;
+  margin-bottom: 15px;
+  transition: scale 1s;
+}
+
+.all img:hover {
+  scale: 105%;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(100%); /* Elemen dimulai dari bawah */
+    opacity: 0; /* Elemen transparan saat dimulai */
+  }
+  100% {
+    transform: translateX(0%); /* Elemen dimulai dari bawah */
+    opacity: 1; /* Elemen transparan saat dimulai */
+  }
 }
 
 .footer {

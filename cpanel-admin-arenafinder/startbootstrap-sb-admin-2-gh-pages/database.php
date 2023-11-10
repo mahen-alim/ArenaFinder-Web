@@ -3,7 +3,7 @@
 $servername = "localhost"; 
 $username_db = "root"; 
 $password_db = ""; 
-$dbname = "arenafinder";
+$dbname = "arenafinderweb";
 
 $conn = new mysqli($servername, $username_db, $password_db, $dbname);
 

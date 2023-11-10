@@ -62,7 +62,7 @@ $email = $_SESSION['email'];
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-clipboard"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFinder <sup>Admin</sup></div>
+                <div class="sidebar-brand-text mx-3">ArenaFinder</div>
             </a>
 
             <!-- Divider -->
@@ -142,7 +142,7 @@ $email = $_SESSION['email'];
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #e7f5ff;">
 
             <!-- Main Content -->
             <div id="content">

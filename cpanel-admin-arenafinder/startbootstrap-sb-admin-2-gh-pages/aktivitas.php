@@ -178,7 +178,7 @@ $email = $_SESSION['email'];
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-clipboard"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFInder <sup>Admin</sup></div>
+                <div class="sidebar-brand-text mx-3">ArenaFInder</div>
             </a>
 
             <!-- Divider -->
@@ -193,7 +193,7 @@ $email = $_SESSION['email'];
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/html/beranda.html">
+                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>

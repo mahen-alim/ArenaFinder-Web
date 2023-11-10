@@ -185,6 +185,7 @@ if (!$koneksi) {
       height: 60px;
       margin-top: 20px;
       margin-left: 0px;
+      margin-right: 15px;
       text-align: center;
       border: 1px solid #02406d;
       border-radius: 10px;
@@ -210,6 +211,7 @@ if (!$koneksi) {
     button.all {
       width: 100px;
       height: 100px;
+      animation: slideRight 2s ease-in-out;
     }
 
     .all img {
@@ -229,9 +231,10 @@ if (!$koneksi) {
       display: flex;
       text-align: justify;
       justify-content: flex-start;
-      background-color: #02406D;
+      background-color: #02406d;
       color: white;
       margin-left: 50px;
+      margin-top: 50px;
       height: 50px;
       width: fit-content;
       border-radius: 10px;
@@ -249,7 +252,17 @@ if (!$koneksi) {
       font-size: 12px;
       animation: slideRight 2s ease-in-out;
       font-weight: lighter;
-      color: #02406D;
+      color: #02406d;
+    }
+
+    .semua-act .all-activity {
+      padding: 10px;
+    }
+
+    .semua-act .all-activity1 {
+      padding: 10px;
+      margin-left: -10px;
+      color: #A1FF9F;
     }
 
     @keyframes slideRight {
@@ -302,6 +315,7 @@ if (!$koneksi) {
         height: 60px;
         margin-top: 20px;
         margin-left: 0px;
+        margin-right: 15px;
         border: 1px solid #02406d;
         border-radius: 10px;
         background-color: white;
@@ -318,6 +332,7 @@ if (!$koneksi) {
         border-radius: 10px;
         margin-bottom: 15px;
         transition: scale 1s;
+        animation: slideRight 2s ease-in-out;
       }
 
       .all img:hover {
@@ -328,7 +343,7 @@ if (!$koneksi) {
         display: flex;
         text-align: justify;
         justify-content: flex-start;
-        background-color: #02406D;
+        background-color: #02406d;
         color: white;
         margin-left: 50px;
         height: 50px;
@@ -356,8 +371,21 @@ if (!$koneksi) {
         font-size: 12px;
         animation: slideRight 2s ease-in-out;
         font-weight: lighter;
-        color: #02406D;
+        color: #02406d;
+      }
 
+      .footer {
+        margin-left: -100px;
+      }
+
+      .semua-act .all-activity {
+        padding: 10px;
+      }
+
+      .semua-act .all-activity1 {
+        padding: 10px;
+        margin-left: -10px;
+        color: #A1FF9F;
       }
     }
   </style>
@@ -395,7 +423,7 @@ if (!$koneksi) {
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
           <li class="nav-item dropdown" id="nav-down1">
             <a class="nav-link" id="nav-down-item1"
-              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 150px;">
+              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
               <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
               Panel Pengelola
             </a>
@@ -413,9 +441,9 @@ if (!$koneksi) {
   </div>
 
   <div class="con-main">
-    <div class="title_activity"> Aktivitas Komunitas
+    <div class="title_activity">Aktivitas Komunitas
     </div>
-    <div class="sub_title_activity"> Berbagai macam akitivitas olahraga yang sedang berlangsung dan
+    <div class="sub_title_activity">Berbagai macam akitivitas olahraga yang sedang berlangsung dan
       yang telah usai dilaksanakan, disajikan sesuai dengan
       kategori olahraga yang anda minati
     </div>
@@ -425,68 +453,23 @@ if (!$koneksi) {
     <div class="con-type">
       <button class="semua">All</button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/futsal.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/futsal.jpg" alt="" />
         <span>Bola Futsal</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/badmin.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/badmin.jpg" alt="" />
         <span>Badminton</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/voli.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/voli.jpg" alt="" />
         <span>Bola Voli</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/basket.jpg" alt="" />
         <span>Bola Basket</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button><button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button><button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
-        <span>Sepak Bola</span>
-      </button><button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="">
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">
+        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="" />
         <span>Sepak Bola</span>
       </button>
     </div>
@@ -523,10 +506,13 @@ if (!$koneksi) {
 
     </script>
 
-    <div class="semua-act">
-      <div class="all-activity">Semua</div>
-      <div class="all-activity1">Aktivitas</div>
+    <div id="con-3">
+      <div class="semua-act">
+        <div class="all-activity">Semua</div>
+        <div class="all-activity1">Aktivitas</div>
+      </div>
     </div>
+
   </div>
 
 

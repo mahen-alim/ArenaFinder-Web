@@ -30,9 +30,14 @@ if (isset($_POST["login"])) {
       header("Location: index.php");
       exit();
     } else {
-      $_SESSION['message'] = "Email atau Password Salah, Mohon Coba Lagi.";
-      header("Location: login.php");
-      exit();
+      ?>
+        <script>
+          alert("<?php echo "Email atau Password Salah, Mohon Coba Lagi." ?>");
+          window.location.replace('login.php');
+        </script>
+        <?php
+        exit();
+
     }
   }
 }

@@ -160,7 +160,7 @@ $email = $_SESSION['email'];
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-clipboard"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFInder <sup>Admin</sup></div>
+                <div class="sidebar-brand-text mx-3">ArenaFInder</div>
             </a>
 
             <!-- Divider -->
@@ -175,7 +175,7 @@ $email = $_SESSION['email'];
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/html/beranda.html">
+                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>
@@ -604,7 +604,7 @@ $email = $_SESSION['email'];
                                         <form action="keanggotaan.php" method="GET">
                                             <div class="form-group" style="display: flex; gap: 10px;">
                                                 <input type="text" name="search" class="form-control" id="searchInput"
-                                                    style="width: 30%;" placeholder="Cari Member"
+                                                    style="width: 50%;" placeholder="Cari Member"
                                                     value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                                                 <button type="submit" class="btn btn-info"
                                                     id="searchButton">Cari</button>
@@ -630,7 +630,7 @@ $email = $_SESSION['email'];
 
                                             document.getElementById('searchInput').addEventListener('click', function () {
                                                 var searchInput = document.getElementById('searchInput');
-                                                searchInput.placeholder = 'Cari Aktivitas'; // Mengembalikan placeholder ke default saat input diklik
+                                                searchInput.placeholder = 'Cari Member'; // Mengembalikan placeholder ke default saat input diklik
                                                 searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
                                             });
                                         </script>
