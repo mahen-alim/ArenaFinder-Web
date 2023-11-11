@@ -237,8 +237,10 @@ if (!$koneksi) {
     button.semua {
       width: 60px;
       height: 60px;
+      padding-top: 10px;
       margin-top: 20px;
       margin-left: 0px;
+      margin-right: 15px;
       text-align: center;
       border: 1px solid #02406d;
       border-radius: 10px;
@@ -367,6 +369,7 @@ if (!$koneksi) {
         height: 60px;
         margin-top: 20px;
         margin-left: 0px;
+        margin-right: 15px;
         border: 1px solid #02406d;
         border-radius: 10px;
         background-color: white;
@@ -624,14 +627,14 @@ if (!$koneksi) {
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
         <?php
         $tipe_lapangan = 'Indoor';
-        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan' ORDER BY id_referensi DESC";
+        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
         
         while ($row = mysqli_fetch_array($q3)) {
           // Membuka baris baru setiap kali 4 kartu telah ditampilkan
           if ($count % 4 == 0) {
-            echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+            echo '</div><div class="card-container" style="display: flex; justify-content: center; gap: 10px;">';
           }
 
           // Card untuk data
@@ -663,14 +666,14 @@ if (!$koneksi) {
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
         <?php
         $tipe_lapangan = 'Outdoor';
-        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan' ORDER BY id_referensi DESC";
+        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
         
         while ($row = mysqli_fetch_array($q3)) {
           // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-          if ($count % 4 == 0) {
-            echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+          if ($count % 6 == 0) {
+            echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">';
           }
 
           // Card untuk data

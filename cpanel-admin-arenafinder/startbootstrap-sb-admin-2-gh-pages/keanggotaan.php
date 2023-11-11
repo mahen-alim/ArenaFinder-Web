@@ -85,6 +85,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Handle the AJAX request
+if (isset($_GET['checkValue'])) {
+    $searchValue = $_GET['checkValue'];
+
+    // Use prepared statements to prevent SQL injection
+    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bind_param('s', $searchValue);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+
+
+    // Return the result as JSON
+    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
+
+    // Close the database connection
+    $stmt->close();
+    $koneksi->close();
+
+    exit();
+}
+
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
     header("refresh:2;url=keanggotaan.php"); // 2 = detik
@@ -145,6 +168,21 @@ $email = $_SESSION['email'];
             color: white;
         }
     </style>
+
+    <script>
+        // JavaScript code to focus on the search input when "F" key is pressed
+        document.addEventListener('keydown', function (event) {
+            // Check if the pressed key is 'F' (case-insensitive)
+            if (event.key.toLowerCase() === 'f') {
+                // Focus on the search input
+                document.getElementById('searchInput').focus();
+                searchInput.placeholder = 'Cari Member';
+                searchInput.style.borderColor = '';
+                // Prevent the default behavior of the key press
+                event.preventDefault();
+            }
+        });
+    </script>
 </head>
 
 <body id="page-top">
@@ -265,9 +303,11 @@ $email = $_SESSION['email'];
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
-                                    <?php echo $email ?>
+                                    <?php echo $email; ?>
                                 </span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
+
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -284,7 +324,7 @@ $email = $_SESSION['email'];
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -604,7 +644,7 @@ $email = $_SESSION['email'];
                                         <form action="keanggotaan.php" method="GET">
                                             <div class="form-group" style="display: flex; gap: 10px;">
                                                 <input type="text" name="search" class="form-control" id="searchInput"
-                                                    style="width: 50%;" placeholder="Cari Member"
+                                                    style="width: 30%;" placeholder="Tekan F untuk Mencari Member"
                                                     value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                                                 <button type="submit" class="btn btn-info"
                                                     id="searchButton">Cari</button>
@@ -619,19 +659,49 @@ $email = $_SESSION['email'];
                                                 var searchInput = document.getElementById('searchInput');
 
                                                 if (searchInput.value === '') {
-                                                    event.preventDefault(); // Mencegah pengiriman form jika field pencarian kosong
+                                                    event.preventDefault(); // Prevent form submission if the search field is empty
                                                     searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                                    searchInput.style.borderColor = 'red'; // Mengubah warna border field
-
+                                                    searchInput.style.borderColor = 'red'; // Change border color to red
                                                 } else {
-                                                    searchInput.style.borderColor = '';
+                                                    // Perform AJAX request to check if the value exists in the database
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+
+                                                    xhr.onload = function () {
+                                                        if (xhr.status === 200) {
+                                                            console.log(xhr.responseText);
+                                                            var response = JSON.parse(xhr.responseText);
+                                                            if (response.count === 0) {
+                                                                // Value not found in the database
+                                                                event.preventDefault();
+                                                                searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                                searchInput.style.borderColor = 'red';
+                                                            } else {
+                                                                // Reset styles
+                                                                searchInput.placeholder = 'Cari Aktivitas';
+                                                                searchInput.style.borderColor = '';
+                                                            }
+                                                        }
+                                                    };
+
+                                                    xhr.send();
                                                 }
                                             });
 
                                             document.getElementById('searchInput').addEventListener('click', function () {
                                                 var searchInput = document.getElementById('searchInput');
-                                                searchInput.placeholder = 'Cari Member'; // Mengembalikan placeholder ke default saat input diklik
-                                                searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
+                                                searchInput.placeholder = 'Cari Aktivitas';
+                                                searchInput.style.borderColor = '';
+                                            });
+
+                                            document.addEventListener('keydown', function (event) {
+                                                var searchInput = document.getElementById('searchInput');
+
+                                                // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                                if (event.key.toLowerCase() === 'f' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                                    searchInput.placeholder = 'Cari Member';
+                                                    searchInput.style.borderColor = '';
+                                                }
                                             });
                                         </script>
 
@@ -659,7 +729,7 @@ $email = $_SESSION['email'];
                                                     exit();
                                                 }
 
-                                                $jumlahDataPerHalaman = 3;
+                                                $jumlahDataPerHalaman = 10;
 
                                                 // Perform the query to get the total number of rows
                                                 $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
@@ -678,7 +748,6 @@ $email = $_SESSION['email'];
                                                 // Perform the query to get data for the current page
                                                 $member = mysqli_query($koneksi, "SELECT * FROM keanggotaan LIMIT $awalData, $jumlahDataPerHalaman");
 
-                                                echo "<nav aria-label='Page navigation'>";
                                                 echo "<ul class='pagination'>";
 
                                                 // Previous page link
@@ -705,7 +774,7 @@ $email = $_SESSION['email'];
                                                 } else {
                                                     $sql = "SELECT * FROM keanggotaan ORDER BY id_anggota DESC";
                                                 }
-                                                $q2 = mysqli_query($koneksi, $sql);
+                                                $member = mysqli_query($koneksi, $sql);
                                                 $urut = 1 + $awalData;
                                                 while ($r2 = mysqli_fetch_array($member)) {
                                                     $id = $r2['id_anggota'];

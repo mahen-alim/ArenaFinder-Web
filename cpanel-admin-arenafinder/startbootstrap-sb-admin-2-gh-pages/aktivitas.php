@@ -103,12 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     }
 }
 
-// Check connection
-if ($koneksi->connect_error) {
-    // If there's an error, return an error message as JSON
-    echo json_encode(['error' => 'Connection failed: ' . $koneksi->connect_error]);
-    exit();
-}
+
 // Handle the AJAX request
 if (isset($_GET['checkValue'])) {
     $searchValue = $_GET['checkValue'];
@@ -629,7 +624,7 @@ $email = $_SESSION['email'];
                                                     exit();
                                                 }
 
-                                                $jumlahDataPerHalaman = 3;
+                                                $jumlahDataPerHalaman = 10;
 
                                                 // Perform the query to get the total number of rows
                                                 $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
@@ -648,7 +643,6 @@ $email = $_SESSION['email'];
                                                 // Perform the query to get data for the current page
                                                 $aktivitas = mysqli_query($koneksi, "SELECT * FROM aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
 
-                                                echo "<nav aria-label='Page navigation'>";
                                                 echo "<ul class='pagination'>";
 
                                                 // Previous page link
@@ -671,11 +665,11 @@ $email = $_SESSION['email'];
 
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%'";
+                                                    $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
-                                                    $sql = "SELECT * FROM aktivitas ORDER BY id DESC";
+                                                    $sql = "SELECT * FROM aktivitas ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
-                                                $q2 = mysqli_query($koneksi, $sql);
+                                                $aktivitas = mysqli_query($koneksi, $sql);
                                                 $urut = 1 + $awalData;
 
                                                 while ($r2 = mysqli_fetch_array($aktivitas)) {

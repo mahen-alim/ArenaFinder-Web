@@ -183,6 +183,7 @@ if (!$koneksi) {
     button.semua {
       width: 60px;
       height: 60px;
+      padding-top: 10px;
       margin-top: 20px;
       margin-left: 0px;
       margin-right: 15px;

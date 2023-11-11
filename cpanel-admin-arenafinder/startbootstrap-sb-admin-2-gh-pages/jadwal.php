@@ -12,7 +12,6 @@ if (!$koneksi) {
 $id = "";
 $anggota = "";
 $jenis_lap = "";
-$tanggal = "";
 $waktu_mulai = "";
 $waktu_selesai = "";
 $harga = "";
@@ -44,7 +43,6 @@ if ($op == 'edit') {
     $r1 = mysqli_fetch_array($q1);
     $anggota = $r1['keanggotaan'];
     $jenis_lap = $r1['jenis_lapangan'];
-    $tanggal = $r1['tanggal'];
     $waktu_mulai = $r1['waktu_mulai'];
     $waktu_selesai = $r1['waktu_selesai'];
     $harga = $r1['harga'];
@@ -59,7 +57,6 @@ if ($op == 'edit') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $anggota = $_POST['keanggotaan'];
     $jenis_lap = $_POST['jenis_lap'];
-    $tanggal = $_POST['tanggal'];
     $waktu_mulai = $_POST['waktu_mulai'];
     $waktu_selesai = $_POST['waktu_selesai'];
     $harga = $_POST['harga'];
@@ -68,10 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
         if ($op == 'edit') {
             // Perbarui data jika ini adalah operasi edit
-            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', tanggal = '$tanggal', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
+            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
         } else {
             // Tambahkan data jika ini adalah operasi insert
-            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tanggal', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
+            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
 
         $q1 = mysqli_query($koneksi, $sql1);
@@ -84,6 +81,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     } else {
         $error = "Terdapat kesalahan input waktu";
     }
+}
+
+
+// Handle the AJAX request
+if (isset($_GET['checkValue'])) {
+    $searchValue = $_GET['checkValue'];
+
+    // Use prepared statements to prevent SQL injection
+    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bind_param('s', $searchValue);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+
+
+    // Return the result as JSON
+    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
+
+    // Close the database connection
+    $stmt->close();
+    $koneksi->close();
+
+    exit();
 }
 
 if ($error) {
@@ -155,7 +176,8 @@ $email = $_SESSION['email'];
             if (event.key.toLowerCase() === 'f') {
                 // Focus on the search input
                 document.getElementById('searchInput').focus();
-
+                searchInput.placeholder = 'Cari Jadwal';
+                searchInput.style.borderColor = '';
                 // Prevent the default behavior of the key press
                 event.preventDefault();
             }
@@ -313,8 +335,8 @@ $email = $_SESSION['email'];
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="page-content">
+                    <!-- Begin Page Content -->
+
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xxl-8 col-12">
@@ -337,8 +359,8 @@ $email = $_SESSION['email'];
                                                     <label for="keanggotaan"
                                                         class="col-sm-2 col-form-label">Keanggotaan</label>
                                                     <div class="col-sm-10">
-                                                        <input type="radio" id="member" name="keanggotaan"
-                                                            value="Member" <?php if ($anggota == "Member")
+                                                        <input type="radio" id="member" name="keanggotaan" value="Member"
+                                                            <?php if ($anggota == "Member")
                                                                 echo "checked"; ?> required>
                                                         <label for="member">Member</label>
 
@@ -371,51 +393,41 @@ $email = $_SESSION['email'];
                                                         </div>
                                                     </div>
 
-                                                    <div class="mb-3 row">
-                                                        <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="datetime-local" placeholder="-Pilih Tanggal-"
-                                                                class="form-control" id="tanggal" name="tanggal"
-                                                                value="<?php echo $tanggal ?>" required>
-                                                    </div>
-                                                </div>
+                                        
 
-                                                <div class="mb-3 row">
-                                                    <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
-                                                        Mulai</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="time" placeholder="-Pilih Waktu Mulai-"
-                                                            class="form-control" id="waktu-mulai" name="waktu_mulai"
-                                                            required>
-                                                    </div>
+                                            <div class="mb-3 row">
+                                                <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
+                                                    Mulai</label>
+                                                <div class="col-sm-10">
+                                                    <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
+                                                        id="waktu-mulai" name="waktu_mulai" required>
                                                 </div>
+                                            </div>
 
-                                                <div class="mb-3 row">
-                                                    <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
-                                                        Selesai</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="time" placeholder="-Pilih Waktu Selesai-"
-                                                            class="form-control" id="waktu-selesai" name="waktu_selesai"
-                                                            required>
-                                                    </div>
+                                            <div class="mb-3 row">
+                                                <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
+                                                    Selesai</label>
+                                                <div class="col-sm-10">
+                                                    <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
+                                                        id="waktu-selesai" name="waktu_selesai" required>
                                                 </div>
+                                            </div>
 
-                                                <div class="mb-3 row">
-                                                    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="harga" name="harga"
-                                                            readonly>
-                                                        <input type="text" class="form-control" id="status"
-                                                            name="status" readonly hidden value="Belum Dipesan">
-                                                    </div>
+                                            <div class="mb-3 row">
+                                                <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="harga" name="harga" readonly>
+                                                    <input type="text" class="form-control" id="status" name="status" readonly
+                                                        hidden value="Belum Dipesan">
                                                 </div>
+                                            </div>
 
-                                                <div class="row">
-                                                    <div class="col-xxl-8 col-12">
-                                                        <input type="submit" name="simpan" value="Simpan Data"
-                                                            class="btn w-100 mt-5" id="save-btn">
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-xxl-8 col-12">
+                                                    <input type="submit" name="simpan" value="Simpan Data"
+                                                        class="btn w-100 mt-5" id="save-btn">
                                                 </div>
+                                            </div>
                                             </form>
                                         </div>
                                     </div>
@@ -489,20 +501,17 @@ $email = $_SESSION['email'];
                                         <h6 class="m-0 font-weight-bold">Tabel Jadwal</h6>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive"></div>
                                             <form action="jadwal.php" method="GET">
                                                 <div class="form-group" style="display: flex; gap: 10px;">
-                                                    <input type="text" name="search" id="searchInput"
-                                                        style="width: 30%;" class="form-control"
-                                                        placeholder="Tekan F untuk Mencari Jadwal"
+                                                    <input type="text" name="search" id="searchInput" style="width: 30%;"
+                                                        class="form-control" placeholder="Tekan F untuk Mencari Jadwal"
                                                         value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 
-                                                    <button type="submit" class="btn btn-info"
-                                                        id="searchButton">Cari</button>
+                                                    <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
                                                     <?php if (isset($_GET['search'])): ?>
-                                                        <a href="jadwal.php" class="btn btn-secondary"
-                                                            id="resetSearch">Hapus
-                                                            Pencarian</a>
+                                                        <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
+                                                        Pencarian</a>
                                                     <?php endif; ?>
                                                 </div>
                                             </form>
@@ -512,235 +521,259 @@ $email = $_SESSION['email'];
                                                     var searchInput = document.getElementById('searchInput');
 
                                                     if (searchInput.value === '') {
-                                                        event.preventDefault(); // Mencegah pengiriman form jika field pencarian kosong
+                                                        event.preventDefault(); // Prevent form submission if the search field is empty
                                                         searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                                        searchInput.style.borderColor = 'red'; // Mengubah warna border field
-
+                                                        searchInput.style.borderColor = 'red'; // Change border color to red
                                                     } else {
-                                                        searchInput.style.borderColor = '';
+                                                        // Perform AJAX request to check if the value exists in the database
+                                                        var xhr = new XMLHttpRequest();
+                                                        xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+
+                                                        xhr.onload = function () {
+                                                            if (xhr.status === 200) {
+                                                                console.log(xhr.responseText);
+                                                                var response = JSON.parse(xhr.responseText);
+                                                                if (response.count === 0) {
+                                                                    // Value not found in the database
+                                                                    event.preventDefault();
+                                                                    searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                                    searchInput.style.borderColor = 'red';
+                                                                } else {
+                                                                    // Reset styles
+                                                                    searchInput.placeholder = 'Cari Aktivitas';
+                                                                    searchInput.style.borderColor = '';
+                                                                }
+                                                            }
+                                                        };
+
+                                                        xhr.send();
                                                     }
                                                 });
 
                                                 document.getElementById('searchInput').addEventListener('click', function () {
                                                     var searchInput = document.getElementById('searchInput');
-                                                    searchInput.placeholder = 'Cari Jadwal'; // Mengembalikan placeholder ke default saat input diklik
-                                                    searchInput.style.borderColor = ''; // Mengembalikan warna border ke default saat input diklik
+                                                    searchInput.placeholder = 'Cari Aktivitas';
+                                                    searchInput.style.borderColor = '';
+                                                });
+
+                                                document.addEventListener('keydown', function (event) {
+                                                    var searchInput = document.getElementById('searchInput');
+
+                                                    // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                                    if (event.key.toLowerCase() === 'f' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                                        searchInput.placeholder = 'Cari Jadwal';
+                                                        searchInput.style.borderColor = '';
+                                                    }
                                                 });
                                             </script>
 
-                                            <div class="container">
-                                                <table class="table text-nowrap mb-0 table-centered table-hover"
-                                                    cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">No.</th>
-                                                            <th scope="col">Keanggotaan</th>
-                                                            <th scope="col">Jenis Lapangan</th>
-                                                            <th scope="col">Tanggal</th>
-                                                            <th scope="col">Waktu Mulai</th>
-                                                            <th scope="col">Waktu Selesai</th>
-                                                            <th scope="col">Harga</th>
-                                                            <th scope="col">Status</th>
-                                                            <th scope="col">Aksi</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="hoverable">
-                                                        <?php
-                                                        if (isset($_GET['reset'])) {
-                                                            // Pengguna menekan tombol "Hapus Pencarian"
-                                                            header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
-                                                            exit();
-                                                        }
+                                        <table class="table text-nowrap table-centered table-hover" id="dataTable"
+                                            width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No.</th>
+                                                    <th scope="col">Keanggotaan</th>
+                                                    <th scope="col">Jenis Lapangan</th>
+                                                    <th scope="col">Tanggal</th>
+                                                    <th scope="col">Waktu Mulai</th>
+                                                    <th scope="col">Waktu Selesai</th>
+                                                    <th scope="col">Harga</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="hoverable">
+                                                <?php
+                                                if (isset($_GET['reset'])) {
+                                                    // Pengguna menekan tombol "Hapus Pencarian"
+                                                    header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                                    exit();
+                                                }
 
-                                                        $jumlahDataPerHalaman = 10;
+                                                $jumlahDataPerHalaman = 10;
 
-                                                        // Perform the query to get the total number of rows
-                                                        $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
-                                                        $countResult = mysqli_fetch_assoc($queryCount);
-                                                        $jumlahData = $countResult['total'];
+                                                // Perform the query to get the total number of rows
+                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
+                                                $countResult = mysqli_fetch_assoc($queryCount);
+                                                $jumlahData = $countResult['total'];
 
-                                                        // Calculate the total number of pages
-                                                        $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+                                                // Calculate the total number of pages
+                                                $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 
-                                                        // Get the current page
-                                                        $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+                                                // Get the current page
+                                                $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
 
-                                                        // Calculate the starting data index for the current page
-                                                        $awalData = ($page - 1) * $jumlahDataPerHalaman;
+                                                // Calculate the starting data index for the current page
+                                                $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
-                                                        // Perform the query to get data for the current page
-                                                        $jadwal = mysqli_query($koneksi, "SELECT * FROM jadwal LIMIT $awalData, $jumlahDataPerHalaman");
+                                                echo "<ul class='pagination ml-auto'>";
 
-                                                        echo "<nav aria-label='Page navigation'>";
-                                                        echo "<ul class='pagination'>";
+                                                // Previous page link
+                                                if ($page > 1) {
+                                                    echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                                }
 
-                                                        // Previous page link
-                                                        if ($page > 1) {
-                                                            echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
-                                                        }
+                                                // Numbered pagination links
+                                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='jadwal.php?page=$i'>$i</a></li>";
+                                                }
 
-                                                        // Numbered pagination links
-                                                        for ($i = 1; $i <= $jumlahHalaman; $i++) {
-                                                            echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='jadwal.php?page=$i'>$i</a></li>";
-                                                        }
+                                                // Next page link
+                                                if ($page < $jumlahHalaman) {
+                                                    echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                                }
 
-                                                        // Next page link
-                                                        if ($page < $jumlahHalaman) {
-                                                            echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                                        }
+                                                echo "</ul>";
+                                                echo "</nav>";
 
-                                                        echo "</ul>";
-                                                        echo "</nav>";
+                                                if (isset($_GET['search'])) {
+                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
 
-                                                        if (isset($_GET['search'])) {
-                                                            $searchTerm = $koneksi->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
+                                                } else {
 
-                                                            $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%'";
-                                                        } else {
+                                                    $sql = "SELECT * FROM jadwal ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                                }
 
-                                                            $sql = "SELECT * FROM jadwal ORDER BY id DESC";
-                                                        }
+                                                $jadwal = mysqli_query($koneksi, $sql);
+                                                $urut = 1 + $awalData;
 
-                                                        $q2 = mysqli_query($koneksi, $sql);
-                                                        $urut = 1 + $awalData;
-
-                                                        while ($r2 = mysqli_fetch_array($jadwal)) {
-                                                            $id = $r2['id'];
-                                                            $anggota = $r2['keanggotaan'];
-                                                            $jenis_lap = $r2['jenis_lapangan'];
-                                                            $tanggal = $r2['tanggal'];
-                                                            $w_mulai = $r2['waktu_mulai'];
-                                                            $w_selesai = $r2['waktu_selesai'];
-                                                            $harga = $r2['harga'];
-                                                            $status = $r2['status_pemesanan'];
-                                                            ?>
-                                                            <tr>
-                                                                <th scope="row">
-                                                                    <?php echo $urut++ ?>
-                                                                </th>
-                                                                <td scope="row">
-                                                                    <?php echo $anggota ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <?php echo $jenis_lap ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <?php echo $tanggal ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <?php echo $w_mulai ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <?php echo $w_selesai ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <?php echo $harga ?>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <a href="jadwal.php?op=status&id="><button type="button"
-                                                                            class="btn btn-info" id="editButton" disabled>
-                                                                            <?php echo $status ?>
-                                                                        </button></a>
-                                                                </td>
-                                                                <td scope="row">
-                                                                    <a href="jadwal.php?op=edit&id=<?php echo $id ?>"><button
-                                                                            type="button" class="btn btn-warning"
-                                                                            id="editButton">Edit</button></a>
-                                                                    <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
-                                                                        onclick="return confirm('Yakin mau menghapus data ini?')"><button
-                                                                            type="button"
-                                                                            class="btn btn-danger">Delete</button></a>
-                                                                </td>
-                                                            </tr>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </tbody>
-
-                                                </table>
-
-                                            </div>
-                                        </div>
+                                                while ($r2 = mysqli_fetch_array($jadwal)) {
+                                                    $id = $r2['id'];
+                                                    $anggota = $r2['keanggotaan'];
+                                                    $jenis_lap = $r2['jenis_lapangan'];
+                                                    $tanggal = date('Y-m-d');
+                                                    $w_mulai = $r2['waktu_mulai'];
+                                                    $w_selesai = $r2['waktu_selesai'];
+                                                    $harga = $r2['harga'];
+                                                    $status = $r2['status_pemesanan'];
+                                                    ?>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?php echo $urut++ ?>
+                                                        </th>
+                                                        <td scope="row">
+                                                            <?php echo $anggota ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $jenis_lap ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $tanggal ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $w_mulai ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $w_selesai ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $harga ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a href="jadwal.php?op=status&id="><button type="button"
+                                                                    class="btn btn-info" id="editButton" disabled>
+                                                                    <?php echo $status ?>
+                                                                </button></a>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <a href="jadwal.php?op=edit&id=<?php echo $id ?>"><button
+                                                                    type="button" class="btn btn-warning"
+                                                                    id="editButton">Edit</button></a>
+                                                            <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
+                                                                onclick="return confirm('Yakin mau menghapus data ini?')"><button
+                                                                    type="button" class="btn btn-danger">Delete</button></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
                                     </div>
-
                                 </div>
-
-                            </div>
-
-                        </div>
-                        <!-- /.container-fluid -->
-
-                    </div>
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Your Website 2020</span>
                             </div>
                         </div>
-                    </footer>
-                    <!-- End of Footer -->
 
-                </div>
-                <!-- End of Content Wrapper -->
-
-            </div>
-            <!-- End of Page Wrapper -->
-
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.php">Logout</a>
-                        </div>
                     </div>
+
                 </div>
             </div>
 
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
-            <!-- flatpickr -->
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3"></script>
-            <script>
-                flatpickr("input[type=datetime-local]", {});
-            </script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <script>
-                config = {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3"></script>
+    <script>
+        flatpickr("input[type=datetime-local]", {});
+    </script>
 
-                }
-                flatpickr("input[type=time]", config);
-            </script>
+    <script>
+        config = {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+
+        }
+        flatpickr("input[type=time]", config);
+    </script>
 
 </body>
 
