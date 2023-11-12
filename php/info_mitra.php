@@ -237,6 +237,45 @@ try {
         margin-top: -65px;
         margin-right: 60px;
       }
+
+      .pengelola {
+        margin-top: 30px;
+        margin-left: -118px;
+      }
+
+      #pengelolaTempat {
+        display: flex;
+        /* Menggunakan display: flex; untuk membuat tampilan horizontal */
+        align-items: start;
+        /* Untuk pusatkan elemen vertikal di dalam container */
+        gap: 20px;
+      }
+
+      #pengelolaTempat img {
+        margin: 0 20px;
+        /* Spasi antara gambar */
+        width: 100px;
+        height: 100px;
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 20px;
+      }
+
+      #pengelolaTempat h5 {
+        margin: 0 10px;
+        /* Spasi antara teks */
+        padding-top: 20px;
+      }
+
+      .keanggotaan {
+        margin-left: -118px;
+        margin-top: 30px;
+      }
+
+      .lokasi {
+        margin-left: -118px;
+        margin-top: 30px;
+      }
     }
   </style>
 </head>
