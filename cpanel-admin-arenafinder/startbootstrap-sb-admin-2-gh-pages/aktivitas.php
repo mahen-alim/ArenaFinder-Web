@@ -167,15 +167,17 @@ $email = $_SESSION['email'];
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
         #save-btn {
             background-color: #e7f5ff;
             color: #02406d;
@@ -215,9 +217,10 @@ $email = $_SESSION['email'];
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-clipboard"></i>
+                    <i class="fa-solid fa-clipboard mx-3 ml-auto"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFInder</div>
+                <div class="sidebar-brand-text">Arena</div>
+                <div class="sidebar-brand-text" style="color: #a1ff9f;">Finder</div>
             </a>
 
             <!-- Divider -->
@@ -295,7 +298,7 @@ $email = $_SESSION['email'];
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #e7f5ff;">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: white;">
 
             <!-- Main Content -->
             <div id="content">

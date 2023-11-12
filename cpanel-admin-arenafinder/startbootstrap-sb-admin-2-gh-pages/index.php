@@ -42,14 +42,17 @@ $conn->close();
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
     <style>
+        /* custom.css */
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
         #kartu {
             transition: transform 0.2s;
         }
@@ -75,9 +78,10 @@ $conn->close();
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-clipboard"></i>
+                    <i class="fa-solid fa-clipboard mx-3 ml-auto"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFinder</div>
+                <div class="sidebar-brand-text">Arena</div>
+                <div class="sidebar-brand-text" style="color: #a1ff9f;">Finder</div>
             </a>
 
             <!-- Divider -->
@@ -157,7 +161,7 @@ $conn->close();
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #e7f5ff;">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: white;">
 
             <!-- Main Content -->
             <div id="content">
@@ -225,19 +229,21 @@ $conn->close();
 
                         <!-- Schedule On Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2" id="kartu">
+                            <div class="card shadow h-100 py-2" id="kartu"
+                                style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <a href="aktivitas.php">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Jadwal Dipesan</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1"
+                                                    style="color: white;">
+                                                    Jadwal <span style="color: #a1ff9f;">Dipesan</span></div>
+                                                <div class="h5 mb-0 font-weight-bold text-white">5</div>
                                             </a>
 
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-regular fa-calendar-xmark fa-2x text-gray-300"></i>
+                                            <i class="fa-regular fa-calendar-xmark fa-2x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -246,19 +252,21 @@ $conn->close();
 
                         <!-- Schedule Off Card -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2" id="kartu">
+                            <div class="card shadow h-100 py-2" id="kartu"
+                                style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <a href="pesanan.php">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                    Jadwal Kosong</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1"
+                                                    style="color: white;">
+                                                    Jadwal <span style="color: #a1ff9f;">Kosong</span></div>
+                                                <div class="h5 mb-0 font-weight-bold text-white">18</div>
                                             </a>
 
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-calendar-check fa-2x text-gray-300"></i>
+                                            <i class="fa-solid fa-calendar-check fa-2x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -267,16 +275,20 @@ $conn->close();
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2" id="kartu">
+                            <div class="card shadow h-100 py-2" id="kartu"
+                                style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Jumlah Member</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalMember; ?></div>
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1"
+                                                style="color: white;">
+                                                Jumlah <span style="color: #a1ff9f;">Member</span></div>
+                                            <div class="h5 mb-0 font-weight-bold text-white">
+                                                <?php echo $totalMember; ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-users fa-2x text-gray-300"></i>
+                                            <i class="fa-solid fa-users fa-2x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -285,28 +297,30 @@ $conn->close();
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2" id="kartu">
+                            <div class="card shadow h-100 py-2" id="kartu"
+                                style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Kuota
-                                                Pesanan
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1 text-white">Kuota
+                                                <span style="color: #a1ff9f;">Pesanan</span>
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-white">100%</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-warning" role="progressbar"
-                                                            style="width: 100%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        <div class="progress-bar" role="progressbar"
+                                                            style="width: 100%; background-color: #a1ff9f;"
+                                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-clipboard-list fa-2x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -320,16 +334,17 @@ $conn->close();
                     <div class="row">
 
                         <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xxl-8 col-12">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Grafik Pemesanan</h6>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                    style="background-color: #02406d;">
+                                    <h6 class="m-0 font-weight-bold text-white">Grafik <span
+                                            style="color: #a1ff9f;">Pemesanan</span></h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-white"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                             aria-labelledby="dropdownMenuLink">
@@ -344,53 +359,15 @@ $conn->close();
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
+                                        <!-- Adjust height as needed -->
                                         <canvas id="myAreaChart"></canvas>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Layanan Terlaris dipesan</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>

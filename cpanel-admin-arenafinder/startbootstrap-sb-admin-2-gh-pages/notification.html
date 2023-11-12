@@ -14,7 +14,7 @@
     <title>Login Form</title>
 </head>
 <style>
-body { margin-top:30px; overflow-x: hidden;}
+body { margin-top:30px; overflow-x: hidden; background-color: #e7f5ff;}
 hr.message-inner-separator
 {
     clear: both;
@@ -28,6 +28,10 @@ hr.message-inner-separator
     position: absolute;
     left: 30%;
 }
+#box-alert{
+    background-color: #02406d;
+    color: white;
+}
 
 @media (max-width: 768px) {
 #box-alert{
@@ -40,11 +44,11 @@ hr.message-inner-separator
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-6">
-                <div class="alert alert-success" id="box-alert">
-                   <span class="glyphicon glyphicon-ok"></span> <strong>Email Terkirim</strong>
-                    <hr class="message-inner-separator">
+                <div class="alert" id="box-alert">
+                   <span class="glyphicon glyphicon-ok"></span> <strong>Email <span style="color: #a1ff9f;">Terkirim</span></strong>
+                    <hr class="message-inner-separator" style="background-color: white;">
                     <p>
-                        Link Ubah Sandi Terkirim! Segera Cek Inbox Email Anda untuk Menuju ke Halaman Pergantian Sandi.  <i class="fas fa-envelope" style="color: black;"></i></p>
+                        Link Ubah Sandi Terkirim! Segera Cek Inbox Email Anda untuk Menuju ke Halaman Pergantian Sandi.  <i class="fas fa-envelope" style="color: #a1ff9f;"></i></p>
                 </div>
             </div>
 </body>

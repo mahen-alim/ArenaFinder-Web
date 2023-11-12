@@ -14,46 +14,61 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Kanit", sans-serif;
+        }
 
+        #btn-login {
+            background-color: #e7f5ff;
+            color: #02406d;
+        }
+
+        #btn-login:hover {
+            background-color: #02406d;
+            color: #e7f5ff;
+            border: 1px solid #e7f5ff;
+        }
+
+        #card-email {
+            background-color: white;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
-
+<body class="bg-gradient" style="background-color: #e7f5ff">
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
+            <div class="col-sm-10 col-md-5 ">
+                <div class="card o-hidden border-0 shadow-lg my-4" style="height: 700px;">
+                    <div class="card-body p-10" id="card-email">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
+                            <div class="col-lg-10 mx-auto p-2">
+                                <div class="p-3">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Lupa Sandi?</h1>
-                                        <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kita
+                                        <h1 class="h2 text-gray-900 mb-2 ">Lupa Sandi?</h1>
+                                        <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kami
                                             akan kirimkan sebuah link ke email anda untuk merubah sandi!</p>
+                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
+                                            style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
-                                    <form class="user" action="#" method="POST" name="recover_psw">
+
+                                    <form class="user" method="POST" action="#" autocomplete="off" name="recover_psw">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" placeholder="Alamat Email" name="email">
                                         </div>
                                         <input class="btn btn-primary btn-user btn-block" type="submit"
                                             value="Ganti Sandi" name="recover">
-
                                     </form>
-                                    <hr>
+
+                                    <hr />
                                     <div class="text-center">
                                         <a class="small" href="register.php">Buat Akun Anda!</a>
                                     </div>
@@ -65,11 +80,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <!-- Bootstrap core JavaScript-->

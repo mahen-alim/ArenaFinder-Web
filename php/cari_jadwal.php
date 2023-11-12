@@ -30,6 +30,7 @@ if (!$koneksi) {
     <style>
         body {
             margin-top: 150px;
+            overflow-x: hidden;
         }
 
         .fourth-sep {
@@ -334,20 +335,21 @@ if (!$koneksi) {
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg" style="background-color: #02406D;">
-        <div class="container-fluid">
-            <a class="navbar-brand"
-                style="font-family: 'Kanit', sans-serif; color: white; margin-right: -235px;">Arena</a>
-            <a class="navbar-brand"
-                style="font-family: 'Kanit', sans-serif; color: #A1FF9F; margin-left: 235px;">Finder</a>
-            <a class="navbar-brand" style="font-family: 'Kanit', sans-serif; color: white; padding-right: 300px;">|</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"
-                style="margin-top: 0px; background-color: white; color-scheme: #02406D;">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #02406D;">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span style="font-family: 'Kanit', sans-serif; color: white;">Arena</span>
+                <span style="font-family: 'Kanit', sans-serif; color: #A1FF9F;">Finder</span>
+                <span style="font-family: 'Kanit', sans-serif; color: white;">|</span>
+            </a>
+
+            <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto my-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="beranda.php">Beranda</a>
                     </li>
@@ -401,7 +403,7 @@ if (!$koneksi) {
                         echo '<span class="span">Nganjuk </span>';
                         echo '<span class="text-wrapper">' . $tanggalData . '</span>';
                     } else {
-                        echo 'Data tidak ditemukan'; // Handle when no data is found in the database
+                        echo 'Jadwal tidak ditemukan'; // Handle when no data is found in the database
                     }
                     ?>
                 </p>
@@ -411,7 +413,7 @@ if (!$koneksi) {
 
 
     <div class="form-container">
-        <form method="post" action="/ArenaFinder/php/cari_jadwal.php">
+        <form method="post" action="">
             <div class="form-group">
                 <select id="inputOpsi" class="form-control" name="jenis_lapangan">
                     <option value="">Jenis Lapangan</option>
@@ -431,14 +433,11 @@ if (!$koneksi) {
 
     <div class="label" id="label2">
         <p class="text">
-            <span class="text-wrapper">*Periode tanggal pemesanan: </span>
-            <span class="span">06 Sep - 30 Sep.<br /></span>
             <span class="text-wrapper">*Status </span>
             <span class="span">Belum Dipesan</span>
             <span class="text-wrapper-2"> akan berubah menjadi </span>
             <span class="span">Sudah Dipesan</span>
-            <span class="text-wrapper-2">jika total waktu yang disediakan pada salah satu sesi hari sudah habis
-                terjual.<br /></span>
+            <span class="text-wrapper-2">jika admin telah mengkonfirmasi pesanan dari pelanggan.<br /></span>
             <span class="text-wrapper">*Durasi sewa lapangan </span>
             <span class="span">perjam</span>
             <span class="text-wrapper"> untuk setiap pemesanan.</span>
@@ -480,7 +479,7 @@ if (!$koneksi) {
                 $count++;
             }
         } else {
-            echo "Jadwal telah dipesan.";
+            echo "Jadwal tidak ditemukan.";
         }
 
         ?>
@@ -515,6 +514,19 @@ if (!$koneksi) {
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
             <script>
                 flatpickr("input[type=datetime-local]", {});
+            </script>
+            <!-- Include Bootstrap JS and jQuery -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    flatpickr("#staticEmail", {
+                        enableTime: false, // Enable time selection
+                        minDate: "today", // Set the minimum date to today
+                        dateFormat: "Y-m-d", // Specify the date format
+                    });
+                });
             </script>
 </body>
 
