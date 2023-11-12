@@ -37,7 +37,7 @@ try {
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
   <style>
     body {
-      overflow-x: scroll;
+      overflow-x: hidden;
     }
 
     .img-container {
@@ -52,7 +52,7 @@ try {
       justify-content: center;
       margin-top: 50px;
       max-width: 100%;
-      height: 500px;
+      height: 300px;
       border-bottom-right-radius: 50px;
       border-bottom-left-radius: 50px;
     }
@@ -76,7 +76,7 @@ try {
     }
 
     .title-con {
-      margin-left: 200px;
+      margin-left: 400px;
     }
 
     /* Menyembunyikan semua bagian kecuali section1 */
@@ -166,7 +166,7 @@ try {
     .social-buttons {
       text-align: end;
       margin-top: -75px;
-      margin-right: 200px;
+      margin-right: 420px;
     }
 
     .social-button {
@@ -178,7 +178,7 @@ try {
       text-decoration: none;
       font-weight: bold;
       border-radius: 5px;
-      font-size: 24px;
+      font-size: 20px;
       transition: transform 0.2s;
       /* Sesuaikan ukuran ikon */
     }
@@ -204,10 +204,26 @@ try {
       /* Warna latar belakang saat tombol dihover */
     }
 
+    .pengelola {
+      margin-top: -730px;
+      margin-left: 720px;
+    }
+
+    .keanggotaan {
+      margin-left: 720px;
+      margin-top: 50px;
+    }
+
+    .lokasi {
+      margin-left: 720px;
+      margin-top: 50px;
+    }
 
     @media (max-width: 900px) {
       .img-container img {
         margin-left: -20px;
+        max-width: 100%;
+        height: 300px;
         border-bottom-right-radius: 50px;
         border-bottom-left-radius: 50px;
       }
@@ -215,6 +231,7 @@ try {
       .title-con {
         margin-left: 80px;
       }
+
       .social-buttons {
         text-align: end;
         margin-top: -65px;
@@ -293,8 +310,6 @@ try {
       <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
       <a href="#" class="social-button instagram"><i class="fab fa-instagram"></i></a>
     </div>
-
-
 
   </div>
 
@@ -388,6 +403,32 @@ try {
               <div class="pengelola-item">
                 <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5>Super Admin</h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="keanggotaan">
+            <h3>Sistem Keanggotaan</h3>
+            <div id="pengelolaTempat">
+              <div class="pengelola-item">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <h5>Member</h5>
+              </div>
+              <div class="pengelola-item">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <h5>Non Member</h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="lokasi">
+            <h3>Lokasi</h3>
+            <div id="pengelolaTempat">
+              <div class="pengelola-item">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.772089912621!2d111.91565287506188!3d-7.599764592415119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e784bb1bfb7007b%3A0xf4b4b72690bfdd4d!2sBLESSING%20FUTSAL!5e0!3m2!1sid!2sid!4v1699786792132!5m2!1sid!2sid"
+                  width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
             </div>
           </div>

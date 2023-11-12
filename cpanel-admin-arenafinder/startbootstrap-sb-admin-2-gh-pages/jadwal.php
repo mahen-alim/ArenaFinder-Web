@@ -12,6 +12,7 @@ if (!$koneksi) {
 $id = "";
 $anggota = "";
 $jenis_lap = "";
+$tgl = "";
 $waktu_mulai = "";
 $waktu_selesai = "";
 $harga = "";
@@ -43,6 +44,7 @@ if ($op == 'edit') {
     $r1 = mysqli_fetch_array($q1);
     $anggota = $r1['keanggotaan'];
     $jenis_lap = $r1['jenis_lapangan'];
+    $tgl = $r1['tanggal'];
     $waktu_mulai = $r1['waktu_mulai'];
     $waktu_selesai = $r1['waktu_selesai'];
     $harga = $r1['harga'];
@@ -65,10 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
         if ($op == 'edit') {
             // Perbarui data jika ini adalah operasi edit
-            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', tanggal = '$tgl', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
+            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
         } else {
             // Tambahkan data jika ini adalah operasi insert
-            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
+            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
 
         $q1 = mysqli_query($koneksi, $sql1);
@@ -399,8 +401,8 @@ $email = $_SESSION['email'];
                                                 <div class="mb-3 row">
                                                     <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
                                                     <div class="col-sm-10" onclick="">
-                                                        <input type="date" placeholder="-Pilih Tanggal-"
-                                                            class="form-control" id="tanggalInput" name="tanggal" disabled
+                                                        <input type="text" placeholder="-Pilih Tanggal-"
+                                                            class="form-control" id="tanggal" name="tanggal" disabled
                                                             required>
                                                     </div>
                                                 </div>
@@ -411,7 +413,7 @@ $email = $_SESSION['email'];
                                                         var currentDate = new Date().toISOString().split('T')[0];
 
                                                         // Set the value of the input element to the current date and time
-                                                        document.getElementById('tanggalInput').value = currentDate;
+                                                        document.getElementById('tanggal').value = currentDate;
                                                     });
                                                 </script>
                                         </div>

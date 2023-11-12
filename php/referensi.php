@@ -494,7 +494,7 @@ if (!$koneksi) {
     <p id="swipe-btn">Swipe >></p>
 
     <div class="con-type">
-      <button class="semua">All</button>
+      <button class="semua" onclick="showCards('All')">All</button>
       <button class="all" type="submit">
         <img src="/ArenaFinder/img_asset/futsal.jpg" alt="" />
         <span>Bola Futsal</span>
@@ -627,7 +627,8 @@ if (!$koneksi) {
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
         <?php
         $tipe_lapangan = 'Indoor';
-        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan'";
+        $tipe_olga = 'Badminton';
+        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan' AND tipe_olga = '$tipe_olga'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
         
@@ -638,7 +639,7 @@ if (!$koneksi) {
           }
 
           // Card untuk data
-          echo '<div class="card" data-tipe-lap="' . $row['tipe_lap'] . '">';
+          echo '<div class="card" data-tipe-lap="' . $row['tipe_lap'] . '" data-tipe-olga="' . $row['tipe_olga'] . '">';
           echo '<div class="card-body">';
 
           $namaGambar = $row['gambar'];
@@ -672,7 +673,7 @@ if (!$koneksi) {
         
         while ($row = mysqli_fetch_array($q3)) {
           // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-          if ($count % 6 == 0) {
+          if ($count % 4 == 0) {
             echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">';
           }
 

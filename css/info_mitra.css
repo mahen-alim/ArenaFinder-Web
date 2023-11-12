@@ -261,22 +261,6 @@ body {
   padding-top: 20px;
 }
 
-.pengelola {
-  margin-top: -720px;
-  margin-left: 720px;
-}
-
-/* CSS untuk memberi jarak antara gambar dan teks */
-.pengelola-item {
-  margin-bottom: 20px; /* Anda bisa mengatur nilai margin-bottom sesuai dengan kebutuhan Anda */
-  text-align: center;
-}
-
-/* CSS tambahan jika diperlukan */
-.pengelola img {
-  max-width: 100%; /* Membuat gambar sesuai lebar parent container */
-}
-
 /* Gaya untuk mengatur tata letak img dan h5 secara horizontal */
 #pengelolaTempat {
   display: flex; /* Menggunakan display: flex; untuk membuat tampilan horizontal */

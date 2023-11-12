@@ -176,7 +176,7 @@ $conn->close();
                     </button>
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-3">
-                        <i class="fas fa-fw fa-tachometer-alt mt-3 mr-3" style="color: #02406d;"></i>
+                        <i class="fa-solid fa-house-user mt-3 mr-3" style="color: #02406d;"></i>
                         <h1 class="h3 mr-2 mt-4" style="color: #02406d; font-size: 20px; font-weight: bold;">Dashboard
                         </h1>
                     </div>
@@ -234,7 +234,7 @@ $conn->close();
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <a href="aktivitas.php">
+                                            <a href="jadwal.php">
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
                                                     style="color: white;">
                                                     Jadwal <span style="color: #a1ff9f;">Dipesan</span></div>
@@ -257,7 +257,7 @@ $conn->close();
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <a href="pesanan.php">
+                                            <a href="jadwal.php">
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
                                                     style="color: white;">
                                                     Jadwal <span style="color: #a1ff9f;">Kosong</span></div>
@@ -280,12 +280,15 @@ $conn->close();
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-1"
-                                                style="color: white;">
-                                                Jumlah <span style="color: #a1ff9f;">Member</span></div>
-                                            <div class="h5 mb-0 font-weight-bold text-white">
-                                                <?php echo $totalMember; ?>
-                                            </div>
+                                            <a href="keanggotaan.php">
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1"
+                                                    style="color: white;">
+                                                    Jumlah <span style="color: #a1ff9f;">Member</span></div>
+                                                <div class="h5 mb-0 font-weight-bold text-white">
+                                                    <?php echo $totalMember; ?>
+                                                </div>
+                                            </a>
+
                                         </div>
                                         <div class="col-auto">
                                             <i class="fa-solid fa-users fa-2x text-white"></i>
@@ -302,9 +305,12 @@ $conn->close();
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-1 text-white">Kuota
-                                                <span style="color: #a1ff9f;">Pesanan</span>
-                                            </div>
+                                            <a href="pesanan.php">
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-white">
+                                                    Kuota
+                                                    <span style="color: #a1ff9f;">Pesanan</span>
+                                                </div>
+                                            </a>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-white">100%</div>
