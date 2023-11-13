@@ -433,7 +433,7 @@
   </div>
 
   <div class="container">
-    <div class="community" style="margin-top: 200px; margin-left: -120px;"> Semua Aktivitas </div>
+    <div class="community" style="margin-top: 200px; margin-left: -120px;"> Rekomendasi Aktivitas </div>
     <div class="card-slider w-60 h-60" id="cardSlider">
       <div class="card">
         <img src="/ArenaFinder/img_asset/pexels-laura-rincón-16477377.jpg" class="card-img-top" alt="..."

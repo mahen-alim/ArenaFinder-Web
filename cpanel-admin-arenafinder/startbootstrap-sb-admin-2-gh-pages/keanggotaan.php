@@ -318,14 +318,6 @@ $email = $_SESSION['email'];
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -735,7 +727,7 @@ $email = $_SESSION['email'];
                                                 $jumlahDataPerHalaman = 10;
 
                                                 // Perform the query to get the total number of rows
-                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
+                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM keanggotaan");
                                                 $countResult = mysqli_fetch_assoc($queryCount);
                                                 $jumlahData = $countResult['total'];
 
@@ -747,9 +739,6 @@ $email = $_SESSION['email'];
 
                                                 // Calculate the starting data index for the current page
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
-
-                                                // Perform the query to get data for the current page
-                                                $member = mysqli_query($koneksi, "SELECT * FROM keanggotaan LIMIT $awalData, $jumlahDataPerHalaman");
 
                                                 echo "<ul class='pagination'>";
 
@@ -773,9 +762,9 @@ $email = $_SESSION['email'];
 
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM keanggotaan WHERE nama LIKE '%$searchTerm%'";
+                                                    $sql = "SELECT * FROM keanggotaan WHERE nama LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
-                                                    $sql = "SELECT * FROM keanggotaan ORDER BY id_anggota DESC";
+                                                    $sql = "SELECT * FROM keanggotaan ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
                                                 $member = mysqli_query($koneksi, $sql);
                                                 $urut = 1 + $awalData;
