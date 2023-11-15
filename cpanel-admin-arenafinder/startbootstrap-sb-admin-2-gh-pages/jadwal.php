@@ -59,6 +59,7 @@ if ($op == 'edit') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $anggota = $_POST['keanggotaan'];
     $jenis_lap = $_POST['jenis_lap'];
+    $tgl = $_POST['tanggal'];
     $waktu_mulai = $_POST['waktu_mulai'];
     $waktu_selesai = $_POST['waktu_selesai'];
     $harga = $_POST['harga'];
@@ -67,10 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
         if ($op == 'edit') {
             // Perbarui data jika ini adalah operasi edit
-            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
+            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', tanggal = '$tgl', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
         } else {
             // Tambahkan data jika ini adalah operasi insert
-            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
+            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
 
         $q1 = mysqli_query($koneksi, $sql1);
@@ -147,7 +148,7 @@ $email = $_SESSION['email'];
     <meta name="author" content="">
 
     <title>ArenaFinder - Jadwal</title>
-    
+
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
@@ -393,23 +394,21 @@ $email = $_SESSION['email'];
                                                 <div class="mb-3 row">
                                                     <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
                                                     <div class="col-sm-10" onclick="">
-                                                        <input type="text" placeholder="-Pilih Tanggal-"
-                                                            class="form-control" id="tanggal" name="tanggal" disabled
-                                                            required>
+                                                        <input type="datetime-local" placeholder="-Pilih Tanggal-"
+                                                            class="form-control" id="tanggal" name="tanggal" required>
                                                     </div>
                                                 </div>
-
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function () {
-                                                        // Get the current date and time in the format expected by datetime-local input
-                                                        var currentDate = new Date().toISOString().split('T')[0];
-
-                                                        // Set the value of the input element to the current date and time
-                                                        document.getElementById('tanggal').value = currentDate;
-                                                    });
-                                                </script>
                                         </div>
 
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                flatpickr("#tanggal", {
+                                                    enableTime: false, // Enable time selection
+                                                    minDate: "today", // Set the minimum date to today
+                                                    dateFormat: "Y-m-d", // Specify the date format
+                                                });
+                                            });
+                                        </script>
 
 
                                         <div class="mb-3 row">
@@ -660,7 +659,7 @@ $email = $_SESSION['email'];
                                         $id = $r2['id'];
                                         $anggota = $r2['keanggotaan'];
                                         $jenis_lap = $r2['jenis_lapangan'];
-                                        $tanggal = date('Y-m-d');
+                                        $tgl = $r2['tanggal'];
                                         $w_mulai = $r2['waktu_mulai'];
                                         $w_selesai = $r2['waktu_selesai'];
                                         $harga = $r2['harga'];
@@ -677,7 +676,7 @@ $email = $_SESSION['email'];
                                                 <?php echo $jenis_lap ?>
                                             </td>
                                             <td scope="row">
-                                                <?php echo $tanggal ?>
+                                                <?php echo $tgl ?>
                                             </td>
                                             <td scope="row">
                                                 <?php echo $w_mulai ?>

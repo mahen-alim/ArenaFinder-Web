@@ -422,6 +422,16 @@ $email = $_SESSION['email'];
                                                 </div>
                                             </div>
 
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    flatpickr("#staticEmail", {
+                                                        enableTime: false, // Enable time selection
+                                                        minDate: "today", // Set the minimum date to today
+                                                        dateFormat: "Y-m-d", // Specify the date format
+                                                    });
+                                                });
+                                            </script>
+
                                             <div class="mb-3 row">
                                                 <label for="keanggotaan"
                                                     class="col-sm-2 col-form-label">Keanggotaan</label>
