@@ -16,7 +16,7 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 
 #### Terdapat 2 level user, antara lain:
 - **Admin:** Pihak pengelola tempat, dapat mengelola tempat usaha olahraga 
-- **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi dan dapat menambahkan referensi tempat olahraga
+- **Super Admin:** Pihak pengembang, dapat mengakses keseluruhan sistem aplikasi serta dapat mengelola referensi tempat olahraga.
 
 ---
 
