@@ -147,7 +147,7 @@ $email = $_SESSION['email'];
     <meta name="author" content="">
 
     <title>ArenaFinder - Jadwal</title>
-
+    
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
@@ -177,7 +177,7 @@ $email = $_SESSION['email'];
         // JavaScript code to focus on the search input when "F" key is pressed
         document.addEventListener('keydown', function (event) {
             // Check if the pressed key is 'F' (case-insensitive)
-            if (event.key.toLowerCase() === 'f') {
+            if (event.key.toLowerCase() === '/') {
                 // Focus on the search input
                 document.getElementById('searchInput').focus();
                 searchInput.placeholder = 'Cari Jadwal';
@@ -523,7 +523,7 @@ $email = $_SESSION['email'];
                                 <form action="jadwal.php" method="GET">
                                     <div class="form-group" style="display: flex; gap: 10px;">
                                         <input type="text" name="search" id="searchInput" style="width: 30%;"
-                                            class="form-control" placeholder="Tekan F untuk Mencari Jadwal"
+                                            class="form-control" placeholder="Tekan / untuk Mencari Jadwal"
                                             value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 
                                     <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
@@ -578,7 +578,7 @@ $email = $_SESSION['email'];
                                     var searchInput = document.getElementById('searchInput');
 
                                     // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
-                                    if (event.key.toLowerCase() === 'f' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                    if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
                                         searchInput.placeholder = 'Cari Jadwal';
                                         searchInput.style.borderColor = '';
                                     }
@@ -750,12 +750,12 @@ $email = $_SESSION['email'];
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                <div class="modal-body">Akhiri aktivitas?
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

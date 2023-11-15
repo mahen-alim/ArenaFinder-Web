@@ -9,7 +9,7 @@ try {
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Mengambil data gambar dari database
-  $stmt = $pdo->prepare("SELECT id, nama_gambar, data_gambar FROM gambar"); // Sesuaikan dengan kolom dan kriteria yang sesuai
+  $stmt = $pdo->prepare("SELECT id, nama_gambar FROM gambar"); // Sesuaikan dengan kolom dan kriteria yang sesuai
 
   $stmt->execute();
 
