@@ -1,25 +1,51 @@
 <?php
+// Include your database connection code here
 $db_host = "localhost";
 $db_name = "arenafinderweb";
 $db_user = "root";
 $db_pass = "";
 
-try {
-  $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Establish a connection to the database
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
-  // Mengambil data gambar dari database
-  $stmt = $pdo->prepare("SELECT id, nama_gambar FROM gambar"); // Sesuaikan dengan kolom dan kriteria yang sesuai
+// Check the connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
 
-  $stmt->execute();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (!empty($_FILES['fileUpload']['name'])) {
+    $nama_file = $_FILES['fileUpload']['name'];
+    $tmp = $_FILES['fileUpload']['tmp_name'];
 
-  $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
+    $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
 
-} catch (PDOException $e) {
-  echo "Error: " . $e->getMessage();
+    // Pindahkan file gambar ke folder tujuan
+    if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
+      // Insert image information into the database
+      $sql = "INSERT INTO gambar (nama_gambar, data_gambar) VALUES (?, ?)";
+      $stmt = $conn->prepare($sql);
+
+      // Read the image content
+      $image_data = file_get_contents($upload_folder . $nama_file);
+
+      // Bind parameters
+      $stmt->bind_param("ss", $nama_file, $image_data);
+
+      // Execute the statement
+      $stmt->execute();
+
+      // Close the statement
+      $stmt->close();
+
+      // Redirect back to the original page
+      header("Location: info_mitra.php");
+      exit();
+    }
+  }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -217,6 +243,46 @@ try {
     .lokasi {
       margin-left: 720px;
       margin-top: 50px;
+    }
+
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      margin-top: 50px;
+      gap: 10px;
+    }
+
+    #card-body-4 {
+      width: 100%;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    #btn-s4 {
+      position: relative;
+      width: 200px;
+      height: 50px;
+      margin-top: 20px;
+      border: 1px solid #02406D;
+      border-radius: 10px;
+      background-color: white;
+      color: #02406D;
+    }
+
+    #btn-s4:hover {
+      background-color: #02406D;
+      color: white;
+      transition: 0.5s;
     }
 
     @media (max-width: 900px) {
@@ -555,30 +621,43 @@ try {
 
     <section id="section4">
       <div class="tentang-con">
-        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-          <div class="card" style="color: black;  border: 1px solid white;">
-            <div class="card-body" style="background-color: white;">
-              <form action="upload.php" method="post" enctype="multipart/form-data">
-                <label for="fileUpload">Pilih Gambar:</label>
-                <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
-                <button type="submit" name="submit">Upload dan Simpan</button>
-              </form>
+        <div class="deskripsi">
+          <div class="card">
+            <div class="card-body" id="card-body-4">
+              <?php
+              // Fetch data gambar from the database
+              $sql = "SELECT id, nama_gambar, data_gambar FROM gambar"; // Adjust table name and column names as needed
+              $result = $conn->query($sql);
 
-              <?php foreach ($images as $image) { ?>
+              // Fetch data as an associative array
+              echo '<div class="image-container">';
+              $count = 0; // Variable to count the images in a row
+              while ($image = $result->fetch_assoc()) {
+                ?>
                 <div class="card">
                   <img src="data:image/jpeg;base64,<?= base64_encode($image['data_gambar']); ?>" alt="Gambar">
-                  <div class="card-body">
-                    <h5 class="card-title">Gambar ID
-                      <?= $image['id']; ?>
-                    </h5>
-                    <p class="card-text">Deskripsi gambar atau informasi lainnya.</p>
-                  </div>
                 </div>
-              <?php } ?>
+                <?php
+                $count++;
+                // If 4 images are displayed in a row, start a new row
+                if ($count == 4) {
+                  echo '</div><div class="image-container">';
+                  $count = 0; // Reset the count for the new row
+                }
+              }
+              echo '</div>'; // Close the last container
+              ?>
+              <form action="#" method="post" enctype="multipart/form-data">
+                <div class="file-input-wrapper">
+                  <div class="file-input-button">Pilih Gambar</div>
+                  <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
 
-
+                  <br>
+                </div>
+                <button type="submit" name="submit" id="btn-s4">Upload
+                  dan Simpan</button>
+              </form>
             </div>
-
           </div>
         </div>
       </div>
