@@ -285,6 +285,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       transition: 0.5s;
     }
 
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    #card-act {
+      width: 300px;
+      margin-top: 50px;
+      text-align: center;
+      border: none;
+    }
+
+    .card-text {
+      margin: 5px;
+    }
+
+    #card-act img {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      transition: transform 1s;
+    }
+
+    #card-act img:hover {
+      transform: scale(1.1);
+    }
+
     @media (max-width: 900px) {
       .img-container img {
         margin-left: -20px;
@@ -558,139 +587,145 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <h3 style="margin-top: 30px;">Semua Aktivitas</h3>
         </div>
 
-        <div class="card-con" style="display: flex; justify-content: space-between; margin: 10px;">
-          <div class="card" style="width: 18rem; margin-left: -65px;">
-            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-            </div>
-          </div>
+        <div class="cards-container">
+          <?php
+          $sql3 = "SELECT * FROM aktivitas WHERE jenis_olga = 'Futsal' ORDER BY id DESC";
+          $q3 = mysqli_query($conn, $sql3);
+          $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
+          
+          while ($row = mysqli_fetch_array($q3)) {
+            // Membuka baris baru setiap kali 4 kartu telah ditampilkan
+            if ($count % 6 == 0) {
+              echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+            }
+
+            // Card untuk data
+            echo '<div class="card" id="card-act">';
+            echo '<div class="card-body">';
+
+            $namaGambar = $row['gambar'];
+            $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
+
+            echo '<img src="' . $gambarURL . '" alt="Gambar">';
+            echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
+            echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['lokasi'] . '</p>';
+            echo '<p class="card-text">' . $row['tanggal'] . '</p>';
+            echo '<p class="card-text">' . $row['jam'] . '</p>';
+            echo '<p class="card-text">Harga : Rp ' . $row['harga'] . '</p>';
+
+            echo '</div></div>';
+
+            $count++;
+          }
+          ?>
         </div>
 
-
       </div>
-    </section>
 
-    <section id="section3">
-      <div class="tentang-con">
-        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-          <div class="card" style="color: black;  border: 1px solid white;">
-            <div class="card-body" style="background-color: white;">
-              <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
-              <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
-                <div class="card-body" style="display: flex; align-items: center;">
-                  <img src="/ArenaFinder/img_asset/img-c2.jpeg" alt="" style="width: 20%; border-radius: 5px;">
-                  <h3 style="margin-left: 20px;">K.C2</h3>
-                  <h6 style="margin-left: -48px; margin-top: 50px;">@C2_nich</h6>
-                  <div class="card"
-                    style="display: flex; width: 250px; text-align: center; height: 30px; background-color: #02406D; color: white;">
-                    Super Admin
-                  </div>
+
+
+
+  </div>
+  </section>
+
+  <section id="section3">
+    <div class="tentang-con">
+      <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
+        <div class="card" style="color: black;  border: 1px solid white;">
+          <div class="card-body" style="background-color: white;">
+            <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
+            <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
+              <div class="card-body" style="display: flex; align-items: center;">
+                <img src="/ArenaFinder/img_asset/img-c2.jpeg" alt="" style="width: 20%; border-radius: 5px;">
+                <h3 style="margin-left: 20px;">K.C2</h3>
+                <h6 style="margin-left: -48px; margin-top: 50px;">@C2_nich</h6>
+                <div class="card"
+                  style="display: flex; width: 250px; text-align: center; height: 30px; background-color: #02406D; color: white;">
+                  Super Admin
                 </div>
               </div>
-
             </div>
 
           </div>
+
         </div>
-
       </div>
-    </section>
 
-    <section id="section4">
-      <div class="tentang-con">
-        <div class="deskripsi">
-          <div class="card">
-            <div class="card-body" id="card-body-4">
-              <?php
-              // Fetch data gambar from the database
-              $sql = "SELECT id, nama_gambar, data_gambar FROM gambar"; // Adjust table name and column names as needed
-              $result = $conn->query($sql);
+    </div>
+  </section>
 
-              // Fetch data as an associative array
-              echo '<div class="image-container">';
-              $count = 0; // Variable to count the images in a row
-              while ($image = $result->fetch_assoc()) {
-                ?>
-                <div class="card">
-                  <img src="data:image/jpeg;base64,<?= base64_encode($image['data_gambar']); ?>" alt="Gambar">
-                </div>
-                <?php
-                $count++;
-                // If 4 images are displayed in a row, start a new row
-                if ($count == 4) {
-                  echo '</div><div class="image-container">';
-                  $count = 0; // Reset the count for the new row
-                }
-              }
-              echo '</div>'; // Close the last container
+  <section id="section4">
+    <div class="tentang-con">
+      <div class="deskripsi">
+        <div class="card">
+          <div class="card-body" id="card-body-4">
+            <?php
+            // Fetch data gambar from the database
+            $sql = "SELECT id, nama_gambar, data_gambar FROM gambar"; // Adjust table name and column names as needed
+            $result = $conn->query($sql);
+
+            // Fetch data as an associative array
+            echo '<div class="image-container">';
+            $count = 0; // Variable to count the images in a row
+            while ($image = $result->fetch_assoc()) {
               ?>
-              <form action="#" method="post" enctype="multipart/form-data">
-                <div class="file-input-wrapper">
-                  <div class="file-input-button">Pilih Gambar</div>
-                  <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
-
-                  <br>
-                </div>
-                <button type="submit" name="submit" id="btn-s4">Upload
-                  dan Simpan</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="section5">
-      <div class="tentang-con">
-        <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-          <div class="card" style="color: black;  border: 1px solid white;">
-            <div class="card-body" style="background-color: white;">
-              <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
-              <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
-                <div class="card-body" style="display: flex; align-items: center;">
-                  <img src="/ArenaFinder/img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
-                  <h3 style="margin-left: 20px;">08958074xxxxx</h3>
-                  <div class="card"
-                    style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
-                    Super Admin
-                  </div>
-
-
-
-
-                </div>
+              <div class="card">
+                <img src="data:image/jpeg;base64,<?= base64_encode($image['data_gambar']); ?>" alt="Gambar">
               </div>
+              <?php
+              $count++;
+              // If 4 images are displayed in a row, start a new row
+              if ($count == 4) {
+                echo '</div><div class="image-container">';
+                $count = 0; // Reset the count for the new row
+              }
+            }
+            echo '</div>'; // Close the last container
+            ?>
+            <form action="#" method="post" enctype="multipart/form-data">
+              <div class="file-input-wrapper">
+                <div class="file-input-button">Pilih Gambar</div>
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*">
 
+                <br>
+              </div>
+              <button type="submit" name="submit" id="btn-s4">Upload
+                dan Simpan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section5">
+    <div class="tentang-con">
+      <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
+        <div class="card" style="color: black;  border: 1px solid white;">
+          <div class="card-body" style="background-color: white;">
+            <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
+            <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
+              <div class="card-body" style="display: flex; align-items: center;">
+                <img src="/ArenaFinder/img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
+                <h3 style="margin-left: 20px;">08958074xxxxx</h3>
+                <div class="card"
+                  style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
+                  Super Admin
+                </div>
+
+
+
+
+              </div>
             </div>
 
           </div>
-        </div>
 
+        </div>
       </div>
-    </section>
+
+    </div>
+  </section>
   </div>
 
 
