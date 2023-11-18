@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
   <style>
     body {
-      overflow-x: hidden;
+      overflow-x: scroll;
     }
 
     .img-container {
@@ -440,9 +440,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="social-buttons">
-      <a href="#" class="social-button facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016" class="social-button facebook"><i class="fab fa-facebook"></i></a>
       <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="social-button instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg==" class="social-button instagram"><i class="fab fa-instagram"></i></a>
     </div>
 
   </div>
@@ -622,37 +622,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       </div>
 
-
-
+    </section>
 
   </div>
-  </section>
 
   <section id="section3">
-    <div class="tentang-con">
-      <div class="deskripsi" style="width: 10rem; margin-left: -85px;">
-        <div class="card" style="color: black;  border: 1px solid white;">
-          <div class="card-body" style="background-color: white;">
-            <img src="/ArenaFinder/img_asset/bg-member.png" alt="" style="border-radius: 10px;">
-            <div class="card" style="margin-top: -41rem; margin-left: 30px; width: 500px; border: 1px solid white;">
-              <div class="card-body" style="display: flex; align-items: center;">
-                <img src="/ArenaFinder/img_asset/img-c2.jpeg" alt="" style="width: 20%; border-radius: 5px;">
-                <h3 style="margin-left: 20px;">K.C2</h3>
-                <h6 style="margin-left: -48px; margin-top: 50px;">@C2_nich</h6>
-                <div class="card"
-                  style="display: flex; width: 250px; text-align: center; height: 30px; background-color: #02406D; color: white;">
-                  Super Admin
-                </div>
-              </div>
-            </div>
+    <div class="tentang-con" style="margin-left: 250px;">
+      <div class="deskripsi"
+        style="width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
 
-          </div>
+        <?php
+        // Fetch and display data from keanggotaan table
+        $sql = "SELECT * FROM keanggotaan";
+        $result = mysqli_query($conn, $sql);
+        $count = 0;
 
-        </div>
+        while ($row = mysqli_fetch_assoc($result)) {
+          if ($count % 4 == 0) {
+            echo '</div><div class="deskripsi" style="width: 100%; display: flex; justify-content: space-around; gap: 10px;">';
+          }
+          echo '<div class="card" style="flex: 0 0 calc(25% - 20px); background-color: white; border: 1px solid #02406d;">'; // Adjust flex properties for the desired width
+          echo '<div class="card-body" style="display: flex; flex-direction: column; align-items: center; color: #02406d;">';
+          echo '<h3>' . $row['nama'] . '</h3>';
+          echo '<p>' . $row['alamat'] . '</p>';
+          echo '<p>' . $row['status'] . '</p>';
+          echo '</div>';
+          echo '</div>';
+
+          $count++;
+        }
+
+        echo '</div>'; // Close the last deskripsi div
+        
+        ?>
+
       </div>
-
     </div>
   </section>
+
+
 
   <section id="section4">
     <div class="tentang-con">
@@ -712,18 +720,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
                   Super Admin
                 </div>
-
-
-
-
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
-
     </div>
   </section>
   </div>
@@ -760,8 +761,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         link.classList.add("active");
       });
     });
-
-
 
   </script>
 
