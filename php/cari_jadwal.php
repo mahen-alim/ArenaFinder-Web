@@ -259,6 +259,10 @@ if (!$koneksi) {
             color: #02406D;
         }
 
+        #wrap-txt{
+            margin-left: 100px;
+        }
+
         .cards-container {
             margin-top: 100px;
         }
@@ -330,6 +334,13 @@ if (!$koneksi) {
             #label2 {
                 margin-left: 10px;
             }
+            #wrap-txt{
+                margin-left: 150px;
+                padding-top: 5px;
+            }
+            .footer{
+                margin-left: -100px;
+            }
         }
     </style>
 </head>
@@ -377,7 +388,6 @@ if (!$koneksi) {
         </div>
     </nav>
 
-
     <div class="box">
         <div class="rectangle">
             <div class="label">
@@ -403,14 +413,13 @@ if (!$koneksi) {
                         echo '<span class="span">Nganjuk </span>';
                         echo '<span class="text-wrapper">' . $tanggalData . '</span>';
                     } else {
-                        echo 'Jadwal tidak ditemukan'; // Handle when no data is found in the database
+                        echo '<span class="text-wrapper" id="wrap-txt">Jadwal Tidak Ditemukan</span>';
                     }
                     ?>
                 </p>
             </div>
         </div>
     </div>
-
 
     <div class="form-container">
         <form method="post" action="">
@@ -478,13 +487,10 @@ if (!$koneksi) {
 
                 $count++;
             }
-        } else {
-            echo "Jadwal tidak ditemukan.";
-        }
+        } 
 
         ?>
     </div>
-
 
     <div class="container">
         <div class="footer">

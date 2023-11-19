@@ -518,114 +518,178 @@ $email = $_SESSION['email'];
                                 <h6 class="m-0 font-weight-bold">Tabel Jadwal</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive"></div>
-                                <form action="jadwal.php" method="GET">
-                                    <div class="form-group" style="display: flex; gap: 10px;">
-                                        <input type="text" name="search" id="searchInput" style="width: 30%;"
-                                            class="form-control" placeholder="Tekan / untuk Mencari Jadwal"
-                                            value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                                <div class="table-responsive">
+                                    <form action="jadwal.php" method="GET">
+                                        <div class="form-group" style="display: flex; gap: 10px;">
+                                            <input type="text" name="search" id="searchInput" style="width: 30%;"
+                                                class="form-control" placeholder="Tekan / untuk Mencari Jadwal"
+                                                value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 
-                                    <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
-                                    <?php if (isset($_GET['search'])): ?>
-                                        <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
-                                            Pencarian</a>
-                                    <?php endif; ?>
-                                </div>
-                            </form>
+                                        <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
+                                        <?php if (isset($_GET['search'])): ?>
+                                            <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
+                                                Pencarian</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </form>
 
-                            <script>
-                                document.getElementById('searchButton').addEventListener('click', function (event) {
-                                    var searchInput = document.getElementById('searchInput');
+                                <script>
+                                    document.getElementById('searchButton').addEventListener('click', function (event) {
+                                        var searchInput = document.getElementById('searchInput');
 
-                                    if (searchInput.value === '') {
-                                        event.preventDefault(); // Prevent form submission if the search field is empty
-                                        searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                        searchInput.style.borderColor = 'red'; // Change border color to red
-                                    } else {
-                                        // Perform AJAX request to check if the value exists in the database
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+                                        if (searchInput.value === '') {
+                                            event.preventDefault(); // Prevent form submission if the search field is empty
+                                            searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
+                                            searchInput.style.borderColor = 'red'; // Change border color to red
+                                        } else {
+                                            // Perform AJAX request to check if the value exists in the database
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
 
-                                        xhr.onload = function () {
-                                            if (xhr.status === 200) {
-                                                console.log(xhr.responseText);
-                                                var response = JSON.parse(xhr.responseText);
-                                                if (response.count === 0) {
-                                                    // Value not found in the database
-                                                    event.preventDefault();
-                                                    searchInput.placeholder = 'Pencarian tidak ditemukan!';
-                                                    searchInput.style.borderColor = 'red';
-                                                } else {
-                                                    // Reset styles
-                                                    searchInput.placeholder = 'Cari Jadwal';
-                                                    searchInput.style.borderColor = '';
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log(xhr.responseText);
+                                                    var response = JSON.parse(xhr.responseText);
+                                                    if (response.count === 0) {
+                                                        // Value not found in the database
+                                                        event.preventDefault();
+                                                        searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                        searchInput.style.borderColor = 'red';
+                                                    } else {
+                                                        // Reset styles
+                                                        searchInput.placeholder = 'Cari Jadwal';
+                                                        searchInput.style.borderColor = '';
+                                                    }
                                                 }
-                                            }
-                                        };
+                                            };
 
-                                        xhr.send();
-                                    }
-                                });
+                                            xhr.send();
+                                        }
+                                    });
 
-                                document.getElementById('searchInput').addEventListener('click', function () {
-                                    var searchInput = document.getElementById('searchInput');
-                                    searchInput.placeholder = 'Cari Jadwal';
-                                    searchInput.style.borderColor = '';
-                                });
-
-                                document.addEventListener('keydown', function (event) {
-                                    var searchInput = document.getElementById('searchInput');
-
-                                    // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
-                                    if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                    document.getElementById('searchInput').addEventListener('click', function () {
+                                        var searchInput = document.getElementById('searchInput');
                                         searchInput.placeholder = 'Cari Jadwal';
                                         searchInput.style.borderColor = '';
-                                    }
-                                });
-                            </script>
+                                    });
 
-                            <table class="table text-nowrap table-centered table-hover" id="dataTable" width="100%"
-                                cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Keanggotaan</th>
-                                        <th scope="col">Jenis Lapangan</th>
-                                        <th scope="col">Tanggal</th>
-                                        <th scope="col">Waktu Mulai</th>
-                                        <th scope="col">Waktu Selesai</th>
-                                        <th scope="col">Harga</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="hoverable">
+                                    document.addEventListener('keydown', function (event) {
+                                        var searchInput = document.getElementById('searchInput');
+
+                                        // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                        if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                            searchInput.placeholder = 'Cari Jadwal';
+                                            searchInput.style.borderColor = '';
+                                        }
+                                    });
+                                </script>
+
+                                <table class="table text-nowrap table-centered table-hover" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Keanggotaan</th>
+                                            <th scope="col">Jenis Lapangan</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Waktu Mulai</th>
+                                            <th scope="col">Waktu Selesai</th>
+                                            <th scope="col">Harga</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="hoverable">
+                                        <?php
+                                        if (isset($_GET['reset'])) {
+                                            // Pengguna menekan tombol "Hapus Pencarian"
+                                            header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                            exit();
+                                        }
+
+                                        $jumlahDataPerHalaman = 10;
+
+                                        // Perform the query to get the total number of rows
+                                        $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
+                                        $countResult = mysqli_fetch_assoc($queryCount);
+                                        $jumlahData = $countResult['total'];
+
+                                        // Calculate the total number of pages
+                                        $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+
+                                        // Get the current page
+                                        $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+                                        // Calculate the starting data index for the current page
+                                        $awalData = ($page - 1) * $jumlahDataPerHalaman;
+
+                                        if (isset($_GET['search'])) {
+                                            $searchTerm = $koneksi->real_escape_string($_GET['search']);
+
+                                            $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
+                                        } else {
+
+                                            $sql = "SELECT * FROM jadwal ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                        }
+
+                                        $jadwal = mysqli_query($koneksi, $sql);
+                                        $urut = 1 + $awalData;
+
+                                        while ($r2 = mysqli_fetch_array($jadwal)) {
+                                            $id = $r2['id'];
+                                            $anggota = $r2['keanggotaan'];
+                                            $jenis_lap = $r2['jenis_lapangan'];
+                                            $tgl = $r2['tanggal'];
+                                            $w_mulai = $r2['waktu_mulai'];
+                                            $w_selesai = $r2['waktu_selesai'];
+                                            $harga = $r2['harga'];
+                                            $status = $r2['status_pemesanan'];
+                                            ?>
+                                            <tr>
+                                                <th scope="row">
+                                                    <?php echo $urut++ ?>
+                                                </th>
+                                                <td scope="row">
+                                                    <?php echo $anggota ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $jenis_lap ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $tgl ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $w_mulai ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $w_selesai ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $harga ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <a href="jadwal.php?op=status&id="><button type="button"
+                                                            class="btn btn-info" id="editButton" disabled>
+                                                            <?php echo $status ?>
+                                                        </button></a>
+                                                </td>
+                                                <td scope="row">
+                                                    <a href="jadwal.php?op=edit&id=<?php echo $id ?>"><button type="button"
+                                                            class="btn btn-warning" id="editButton">Edit</button></a>
+                                                    <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
+                                                        onclick="return confirm('Yakin mau menghapus data ini?')"><button
+                                                            type="button" class="btn btn-danger">Delete</button></a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <!-- Pagination code -->
+                                <ul class='pagination'>
+                                    <!-- Previous page link -->
                                     <?php
-                                    if (isset($_GET['reset'])) {
-                                        // Pengguna menekan tombol "Hapus Pencarian"
-                                        header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
-                                        exit();
-                                    }
-
-                                    $jumlahDataPerHalaman = 10;
-
-                                    // Perform the query to get the total number of rows
-                                    $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
-                                    $countResult = mysqli_fetch_assoc($queryCount);
-                                    $jumlahData = $countResult['total'];
-
-                                    // Calculate the total number of pages
-                                    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
-
-                                    // Get the current page
-                                    $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
-
-                                    // Calculate the starting data index for the current page
-                                    $awalData = ($page - 1) * $jumlahDataPerHalaman;
-
-                                    echo "<ul class='pagination ml-auto'>";
-
-                                    // Previous page link
                                     if ($page > 1) {
                                         echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
                                     }
@@ -637,75 +701,11 @@ $email = $_SESSION['email'];
 
                                     // Next page link
                                     if ($page < $jumlahHalaman) {
-                                        echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                    }
-
-                                    echo "</ul>";
-                                    echo "</nav>";
-
-                                    if (isset($_GET['search'])) {
-                                        $searchTerm = $koneksi->real_escape_string($_GET['search']);
-
-                                        $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
-                                    } else {
-
-                                        $sql = "SELECT * FROM jadwal ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
-                                    }
-
-                                    $jadwal = mysqli_query($koneksi, $sql);
-                                    $urut = 1 + $awalData;
-
-                                    while ($r2 = mysqli_fetch_array($jadwal)) {
-                                        $id = $r2['id'];
-                                        $anggota = $r2['keanggotaan'];
-                                        $jenis_lap = $r2['jenis_lapangan'];
-                                        $tgl = $r2['tanggal'];
-                                        $w_mulai = $r2['waktu_mulai'];
-                                        $w_selesai = $r2['waktu_selesai'];
-                                        $harga = $r2['harga'];
-                                        $status = $r2['status_pemesanan'];
-                                        ?>
-                                        <tr>
-                                            <th scope="row">
-                                                <?php echo $urut++ ?>
-                                            </th>
-                                            <td scope="row">
-                                                <?php echo $anggota ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $jenis_lap ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $tgl ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $w_mulai ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $w_selesai ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $harga ?>
-                                            </td>
-                                            <td scope="row">
-                                                <a href="jadwal.php?op=status&id="><button type="button"
-                                                        class="btn btn-info" id="editButton" disabled>
-                                                        <?php echo $status ?>
-                                                    </button></a>
-                                            </td>
-                                            <td scope="row">
-                                                <a href="jadwal.php?op=edit&id=<?php echo $id ?>"><button type="button"
-                                                        class="btn btn-warning" id="editButton">Edit</button></a>
-                                                <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
-                                                    onclick="return confirm('Yakin mau menghapus data ini?')"><button
-                                                        type="button" class="btn btn-danger">Delete</button></a>
-                                            </td>
-                                        </tr>
-                                        <?php
+                                        echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
                                     }
                                     ?>
-                                </tbody>
-                            </table>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -721,16 +721,6 @@ $email = $_SESSION['email'];
 
     </div>
     <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2020</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->

@@ -306,7 +306,7 @@ $email = $_SESSION['email'];
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
-                                    <?php echo $email;?>
+                                    <?php echo $email; ?>
                                 </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
@@ -421,9 +421,11 @@ $email = $_SESSION['email'];
                                                                             class="img-small">+81 (Japan)</a></li>
                                                             </ul>
                                                         </div>
+
                                                         <input type="text" class="form-control" id="selectedCountryCode"
                                                             aria-label="Text input with segmented dropdown button"
                                                             name="no_telp" value="+62" required>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -485,11 +487,10 @@ $email = $_SESSION['email'];
 
                                             </script>
 
-
                                             <div class="mb-3 row">
                                                 <label for="hari_main" class="col-sm-2 col-form-label"
                                                     style="cursor: pointer">Hari Main</label>
-                                                <div class="col-sm-10 d-flex">
+                                                <div class="col-sm-10 d-flex flex-wrap">
                                                     <div class="form-check mx-3">
                                                         <input class="form-check-input" type="checkbox"
                                                             name="hari_main[]" id="senin" value="Senin" <?php if ($hari == "Senin")
@@ -534,7 +535,6 @@ $email = $_SESSION['email'];
                                                     </div>
                                                 </div>
                                             </div>
-
 
 
                                             <div class="mb-3 row">
@@ -740,26 +740,6 @@ $email = $_SESSION['email'];
                                                 // Calculate the starting data index for the current page
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
-                                                echo "<ul class='pagination'>";
-
-                                                // Previous page link
-                                                if ($page > 1) {
-                                                    echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
-                                                }
-
-                                                // Numbered pagination links
-                                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
-                                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='keanggotaan.php?page=$i'>$i</a></li>";
-                                                }
-
-                                                // Next page link
-                                                if ($page < $jumlahHalaman) {
-                                                    echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                                }
-
-                                                echo "</ul>";
-                                                echo "</nav>";
-
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
                                                     $sql = "SELECT * FROM keanggotaan WHERE nama LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
@@ -821,6 +801,25 @@ $email = $_SESSION['email'];
                                                 ?>
                                             </tbody>
                                         </table>
+                                        <!-- Pagination code -->
+                                        <ul class='pagination'>
+                                            <!-- Previous page link -->
+                                            <?php
+                                            if ($page > 1) {
+                                                echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                            }
+
+                                            // Numbered pagination links
+                                            for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='keanggotaan.php?page=$i'>$i</a></li>";
+                                            }
+
+                                            // Next page link
+                                            if ($page < $jumlahHalaman) {
+                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                            }
+                                            ?>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -839,16 +838,6 @@ $email = $_SESSION['email'];
 
             </div>
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

@@ -41,6 +41,7 @@ if (isset($_POST["login"])) {
     }
   }
 }
+
 ?>
 
 
@@ -54,7 +55,7 @@ if (isset($_POST["login"])) {
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>SB Admin 2 - Login</title>
+  <title>ArenaFinder - Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -66,7 +67,7 @@ if (isset($_POST["login"])) {
     body {
       font-family: "Kanit", sans-serif;
     }
-    
+
     #btn-login {
       background-color: #e7f5ff;
       color: #02406d;
@@ -81,7 +82,6 @@ if (isset($_POST["login"])) {
     #card-email {
       background-color: white;
     }
-
   </style>
 </head>
 
@@ -110,6 +110,7 @@ if (isset($_POST["login"])) {
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword"
                         placeholder="Password" name="password" autocomplete="off" />
+                      <input type="hidden" name="level" value="<?php echo $levelValue; ?>" id="level" />
                     </div>
                     <div class="form-group">
                       <button class="btn btn-user btn-block" id="btn-login" name="login">Masuk</button>

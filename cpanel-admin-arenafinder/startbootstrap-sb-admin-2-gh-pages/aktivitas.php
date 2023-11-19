@@ -648,26 +648,6 @@ $email = $_SESSION['email'];
                                                 // Perform the query to get data for the current page
                                                 $aktivitas = mysqli_query($koneksi, "SELECT * FROM aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
 
-                                                echo "<ul class='pagination'>";
-
-                                                // Previous page link
-                                                if ($page > 1) {
-                                                    echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
-                                                }
-
-                                                // Numbered pagination links
-                                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
-                                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='aktivitas.php?page=$i'>$i</a></li>";
-                                                }
-
-                                                // Next page link
-                                                if ($page < $jumlahHalaman) {
-                                                    echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                                }
-
-                                                echo "</ul>";
-                                                echo "</nav>";
-
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
                                                     $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
@@ -725,6 +705,25 @@ $email = $_SESSION['email'];
                                                 ?>
                                             </tbody>
                                         </table>
+                                        <!-- Pagination code -->
+                                        <ul class='pagination'>
+                                            <!-- Previous page link -->
+                                            <?php
+                                            if ($page > 1) {
+                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                            }
+
+                                            // Numbered pagination links
+                                            for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='aktivitas.php?page=$i'>$i</a></li>";
+                                            }
+
+                                            // Next page link
+                                            if ($page < $jumlahHalaman) {
+                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                            }
+                                            ?>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -743,16 +742,6 @@ $email = $_SESSION['email'];
 
             </div>
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

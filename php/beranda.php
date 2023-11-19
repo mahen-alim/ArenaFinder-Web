@@ -1,3 +1,13 @@
+<?php
+$servername = "localhost";
+$username_db = "root";
+$password_db = "";
+$dbname = "arenafinderweb";
+
+$conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -362,7 +372,7 @@
   </div>
 
   <div class="persegi"></div>
-  <a href="/ArenaFinder/php/kelola_jadwal.php">
+  <a href="alur-pesan.php">
     <button class="btn" type="button" style="font-weight: 100;" id="alur-btn">Alur Pemesanan
       <img src="/ArenaFinder/img_asset/geocaching_40px (1).png" alt="">
     </button>
@@ -371,10 +381,18 @@
     <button class="btn-1" type="button" style="font-weight: 100;">Aktivitas Komunitas
       <img src="/ArenaFinder/img_asset/people_48px (1).png" alt="" id="aktiv-btn"></button>
   </a>
-  <button class="btn-2" type="button">Status Lapangan
-    <img src="/ArenaFinder/img_asset/info_64px (1).png" alt="" id="status-btn"></button>
-  <button class="btn-3" type="button">Riwayat Pemesanan
-    <img src="/ArenaFinder/img_asset/historical_48px (1).png" alt="" id="riwayat-btn"></button>
+  <a href="status-lap.php">
+    <button class="btn-2" type="button" style="font-weight: 100;">Status Lapangan
+      <img src="/ArenaFinder/img_asset/info_64px (1).png" alt="" id="status-btn"></button>
+  </a>
+  <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/pesanan.php">
+    <button class="btn-3" type="button" style="font-weight: 100;">Daftar Pesanan
+      <img src="   https://cdn-icons-png.flaticon.com/512/1187/1187525.png " width="100" height="150" alt="" title=""
+        class="img-small"></button>
+  </a>
+
+
+
 
 
 

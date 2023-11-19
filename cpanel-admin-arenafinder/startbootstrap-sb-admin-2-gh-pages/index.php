@@ -10,6 +10,7 @@ if (!isset($_SESSION['email'])) {
 
 // Pengguna sudah masuk, Anda dapat mengakses data sesi
 $email = $_SESSION['email'];
+$level = $_SESSION['level'];
 
 // Query SQL untuk menghitung jumlah baris di tabel keanggotaan
 $sql = "SELECT COUNT(*) as total_member FROM keanggotaan";
@@ -326,6 +327,40 @@ $conn->close();
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xxl-8 col-12">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3" style="background-color: #02406d;">
+                                            <h6 class="m-0 font-weight-bold text-white">Alur <span style="color: #a1ff9f;">Pemesanan</span></h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-auto">
+                                                <h5>* <span>User Masuk ke Aplikasi Mobile Arena Finder</span>
+                                                </h5>
+                                                <h5>* <span>User Memesan Lapangan sesuai Jadwal yang dipilih </span>
+                                                </h5>
+                                                <h5>* <span>User Menekan Button Pesan</span>
+                                                </h5>
+                                                <h5>* <span>Admin akan Mengkonfirmasi Pesanan</span>
+                                                </h5>
+                                                <h5>* <span>User Mendapat Notifikasi Pesanan Telah diterima</span>
+                                                </h5>
+                                                <h5>* <span>Status Pemesanan Berubah menjadi Sudah Dipesan</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
 
                     </div>
 
