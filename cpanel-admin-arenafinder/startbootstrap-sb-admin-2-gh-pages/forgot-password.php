@@ -34,6 +34,15 @@
             border: 1px solid #e7f5ff;
         }
 
+        .small{
+            color: #02406d;
+        }
+
+        .small:hover{
+            color: #02406d;
+            text-decoration: underline;
+        }
+        
         #card-email {
             background-color: white;
         }
@@ -62,10 +71,10 @@
                                     <form class="user" method="POST" action="#" autocomplete="off" name="recover_psw">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" placeholder="Alamat Email" name="email">
+                                                id="exampleInputEmail" placeholder="Alamat Email" name="email" autofocus>
                                         </div>
-                                        <input class="btn btn-primary btn-user btn-block" type="submit"
-                                            value="Ganti Sandi" name="recover">
+                                        <input class="btn btn-user btn-block" type="submit"
+                                            value="Ganti Sandi" name="recover" id="btn-login">
                                     </form>
 
                                     <hr />

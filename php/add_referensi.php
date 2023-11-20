@@ -409,7 +409,7 @@ if ($sukses) {
                                 <div class="table-responsive">
                                     <form action="jadwal.php" method="GET">
                                         <div class="form-group" style="display: flex; gap: 10px;">
-                                            <input type="text" name="search" id="searchInput" style="width: 30%;"
+                                            <input type="text" name="search" id="searchInput" style="width: 50%;"
                                                 class="form-control" placeholder="Cari Tempat Olahraga"
                                                 value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 

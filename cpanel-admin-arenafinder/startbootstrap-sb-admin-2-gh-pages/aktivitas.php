@@ -1,13 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinderweb";
-
-$koneksi = mysqli_connect($host, $user, $pass, $db);
-if (!$koneksi) {
-    die("Tidak bisa terkoneksi");
-}
+include('database.php');
 
 $id = "";
 $nama = "";
@@ -29,7 +21,7 @@ if (isset($_GET['op'])) {
 
 if ($op == 'delete') {
     $id = $_GET['id'];
-    $sql1 = "DELETE FROM aktivitas WHERE id = '$id'";
+    $sql1 = "DELETE FROM venue_aktivitas WHERE id_aktivitas = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
@@ -40,24 +32,31 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM aktivitas WHERE id = '$id'";
+    $sql1 = "SELECT va.*, v.location AS venue_lokasi
+             FROM venue_aktivitas va
+             JOIN venue v ON va.id_venue = v.id_venue
+             WHERE va.id_aktivitas = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
-    $nama = $r1['nama_aktivitas'];
-    $jenis = $r1['jenis_olga'];
-    $lokasi = $r1['lokasi'];
-    $tanggal = $r1['tanggal'];
-    $anggota = $r1['keanggotaan'];
-    $jam = $r1['jam'];
-    $harga = $r1['harga'];
 
+    $nama = $r1['nama_aktivitas'];
+    $jenis = $r1['sport'];
+    $lokasiAktivitas = $r1['lokasi'];
+    $tanggal = $r1['date'];
+    $anggota = $r1['membership'];
+    $jam = $r1['jam_main'];
+    $harga = $r1['price'];
+
+    // Lokasi dari tabel venue
+    $lokasiVenue = $r1['venue_lokasi'];
 
     if ($nama == '') {
         $error = "Data tidak ditemukan";
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST['nama'];
     $jenis = $_POST['jenis_olga'];
     $lokasi = $_POST['lokasi'];
@@ -65,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $anggota = $_POST['keanggotaan'];
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
-
 
     if (!empty($_FILES['foto']['name'])) {
         $nama_file = $_FILES['foto']['name'];
@@ -80,17 +78,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             // Periksa apakah file gambar diunggah
             if ($op == 'edit') {
                 // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE aktivitas SET nama_aktivitas = '$nama', jenis_olga = '$jenis', lokasi = '$lokasi', tanggal = '$tanggal', keanggotaan = '$anggota', jam = '$jam', harga = '$harga', gambar = '$nama_file' WHERE id = '$id'";
+                $sql1 = "UPDATE venue_aktivitas SET 
+                            nama_aktivitas = '$nama',
+                            jenis_olga = '$jenis',
+                            tanggal = '$tanggal',
+                            keanggotaan = '$anggota',
+                            jam = '$jam',
+                            harga = '$harga',
+                            gambar = '$nama_file',
+                            id_venue = '$lokasi'
+                         WHERE id_aktivitas = '$id'";
             } else {
                 // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO aktivitas (nama_aktivitas, jenis_olga, lokasi, tanggal, keanggotaan, jam, harga, gambar) VALUES ('$nama', '$jenis', '$lokasi', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file')";
-
+                $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, jenis_olga, date, membership, jam_main, price, gambar, id_venue) 
+                         VALUES ('$nama', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue')";
             }
 
-            $q1 = mysqli_query($koneksi, $sql1);
+            $q1 = mysqli_query($conn, $sql1);
 
             if ($q1) {
                 $sukses = "Data aktivitas berhasil diupdate/ditambahkan";
+
+                // Setelah berhasil memasukkan data ke tabel venue_aktivitas,
+                // tambahkan data ke kolom location di tabel venues
+                if ($op == 'edit') {
+                    $sql2 = "UPDATE venues SET location = '$lokasi' WHERE id_venue = '$id_venue'";
+                } else {
+                    // For insert operation, you may need to retrieve the last inserted id
+                    // depending on your database system (e.g., mysqli_insert_id for MySQL)
+                    $lastInsertId = mysqli_insert_id($conn);
+                    $sql2 = "UPDATE venues SET location = '$lokasi' WHERE id_venue = '$lastInsertId'";
+                }
+
+                $q2 = mysqli_query($conn, $sql2);
+
+                if (!$q2) {
+                    $error = "Gagal memperbarui lokasi di tabel venues";
+                }
             } else {
                 $error = "Data aktivitas gagal diupdate/ditambahkan";
             }
@@ -104,28 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 }
 
 
-// Handle the AJAX request
-if (isset($_GET['checkValue'])) {
-    $searchValue = $_GET['checkValue'];
-
-    // Use prepared statements to prevent SQL injection
-    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
-    $stmt = $koneksi->prepare($sql);
-    $stmt->bind_param('s', $searchValue);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-
-
-    // Return the result as JSON
-    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
-
-    // Close the database connection
-    $stmt->close();
-    $koneksi->close();
-
-    exit();
-}
 
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
@@ -203,6 +205,7 @@ $email = $_SESSION['email'];
                 event.preventDefault();
             }
         });
+
     </script>
 </head>
 
@@ -417,14 +420,14 @@ $email = $_SESSION['email'];
                                                 <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
                                                 <div class="col-sm-10" onclick="">
                                                     <input type="datetime-local" placeholder="-Pilih Tanggal-"
-                                                        class="form-control" id="staticEmail" name="tanggal"
+                                                        class="form-control" id="tanggal" name="tanggal"
                                                         value="<?php echo $tanggal ?>" required>
                                                 </div>
                                             </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function () {
-                                                    flatpickr("#staticEmail", {
+                                                    flatpickr("#tanggal", {
                                                         enableTime: false, // Enable time selection
                                                         minDate: "today", // Set the minimum date to today
                                                         dateFormat: "Y-m-d", // Specify the date format
@@ -632,7 +635,7 @@ $email = $_SESSION['email'];
                                                 $jumlahDataPerHalaman = 10;
 
                                                 // Perform the query to get the total number of rows
-                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM aktivitas");
+                                                $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_aktivitas");
                                                 $countResult = mysqli_fetch_assoc($queryCount);
                                                 $jumlahData = $countResult['total'];
 
@@ -646,26 +649,36 @@ $email = $_SESSION['email'];
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
                                                 // Perform the query to get data for the current page
-                                                $aktivitas = mysqli_query($koneksi, "SELECT * FROM aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
+                                                $aktivitas = mysqli_query($conn, "SELECT * FROM venue_aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
 
                                                 if (isset($_GET['search'])) {
-                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM aktivitas WHERE nama_aktivitas LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $searchTerm = $conn->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT va.*, v.location
+                                                            FROM venue_aktivitas va
+                                                            JOIN venues v ON va.id_venue = v.id_venue
+                                                            WHERE va.nama_aktivitas LIKE '%$searchTerm%'
+                                                            ORDER BY va.id_aktivitas DESC
+                                                            LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
-                                                    $sql = "SELECT * FROM aktivitas ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $sql = "SELECT va.*, v.location
+                                                            FROM venue_aktivitas va
+                                                            JOIN venues v ON va.id_venue = v.id_venue
+                                                            ORDER BY va.id_aktivitas DESC
+                                                            LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
-                                                $aktivitas = mysqli_query($koneksi, $sql);
+
+                                                $aktivitas = mysqli_query($conn, $sql);
                                                 $urut = 1 + $awalData;
 
                                                 while ($r2 = mysqli_fetch_array($aktivitas)) {
-                                                    $id = $r2['id'];
+                                                    $id = $r2['id_aktivitas'];
                                                     $nama = $r2['nama_aktivitas'];
-                                                    $jenis = $r2['jenis_olga'];
-                                                    $lokasi = $r2['lokasi'];
-                                                    $tanggal = $r2['tanggal'];
-                                                    $anggota = $r2['keanggotaan'];
-                                                    $jam = $r2['jam'];
-                                                    $harga = $r2['harga'];
+                                                    $jenis = $r2['sport'];
+                                                    $lokasi = $r2['location']; // Ambil data dari kolom location di tabel venues
+                                                    $tanggal = $r2['date'];
+                                                    $anggota = $r2['membership'];
+                                                    $jam = $r2['jam_main'];
+                                                    $harga = $r2['price'];
                                                     ?>
                                                     <tr>
                                                         <th scope="row">
@@ -688,6 +701,7 @@ $email = $_SESSION['email'];
                                                         </td>
                                                         <td scope="row">
                                                             <?php echo $jam ?>
+                                                            Jam
                                                         </td>
                                                         <td scope="row">
                                                             <?php echo $harga ?>
@@ -696,8 +710,9 @@ $email = $_SESSION['email'];
                                                             <a href="aktivitas.php?op=edit&id=<?php echo $id ?>"><button
                                                                     type="button" class="btn btn-warning">Edit</button></a>
                                                             <a href="aktivitas.php?op=delete&id=<?php echo $id ?>"
-                                                                onclick="return confirm('Yakin mau menghapus data ini?')"><button
-                                                                    type="button" class="btn btn-danger">Delete</button></a>
+                                                                onclick="return confirm('Yakin mau menghapus data ini?')">
+                                                                <button type="button" class="btn btn-danger">Delete</button>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                     <?php

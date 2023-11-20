@@ -79,6 +79,15 @@ if (isset($_POST["login"])) {
       border: 1px solid #e7f5ff;
     }
 
+    .small {
+      color: #02406d;
+    }
+
+    .small:hover {
+      color: #02406d;
+      text-decoration: underline;
+    }
+
     #card-email {
       background-color: white;
     }
@@ -105,7 +114,8 @@ if (isset($_POST["login"])) {
                   <form class="user" method="POST" action="#" autocomplete="off" name="login">
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" id="email-input" name="email"
-                        aria-describedby="emailHelp" placeholder="Enter Email Address..." autocomplete="off" />
+                        aria-describedby="emailHelp" placeholder="Enter Email Address..." autocomplete="off"
+                        autofocus />
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword"

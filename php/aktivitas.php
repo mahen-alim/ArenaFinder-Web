@@ -449,8 +449,6 @@ if (!$koneksi) {
       kategori olahraga yang anda minati
     </div>
 
-    <p id="swipe-btn">Swipe >></p>
-
     <div class="con-type">
       <button class="semua">All</button>
       <button class="all" type="submit">

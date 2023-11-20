@@ -491,8 +491,6 @@ if (!$koneksi) {
       indoor maupun outdoor
     </div>
 
-    <p id="swipe-btn">Swipe >></p>
-
     <div class="con-type">
       <button class="semua" onclick="showCards('All')">All</button>
       <button class="all" type="submit">

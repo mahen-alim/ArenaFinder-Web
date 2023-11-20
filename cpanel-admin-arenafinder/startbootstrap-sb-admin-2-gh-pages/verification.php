@@ -70,8 +70,7 @@
                                                 name="verify">Verifikasi</button>
                                         </div>
                                     </form>
-                               
-                                    
+                                                    
                                 </div>
                             </div>
                         </div>

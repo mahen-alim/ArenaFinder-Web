@@ -8,9 +8,20 @@ if (isset($_POST["register"])) {
   $password = $_POST["password"];
   $level = $_POST["level"];
 
-  $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
-  $rowCount = mysqli_num_rows($check_query);
+  // Cek validasi sandi 
+  if (!isValidPassword($password)) {
+    ?>
+    <script>
+      alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf, dan karakter khusus.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+  } else {
+    $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
+    $rowCount = mysqli_num_rows($check_query);
+  }
 
+  //Cek validasi email
   if ($rowCount > 0) {
     ?>
     <script>
@@ -18,10 +29,12 @@ if (isset($_POST["register"])) {
     </script>
     <?php
   } else {
+    
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
     $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
 
+    //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
     if ($result) {
       $otp = rand(100000, 999999);
       $_SESSION['otp'] = $otp;
@@ -48,12 +61,14 @@ if (isset($_POST["register"])) {
                     <p>Berikan pesan anda lewat email ini,</p>
                     <b>arenafinder.app@gmail.com</b>";
 
+      // Kondisi dimana email yang diinputkan user invalid
       if (!$mail->send()) {
         ?>
         <script>
           alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
         </script>
         <?php
+        // Kondisi dimana email yang diinputkan user valid
       } else {
         ?>
         <script>
@@ -64,6 +79,14 @@ if (isset($_POST["register"])) {
       }
     }
   }
+}
+
+// Function untuk mengecek kompleksitas sandi
+function isValidPassword($password)
+{
+  // Sandi skurang-kurangnya harus mengandung 8 karakter
+  $pattern = "/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d]).{8,}$/";
+  return preg_match($pattern, $password);
 }
 
 ?>
@@ -101,6 +124,15 @@ if (isset($_POST["register"])) {
       background-color: #02406d;
       color: #e7f5ff;
       border: 1px solid #e7f5ff;
+    }
+
+    .small {
+      color: #02406d;
+    }
+
+    .small:hover {
+      color: #02406d;
+      text-decoration: underline;
     }
 
     #card-email {

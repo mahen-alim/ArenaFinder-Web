@@ -1,13 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinderweb";
-
-$koneksi = mysqli_connect($host, $user, $pass, $db);
-if (!$koneksi) {
-    die("Tidak bisa terkoneksi");
-}
+include('database.php');
 
 $id = "";
 $anggota = "";
@@ -28,7 +20,7 @@ if (isset($_GET['op'])) {
 
 if ($op == 'delete') {
     $id = $_GET['id'];
-    $sql1 = "DELETE FROM jadwal WHERE id = '$id'";
+    $sql1 = "DELETE FROM venue_price WHERE id_price = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
@@ -39,10 +31,10 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM jadwal WHERE id = '$id'";
+    $sql1 = "SELECT * FROM venue_price WHERE id_price = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
-    $anggota = $r1['keanggotaan'];
+    $anggota = $r1['membership'];
     $jenis_lap = $r1['jenis_lapangan'];
     $tgl = $r1['tanggal'];
     $waktu_mulai = $r1['waktu_mulai'];
@@ -86,29 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     }
 }
 
-
-// Handle the AJAX request
-if (isset($_GET['checkValue'])) {
-    $searchValue = $_GET['checkValue'];
-
-    // Use prepared statements to prevent SQL injection
-    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
-    $stmt = $koneksi->prepare($sql);
-    $stmt->bind_param('s', $searchValue);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-
-
-    // Return the result as JSON
-    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
-
-    // Close the database connection
-    $stmt->close();
-    $koneksi->close();
-
-    exit();
-}
 
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
@@ -595,7 +564,6 @@ $email = $_SESSION['email'];
                                             <th scope="col">Waktu Mulai</th>
                                             <th scope="col">Waktu Selesai</th>
                                             <th scope="col">Harga</th>
-                                            <th scope="col">Status</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
@@ -610,7 +578,7 @@ $email = $_SESSION['email'];
                                         $jumlahDataPerHalaman = 10;
 
                                         // Perform the query to get the total number of rows
-                                        $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM jadwal");
+                                        $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_price");
                                         $countResult = mysqli_fetch_assoc($queryCount);
                                         $jumlahData = $countResult['total'];
 
@@ -624,26 +592,30 @@ $email = $_SESSION['email'];
                                         $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
                                         if (isset($_GET['search'])) {
-                                            $searchTerm = $koneksi->real_escape_string($_GET['search']);
+                                            $searchTerm = $conn->real_escape_string($_GET['search']);
+                                            $sql = "SELECT vp.*, v.sport
+                                                    FROM venue_price vp
+                                                    JOIN venues v ON vp.id_venue = v.id_venue
+                                                    WHERE v.sport LIKE '%$searchTerm%'
+                                                    LIMIT $awalData, $jumlahDataPerHalaman";
 
-                                            $sql = "SELECT * FROM jadwal WHERE jenis_lapangan LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
                                         } else {
-
-                                            $sql = "SELECT * FROM jadwal ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                            $sql = "SELECT vp.*, v.sport
+                                                    FROM venue_price vp
+                                                    JOIN venues v ON vp.id_venue = v.id_venue
+                                                    LIMIT $awalData, $jumlahDataPerHalaman";
                                         }
 
-                                        $jadwal = mysqli_query($koneksi, $sql);
+                                        $jadwal = mysqli_query($conn, $sql);
                                         $urut = 1 + $awalData;
 
                                         while ($r2 = mysqli_fetch_array($jadwal)) {
-                                            $id = $r2['id'];
-                                            $anggota = $r2['keanggotaan'];
-                                            $jenis_lap = $r2['jenis_lapangan'];
-                                            $tgl = $r2['tanggal'];
-                                            $w_mulai = $r2['waktu_mulai'];
-                                            $w_selesai = $r2['waktu_selesai'];
-                                            $harga = $r2['harga'];
-                                            $status = $r2['status_pemesanan'];
+                                            $anggota = $r2['membership'];
+                                            $sport = $r2['sport'];
+                                            $tgl = $r2['date'];
+                                            $w_mulai = $r2['start_hour'];
+                                            $w_selesai = $r2['end_hour'];
+                                            $harga = $r2['price'];
                                             ?>
                                             <tr>
                                                 <th scope="row">
@@ -653,7 +625,7 @@ $email = $_SESSION['email'];
                                                     <?php echo $anggota ?>
                                                 </td>
                                                 <td scope="row">
-                                                    <?php echo $jenis_lap ?>
+                                                    <?php echo $sport ?>
                                                 </td>
                                                 <td scope="row">
                                                     <?php echo $tgl ?>
@@ -666,12 +638,6 @@ $email = $_SESSION['email'];
                                                 </td>
                                                 <td scope="row">
                                                     <?php echo $harga ?>
-                                                </td>
-                                                <td scope="row">
-                                                    <a href="jadwal.php?op=status&id="><button type="button"
-                                                            class="btn btn-info" id="editButton" disabled>
-                                                            <?php echo $status ?>
-                                                        </button></a>
                                                 </td>
                                                 <td scope="row">
                                                     <a href="jadwal.php?op=edit&id=<?php echo $id ?>"><button type="button"
@@ -701,7 +667,7 @@ $email = $_SESSION['email'];
 
                                     // Next page link
                                     if ($page < $jumlahHalaman) {
-                                        echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                        echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
                                     }
                                     ?>
                                 </ul>

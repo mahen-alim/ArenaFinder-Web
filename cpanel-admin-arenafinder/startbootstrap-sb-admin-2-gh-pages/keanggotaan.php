@@ -1,13 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinderweb";
-
-$koneksi = mysqli_connect($host, $user, $pass, $db);
-if (!$koneksi) {
-    die("Tidak bisa terkoneksi");
-}
+include('database.php');
 
 $id = "";
 $nama = "";
@@ -29,7 +21,7 @@ if (isset($_GET['op'])) {
 
 if ($op == 'delete') {
     $id = $_GET['id'];
-    $sql1 = "DELETE FROM keanggotaan WHERE id_anggota = '$id'";
+    $sql1 = "DELETE FROM venue_membership WHERE id_membership = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
@@ -40,7 +32,7 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM keanggotaan WHERE id_anggota = '$id'";
+    $sql1 = "SELECT * FROM venue_membership WHERE id_membership = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r2 = mysqli_fetch_array($q1);
     $nama = $r2['nama'];
@@ -70,10 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($op == 'edit') {
         // Perbarui data jika ini adalah operasi edit
-        $sql1 = "UPDATE keanggotaan SET nama = '$nama', alamat = '$alamat', no_telp = '$no_telp', hari_main = '$hari', waktu_main = '$waktu', durasi_main = '$durasi', harga = '$harga', status = '$status' WHERE id_anggota = '$id'";
+        $sql1 = "UPDATE venue_membership SET nama = '$nama', alamat = '$alamat', no_telp = '$no_telp', hari_main = '$hari', waktu_main = '$waktu', durasi_main = '$durasi', harga = '$harga', status = '$status' WHERE id_membership = '$id'";
     } else {
         // Tambahkan data jika ini adalah operasi insert
-        $sql1 = "INSERT INTO keanggotaan (nama, alamat, no_telp, hari_main, waktu_main, durasi_main, harga, status) VALUES ('$nama', '$alamat', '$no_telp', '$hari', '$waktu', '$durasi', '$harga', '$status')";
+        $sql1 = "INSERT INTO venue_membership (nama, alamat, no_telp, hari_main, waktu_main, durasi_main, harga, status) VALUES ('$nama', '$alamat', '$no_telp', '$hari', '$waktu', '$durasi', '$harga', '$status')";
     }
 
     $q1 = mysqli_query($koneksi, $sql1);
@@ -85,28 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Handle the AJAX request
-if (isset($_GET['checkValue'])) {
-    $searchValue = $_GET['checkValue'];
-
-    // Use prepared statements to prevent SQL injection
-    $sql = "SELECT COUNT(*) as count FROM aktivitas WHERE nama_aktivitas = ?";
-    $stmt = $koneksi->prepare($sql);
-    $stmt->bind_param('s', $searchValue);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-
-
-    // Return the result as JSON
-    echo json_encode(['result' => $result, 'count' => $count, 'searchValue' => $searchValue]);
-
-    // Close the database connection
-    $stmt->close();
-    $koneksi->close();
-
-    exit();
-}
 
 if ($error) {
     // Set header sebelum mencetak pesan kesalahan
@@ -727,7 +697,7 @@ $email = $_SESSION['email'];
                                                 $jumlahDataPerHalaman = 10;
 
                                                 // Perform the query to get the total number of rows
-                                                $queryCount = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM keanggotaan");
+                                                $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_membership");
                                                 $countResult = mysqli_fetch_assoc($queryCount);
                                                 $jumlahData = $countResult['total'];
 
@@ -741,15 +711,15 @@ $email = $_SESSION['email'];
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
                                                 if (isset($_GET['search'])) {
-                                                    $searchTerm = $koneksi->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM keanggotaan WHERE nama LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $searchTerm = $conn->real_escape_string($_GET['search']);
+                                                    $sql = "SELECT * FROM venue_membership WHERE nama LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
-                                                    $sql = "SELECT * FROM keanggotaan ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $sql = "SELECT * FROM venue_membership ORDER BY id_membership DESC LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
-                                                $member = mysqli_query($koneksi, $sql);
+                                                $member = mysqli_query($conn, $sql);
                                                 $urut = 1 + $awalData;
                                                 while ($r2 = mysqli_fetch_array($member)) {
-                                                    $id = $r2['id_anggota'];
+                                                    $id = $r2['id_membership'];
                                                     $nama = $r2['nama'];
                                                     $alamat = $r2['alamat'];
                                                     $no_telp = $r2['no_telp'];
@@ -780,6 +750,7 @@ $email = $_SESSION['email'];
                                                         </td>
                                                         <td scope="row">
                                                             <?php echo $durasi ?>
+                                                            Jam
                                                         </td>
                                                         <td scope="row">
                                                             <?php echo $harga ?>
@@ -816,7 +787,7 @@ $email = $_SESSION['email'];
 
                                             // Next page link
                                             if ($page < $jumlahHalaman) {
-                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                                echo "<li class='page-item'><a class='page-link' href='keanggotaan.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
                                             }
                                             ?>
                                         </ul>
