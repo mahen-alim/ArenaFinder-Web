@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $anggota = $_POST['keanggotaan'];
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
-    $email = $_SESSION['email'];
 
      // Fetch id_venue based on the user's email
      $email = $_SESSION['email'];
@@ -95,12 +94,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                  photo = '$nama_file',
                                  id_venue = '$id_venue'
                               WHERE id_aktivitas = '$id'";
+                    $q1 = mysqli_query($conn, $sql1);
+
+                    if ($q1) {
+                        $sukses = "Data aktivitas berhasil diupdate";
+                    } else {
+                        $error = "Data aktivitas gagal diupdate";
+                    }
+                 
                  } else {
                      // Tambahkan data jika ini adalah operasi insert
                      $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, sport, date, membership, jam_main, price, photo, id_venue) 
                               VALUES ('$nama', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue')";
                      $q1 = mysqli_query($conn, $sql1);
+
+                    if ($q1) {
+                        $sukses = "Data aktivitas berhasil ditambahkan";
+                    } else {
+                        $error = "Data aktivitas gagal ditambahkan";
+                    }
                  }
+                     
              } else {
                  $error = "Harap pilih gambar yang akan diunggah";
              }
@@ -361,7 +375,7 @@ $email = $_SESSION['email'];
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama Aktivitas</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="staticEmail" name="nama"
-                                                        value="<?php echo $nama ?>" required>
+                                                        value="<?php echo $nama ?>" required autofocus>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -371,13 +385,13 @@ $email = $_SESSION['email'];
                                                     <select class="form-control" name="jenis_olga" id="jenis_olga"
                                                         required>
                                                         <option value="">-Pilih Jenis Olahraga-</option>
-                                                        <option value="Badminton" <?php if ($jenis == "Badminton")
+                                                        <option value="Bulu tangkis" <?php if ($jenis == "Bulu tangkis")
                                                             echo "selected" ?>>Badminton
                                                             </option>
                                                             <option value="Futsal" <?php if ($jenis == "Futsal")
                                                             echo "selected" ?>>Futsal
                                                             </option>
-                                                            <option value="Sepak Bola" <?php if ($jenis == "Sepak Bola")
+                                                            <option value="Sepak bola" <?php if ($jenis == "Sepak bola")
                                                             echo "selected" ?>>Sepak Bola
                                                             </option>
                                                             <option value="Bola Voli" <?php if ($jenis == "Bola Voli")

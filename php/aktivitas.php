@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinderweb";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -514,10 +514,12 @@ if (!$koneksi) {
 
   </div>
 
-
   <div class="cards-container">
     <?php
-    $sql3 = "SELECT * FROM aktivitas ORDER BY id DESC";
+    $sql3 = "SELECT va.*, v.location
+    FROM venue_aktivitas va
+    JOIN venues v ON va.id_venue = v.id_venue
+    ORDER BY va.id_aktivitas DESC";
     $q3 = mysqli_query($koneksi, $sql3);
     $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
     
@@ -531,15 +533,15 @@ if (!$koneksi) {
       echo '<div class="card">';
       echo '<div class="card-body">';
 
-      $namaGambar = $row['gambar'];
+      $namaGambar = $row['photo'];
       $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
       echo '<img src="' . $gambarURL . '" alt="Gambar">';
       echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
-      echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['lokasi'] . '</p>';
-      echo '<p class="card-text">' . $row['tanggal'] . '</p>';
-      echo '<p class="card-text">' . $row['jam'] . '</p>';
-      echo '<p class="card-text">Harga : Rp ' . $row['harga'] . '</p>';
+      echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['location'] . '</p>';
+      echo '<p class="card-text">' . $row['date'] . '</p>';
+      echo '<p class="card-text">' . $row['jam_main'] . ' Jam</p>';
+      echo '<p class="card-text">Harga : Rp ' . $row['price'] . '</p>';
 
       echo '</div></div>';
 

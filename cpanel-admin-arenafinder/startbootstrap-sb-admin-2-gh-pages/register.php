@@ -8,74 +8,78 @@ if (isset($_POST["register"])) {
   $password = $_POST["password"];
   $level = $_POST["level"];
 
-  // Cek validasi sandi 
-  if (!isValidPassword($password)) {
-    ?>
-    <script>
-      alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf, dan karakter khusus.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-  } else {
-    $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
-    $rowCount = mysqli_num_rows($check_query);
-  }
+
+  //Check if the email already exists in the database
+  $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
+  $rowCount = mysqli_num_rows($check_query);
 
   //Cek validasi email
   if ($rowCount > 0) {
     ?>
     <script>
       alert("Pengguna dengan email ini sudah terdaftar!");
+      window.location.replace('register.php');
     </script>
     <?php
   } else {
-    
-    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    // Check the validity of the password
+    if (!isValidPassword($password)) {
+      // Password is not valid, display an alert or take appropriate action
+      ?>
+      <script>
+        alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf, dan karakter khusus.");
+        window.location.replace('register.php');
+      </script>
+      <?php
+    } else {
 
-    $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
+      $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-    //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
-    if ($result) {
-      $otp = rand(100000, 999999);
-      $_SESSION['otp'] = $otp;
-      $_SESSION['mail'] = $email;
-      require "Mail/phpmailer/PHPMailerAutoload.php";
-      $mail = new PHPMailer;
+      $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
 
-      $mail->isSMTP();
-      $mail->Host = 'smtp.gmail.com';
-      $mail->Port = 587;
-      $mail->SMTPAuth = true;
-      $mail->SMTPSecure = 'tls';
+      //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
+      if ($result) {
+        $otp = rand(100000, 999999);
+        $_SESSION['otp'] = $otp;
+        $_SESSION['mail'] = $email;
+        require "Mail/phpmailer/PHPMailerAutoload.php";
+        $mail = new PHPMailer;
 
-      $mail->Username = 'mahennekkers27@gmail.com';
-      $mail->Password = 'fxqa zwoq vuji mhlk';
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
 
-      $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
-      $mail->addAddress($_POST["email"]);
+        $mail->Username = 'mahennekkers27@gmail.com';
+        $mail->Password = 'fxqa zwoq vuji mhlk';
 
-      $mail->isHTML(true);
-      $mail->Subject = "Kode verifikasi akun anda";
-      $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
+        $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
+        $mail->addAddress($_POST["email"]);
+
+        $mail->isHTML(true);
+        $mail->Subject = "Kode verifikasi akun anda";
+        $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
                     <br><br>
                     <p>Berikan pesan anda lewat email ini,</p>
                     <b>arenafinder.app@gmail.com</b>";
 
-      // Kondisi dimana email yang diinputkan user invalid
-      if (!$mail->send()) {
-        ?>
-        <script>
-          alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
-        </script>
-        <?php
-        // Kondisi dimana email yang diinputkan user valid
-      } else {
-        ?>
-        <script>
-          alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
-          window.location.replace('verification.php');
-        </script>
-        <?php
+        // Kondisi dimana email yang diinputkan user invalid
+        if (!$mail->send()) {
+          ?>
+          <script>
+            alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
+          </script>
+          <?php
+          // Kondisi dimana email yang diinputkan user valid
+        } else {
+          ?>
+          <script>
+            alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
+            window.location.replace('verification.php');
+          </script>
+          <?php
+        }
       }
     }
   }

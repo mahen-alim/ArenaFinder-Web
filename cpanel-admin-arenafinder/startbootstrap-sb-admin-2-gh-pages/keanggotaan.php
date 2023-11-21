@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('database.php');
 
 $id = "";
@@ -22,7 +23,7 @@ if (isset($_GET['op'])) {
 if ($op == 'delete') {
     $id = $_GET['id'];
     $sql1 = "DELETE FROM venue_membership WHERE id_membership = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $q1 = mysqli_query($conn, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
     } else {
@@ -33,7 +34,7 @@ if ($op == 'delete') {
 if ($op == 'edit') {
     $id = $_GET['id'];
     $sql1 = "SELECT * FROM venue_membership WHERE id_membership = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $q1 = mysqli_query($conn, $sql1);
     $r2 = mysqli_fetch_array($q1);
     $nama = $r2['nama'];
     $alamat = $r2['alamat'];
@@ -60,20 +61,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $harga = $_POST['harga'];
     $status = $_POST['status'];
 
-    if ($op == 'edit') {
-        // Perbarui data jika ini adalah operasi edit
-        $sql1 = "UPDATE venue_membership SET nama = '$nama', alamat = '$alamat', no_telp = '$no_telp', hari_main = '$hari', waktu_main = '$waktu', durasi_main = '$durasi', harga = '$harga', status = '$status' WHERE id_membership = '$id'";
-    } else {
-        // Tambahkan data jika ini adalah operasi insert
-        $sql1 = "INSERT INTO venue_membership (nama, alamat, no_telp, hari_main, waktu_main, durasi_main, harga, status) VALUES ('$nama', '$alamat', '$no_telp', '$hari', '$waktu', '$durasi', '$harga', '$status')";
-    }
+    // Fetch id_venue based on the user's email
+    $email = $_SESSION['email'];
+    $fetchVenueIdQuery = "SELECT id_venue, email FROM venues WHERE email = '$email'";
+    $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
 
-    $q1 = mysqli_query($koneksi, $sql1);
+    if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
+        $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
+        $id_venue = $venueRow['id_venue'];
+        $email = $venueRow['email'];
 
-    if ($q1) {
-        $sukses = "Data member berhasil diupdate/ditambahkan";
+        if ($op == 'edit') {
+            // Perbarui data jika ini adalah operasi edit
+            $sql1 = "UPDATE venue_membership SET nama = '$nama', alamat = '$alamat', no_telp = '$no_telp', hari_main = '$hari', waktu_main = '$waktu', durasi_main = '$durasi', harga = '$harga', status = '$status' WHERE id_membership = '$id'";
+            $q1 = mysqli_query($conn, $sql1);
+
+            if ($q1) {
+                $sukses = "Data member berhasil diupdate";
+            } else {
+                $error = "Data member gagal diupdate";
+            }
+        } else {
+            // Tambahkan data jika ini adalah operasi insert
+            $sql1 = "INSERT INTO venue_membership (nama, alamat, no_telp, hari_main, waktu_main, durasi_main, harga, status, id_venue, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $sql1);
+
+            // Check if the statement was prepared successfully
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "ssssssssss", $nama, $alamat, $no_telp, $hari, $waktu, $durasi, $harga, $status, $id_venue, $email);
+                $result = mysqli_stmt_execute($stmt);
+
+                if ($result) {
+                    $sukses = "Data member berhasil ditambahkan";
+                } else {
+                    $error = "Data member gagal ditambahkan";
+                }
+
+                // Close the statement
+                mysqli_stmt_close($stmt);
+            } else {
+                // Handle the case where the statement preparation fails
+                $error = "Prepared statement failed";
+            }
+
+        }
     } else {
-        $error = "Data member gagal diupdate/ditambahkan";
+        $error = "Venue tidak ditemukan untuk email ini";
     }
 }
 
@@ -92,7 +125,6 @@ if ($sukses) {
 <?php
 }
 
-session_start();
 
 if (!isset($_SESSION['email'])) {
     // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
@@ -325,7 +357,7 @@ $email = $_SESSION['email'];
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="staticEmail" name="nama"
-                                                        value="<?php echo $nama ?>" required>
+                                                        value="<?php echo $nama ?>" required autofocus>
                                                 </div>
                                             </div>
 
@@ -523,19 +555,19 @@ $email = $_SESSION['email'];
                                                     <select class="form-control" name="durasi_main" id="durasi_main"
                                                         required>
                                                         <option value="">-Durasi Main-</option>
-                                                        <option value="1 jam" <?php if ($durasi == "1 jam")
+                                                        <option value="1" <?php if ($durasi == "1")
                                                             echo "selected" ?>>1 jam
                                                             </option>
-                                                            <option value="2 jam" <?php if ($durasi == "2 jam")
+                                                            <option value="2" <?php if ($durasi == "2")
                                                             echo "selected" ?>>2 jam
                                                             </option>
-                                                            <option value="3 jam" <?php if ($durasi == "3 jam")
+                                                            <option value="3" <?php if ($durasi == "3")
                                                             echo "selected" ?>>3 jam
                                                             </option>
-                                                            <option value="4 jam" <?php if ($durasi == "4 jam")
+                                                            <option value="4" <?php if ($durasi == "4")
                                                             echo "selected" ?>>4 jam
                                                             </option>
-                                                            <option value="5 jam" <?php if ($durasi == "5 jam")
+                                                            <option value="5" <?php if ($durasi == "5")
                                                             echo "selected" ?>>5 jam
                                                             </option>
                                                         </select>
@@ -578,15 +610,15 @@ $email = $_SESSION['email'];
 
                                     // Tentukan harga berdasarkan nilai yang dipilih
                                     var harga = 0;
-                                    if (selectedValue == "1 jam") {
+                                    if (selectedValue == "1") {
                                         harga = 90000;
-                                    } else if (selectedValue == "2 jam") {
+                                    } else if (selectedValue == "2") {
                                         harga = 180000;
-                                    } else if (selectedValue == "3 jam") {
+                                    } else if (selectedValue == "3") {
                                         harga = 360000;
-                                    } else if (selectedValue == "4 jam") {
+                                    } else if (selectedValue == "4") {
                                         harga = 720000;
-                                    } else if (selectedValue == "5 jam") {
+                                    } else if (selectedValue == "5") {
                                         harga = 1440000;
                                     } else {
                                         <?php echo $error ?>

@@ -21,7 +21,7 @@ if (isset($_GET['op'])) {
 if ($op == 'delete') {
     $id = $_GET['id'];
     $sql1 = "DELETE FROM venue_price WHERE id_price = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $q1 = mysqli_query($conn, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
     } else {
@@ -31,19 +31,21 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM venue_price WHERE id_price = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $sql1 = "SELECT vp.*, v.sport
+            FROM venue_price vp
+            JOIN venues v ON vp.id_venue = v.id_venue";
+    $q1 = mysqli_query($conn, $sql1);
     $r1 = mysqli_fetch_array($q1);
     $anggota = $r1['membership'];
-    $jenis_lap = $r1['jenis_lapangan'];
-    $tgl = $r1['tanggal'];
-    $waktu_mulai = $r1['waktu_mulai'];
-    $waktu_selesai = $r1['waktu_selesai'];
-    $harga = $r1['harga'];
+    $jenis_lap = $r1['sport'];
+    $tgl = $r1['date'];
+    $waktu_mulai = $r1['start_hour'];
+    $waktu_selesai = $r1['end_hour'];
+    $harga = $r1['price'];
     $status = $r1['status_pemesanan'];
 
 
-    if ($anggota == '') {
+    if ($sport == '') {
         $error = "Data tidak ditemukan";
     }
 }
@@ -66,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
         }
 
-        $q1 = mysqli_query($koneksi, $sql1);
+        $q1 = mysqli_query($conn, $sql1);
 
         if ($q1) {
             $sukses = "Data jadwal berhasil diupdate/ditambahkan";
