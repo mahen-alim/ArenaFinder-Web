@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('database.php');
 
 $id = "";
@@ -22,7 +23,7 @@ if (isset($_GET['op'])) {
 if ($op == 'delete') {
     $id = $_GET['id'];
     $sql1 = "DELETE FROM venue_aktivitas WHERE id_aktivitas = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $q1 = mysqli_query($conn, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
     } else {
@@ -34,21 +35,17 @@ if ($op == 'edit') {
     $id = $_GET['id'];
     $sql1 = "SELECT va.*, v.location AS venue_lokasi
              FROM venue_aktivitas va
-             JOIN venue v ON va.id_venue = v.id_venue
+             JOIN venues v ON va.id_venue = v.id_venue
              WHERE va.id_aktivitas = '$id'";
-    $q1 = mysqli_query($koneksi, $sql1);
+    $q1 = mysqli_query($conn, $sql1);
     $r1 = mysqli_fetch_array($q1);
 
     $nama = $r1['nama_aktivitas'];
     $jenis = $r1['sport'];
-    $lokasiAktivitas = $r1['lokasi'];
     $tanggal = $r1['date'];
     $anggota = $r1['membership'];
     $jam = $r1['jam_main'];
     $harga = $r1['price'];
-
-    // Lokasi dari tabel venue
-    $lokasiVenue = $r1['venue_lokasi'];
 
     if ($nama == '') {
         $error = "Data tidak ditemukan";
@@ -59,72 +56,61 @@ if ($op == 'edit') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST['nama'];
     $jenis = $_POST['jenis_olga'];
-    $lokasi = $_POST['lokasi'];
     $tanggal = $_POST['tanggal'];
     $anggota = $_POST['keanggotaan'];
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
+    $email = $_SESSION['email'];
 
-    if (!empty($_FILES['foto']['name'])) {
-        $nama_file = $_FILES['foto']['name'];
-        $tmp = $_FILES['foto']['tmp_name'];
-
-        // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
-        $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
-
-        // Pindahkan file gambar ke folder tujuan
-        if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
-            // Jika pengunggahan berhasil, lanjutkan dengan query SQL
-            // Periksa apakah file gambar diunggah
-            if ($op == 'edit') {
-                // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE venue_aktivitas SET 
-                            nama_aktivitas = '$nama',
-                            jenis_olga = '$jenis',
-                            tanggal = '$tanggal',
-                            keanggotaan = '$anggota',
-                            jam = '$jam',
-                            harga = '$harga',
-                            gambar = '$nama_file',
-                            id_venue = '$lokasi'
-                         WHERE id_aktivitas = '$id'";
-            } else {
-                // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, jenis_olga, date, membership, jam_main, price, gambar, id_venue) 
-                         VALUES ('$nama', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue')";
-            }
-
-            $q1 = mysqli_query($conn, $sql1);
-
-            if ($q1) {
-                $sukses = "Data aktivitas berhasil diupdate/ditambahkan";
-
-                // Setelah berhasil memasukkan data ke tabel venue_aktivitas,
-                // tambahkan data ke kolom location di tabel venues
-                if ($op == 'edit') {
-                    $sql2 = "UPDATE venues SET location = '$lokasi' WHERE id_venue = '$id_venue'";
-                } else {
-                    // For insert operation, you may need to retrieve the last inserted id
-                    // depending on your database system (e.g., mysqli_insert_id for MySQL)
-                    $lastInsertId = mysqli_insert_id($conn);
-                    $sql2 = "UPDATE venues SET location = '$lokasi' WHERE id_venue = '$lastInsertId'";
-                }
-
-                $q2 = mysqli_query($conn, $sql2);
-
-                if (!$q2) {
-                    $error = "Gagal memperbarui lokasi di tabel venues";
-                }
-            } else {
-                $error = "Data aktivitas gagal diupdate/ditambahkan";
-            }
-
-        } else {
-            $error = "Harap pilih gambar yang akan diunggah";
-        }
-    } else {
-        $error = "Harap pilih gambar yang akan diunggah";
-    }
+     // Fetch id_venue based on the user's email
+     $email = $_SESSION['email'];
+     $fetchVenueIdQuery = "SELECT id_venue FROM venues WHERE email = '$email'";
+     $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
+ 
+     if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
+         $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
+         $id_venue = $venueRow['id_venue'];
+ 
+         // Continue with your existing code
+         if (!empty($_FILES['foto']['name'])) {
+             $nama_file = $_FILES['foto']['name'];
+             $tmp = $_FILES['foto']['tmp_name'];
+ 
+             // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
+             $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
+ 
+             // Pindahkan file gambar ke folder tujuan
+             if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
+                 // Jika pengunggahan berhasil, lanjutkan dengan query SQL
+                 // Periksa apakah file gambar diunggah
+                 if ($op == 'edit') {
+                     // Perbarui data jika ini adalah operasi edit
+                     $sql1 = "UPDATE venue_aktivitas SET 
+                                 nama_aktivitas = '$nama',
+                                 sport = '$jenis',
+                                 date = '$tanggal',
+                                 membership = '$anggota',
+                                 jam_main = '$jam',
+                                 price = '$harga',
+                                 photo = '$nama_file',
+                                 id_venue = '$id_venue'
+                              WHERE id_aktivitas = '$id'";
+                 } else {
+                     // Tambahkan data jika ini adalah operasi insert
+                     $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, sport, date, membership, jam_main, price, photo, id_venue) 
+                              VALUES ('$nama', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue')";
+                     $q1 = mysqli_query($conn, $sql1);
+                 }
+             } else {
+                 $error = "Harap pilih gambar yang akan diunggah";
+             }
+         } else {
+             $error = "Harap pilih gambar yang akan diunggah";
+         }
+     } else {
+         $error = "Venue tidak ditemukan untuk email ini";
+     }
+    
 }
 
 
@@ -143,7 +129,6 @@ if ($sukses) {
 <?php
 }
 
-session_start();
 
 if (!isset($_SESSION['email'])) {
     // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
@@ -408,12 +393,7 @@ $email = $_SESSION['email'];
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-3 row">
-                                                    <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="staticEmail"
-                                                            name="lokasi" value="<?php echo $lokasi ?>" required>
-                                                </div>
+                                                
                                             </div>
 
                                             <div class="mb-3 row">
@@ -457,19 +437,19 @@ $email = $_SESSION['email'];
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="jam_main" id="jam_main" required>
                                                         <option value="">-Jam Main-</option>
-                                                        <option value="1 jam" <?php if ($jam == "1 jam")
+                                                        <option value="1" <?php if ($jam == "1")
                                                             echo "selected" ?>>1 jam
                                                             </option>
-                                                            <option value="2 jam" <?php if ($jam == "2 jam")
+                                                            <option value="2" <?php if ($jam == "2")
                                                             echo "selected" ?>>2 jam
                                                             </option>
-                                                            <option value="3 jam" <?php if ($jam == "3 jam")
+                                                            <option value="3" <?php if ($jam == "3")
                                                             echo "selected" ?>>3 jam
                                                             </option>
-                                                            <option value="4 jam" <?php if ($jam == "4 jam")
+                                                            <option value="4" <?php if ($jam == "4")
                                                             echo "selected" ?>>4 jam
                                                             </option>
-                                                            <option value="5 jam" <?php if ($jam == "5 jam")
+                                                            <option value="5" <?php if ($jam == "5")
                                                             echo "selected" ?>>5 jam
                                                             </option>
                                                         </select>
@@ -516,15 +496,15 @@ $email = $_SESSION['email'];
 
                                     // Tentukan harga berdasarkan nilai yang dipilih
                                     var harga = 0;
-                                    if (selectedValue === "1 jam") {
+                                    if (selectedValue === "1") {
                                         harga = 15000;
-                                    } else if (selectedValue === "2 jam") {
+                                    } else if (selectedValue === "2") {
                                         harga = 30000;
-                                    } else if (selectedValue === "3 jam") {
+                                    } else if (selectedValue === "3") {
                                         harga = 45000;
-                                    } else if (selectedValue === "4 jam") {
+                                    } else if (selectedValue === "4") {
                                         harga = 50000;
-                                    } else if (selectedValue === "5 jam") {
+                                    } else if (selectedValue === "5") {
                                         harga = 65000;
                                     } else {
                                         <?php echo $error ?>
