@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('database.php');
 
 $id = "";
@@ -125,7 +124,7 @@ if ($sukses) {
 <?php
 }
 
-
+session_start();
 if (!isset($_SESSION['email'])) {
     // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
     header("Location: login.php");
@@ -247,7 +246,7 @@ $email = $_SESSION['email'];
 
             <!-- Nav Item - Keanggotaan -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="" id="anggota-link">
                     <i class="fa-solid fa-users"></i>
                     <span>Keanggotaan</span></a>
             </li>
@@ -263,11 +262,32 @@ $email = $_SESSION['email'];
             <!-- Nav Item - Pesanan -->
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter">New</span>
+                    <i class="fa-solid fa-cart-shopping" aria-hidden="true" id="pesanan-link">
+                        
                     </i>
                     <span>Pesanan</span></a>
             </li>
+
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <!-- Your Badge Script with AJAX -->
+            <script>
+                setInterval(function () {
+                    function loadDoc() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("pesanan-link").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "check_data.php", true);
+                        xhttp.send();
+                    }
+                    loadDoc();
+                }, 1000);
+            </script>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

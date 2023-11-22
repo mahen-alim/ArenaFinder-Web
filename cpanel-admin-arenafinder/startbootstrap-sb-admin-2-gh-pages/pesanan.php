@@ -35,6 +35,8 @@ $email = $_SESSION['email'];
             font-family: "Kanit", sans-serif;
         }
     </style>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -98,7 +100,7 @@ $email = $_SESSION['email'];
 
             <!-- Nav Item - Keanggotaan -->
             <li class="nav-item ">
-                <a class="nav-link" href="keanggotaan.php">
+                <a class="nav-link" href="keanggotaan.php" id="anggota-link">
                     <i class="fa-solid fa-users"></i>
                     <span>Keanggotaan</span></a>
             </li>
@@ -111,16 +113,33 @@ $email = $_SESSION['email'];
                 Notifikasi
             </div>
 
-            <!-- Nav Item - Pesanan -->
+            <!-- Assuming this is your navigation link HTML -->
             <li class="nav-item active">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter">New</span>
-                    </i>
-
-                    <span>Pesanan</span></a>
+                    <i class="fa-solid fa-cart-shopping" id="pesanan-link"></i>
+                    <span>Pesanan</span>
+                </a>
             </li>
 
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <!-- Your Badge Script with AJAX -->
+            <script>
+                setInterval(function () {
+                    function loadDoc() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("pesanan-link").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "check_data.php", true);
+                        xhttp.send();
+                    }
+                    loadDoc();
+                }, 1000);
+            </script>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -210,6 +229,8 @@ $email = $_SESSION['email'];
                 </nav>
                 <!-- End of Topbar -->
 
+                <div id="venue-membership-cards"></div>
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -223,85 +244,84 @@ $email = $_SESSION['email'];
                         <div class="col-lg-6">
 
                             <!-- Collapsable Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
-                                        Futsal-Person A</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body" style="display: flex; flex-direction: column;">
-                                        <h6>Keanggotaan : <strong>Member</strong></h6>
-                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
-                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
-                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
-                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
-                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
+                            <?php
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $database = "arenafinder";
 
-                                        <div class="d-flex justify-content-end mt-auto">
-                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
-                                            <button type="button" class="btn btn-danger">Batalkan</button>
+                            // Create connection
+                            $conn = new mysqli($servername, $username, $password, $database);
+
+                            // Check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+
+                            $sql = "SELECT vm.*, v.sport AS venue_sport
+                                    FROM venue_membership vm
+                                    JOIN venues v ON vm.id_venue = v.id_venue
+                                    ORDER BY vm.created_at DESC";
+
+
+                            // Perform the query
+                            $result = $conn->query($sql);
+
+                            // Check if there are any results before generating HTML
+                            if ($result->num_rows > 0) {
+                                // Initialize $html variable
+                                $html = '';
+
+                                // Generate HTML for each venue membership entry
+                                while ($row = $result->fetch_assoc()) {
+                                    $html .= '
+                                        <div class="card shadow mb-4">
+                                            <!-- Card Header - Accordion -->
+                                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                                <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan ' . $row['venue_sport'] . '-Person A</h6>
+                                
+                                                <!-- Add a dropdown button with increased size -->
+                                                <button id="toggleButton' . $row['id_membership'] . '" class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseCard' . $row['id_membership'] . '" aria-expanded="false" aria-controls="collapseCard' . $row['id_membership'] . '">
+                                                   
+                                                </button>
+                                            </div>
+                                            <!-- Card Content - Collapse -->
+                                            <div class="card-body collapse" id="collapseCard' . $row['id_membership'] . '">
+                                                <h6>Nama : <strong>' . htmlspecialchars($row['nama']) . '</strong></h6>
+                                                <h6>Alamat : <strong>' . htmlspecialchars($row['alamat']) . '</strong></h6>
+                                                    <h6>No. Telepon : <strong>' . htmlspecialchars($row['no_telp']) . '</strong></h6>
+                                                    <h6>Hari Main : <strong>' . htmlspecialchars($row['hari_main']) . '</strong></h6>
+                                                    <h6>Waktu Main : <strong>' . htmlspecialchars($row['waktu_main']) . '</strong></h6>
+                                                    <h6>Waktu Pemesanan : <strong>' . htmlspecialchars($row['created_at']) . '</strong></h6>
+                                                    <h6>Total Harga : <strong>' . htmlspecialchars($row['harga']) . '</strong></h6>
+                                                <!-- Add other details here -->
+                                
+                                                <div class="d-flex justify-content-end mt-auto">
+                                                    <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
+                                                    <button type="button" class="btn btn-danger">Batalkan</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                        
+                                        <script>
+                                            // Add a click event handler to toggle the button class
+                                            $("#toggleButton' . $row['id_membership'] . '").on("click", function() {
+                                                $(this).toggleClass("btn-info btn-white");
+                                            });
+                                        </script>';
+                                }
+                            } else {
+                                // Output a message or handle the case when there are no results
+                                $html = '<p>No data available.</p>';
+                            }
 
-                                    </div>
-                                </div>
-                            </div>
+                            // Output the generated HTML
+                            echo $html;
 
-                            <!-- Collapsable Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
-                                        Futsal-Person B</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body" style="display: flex; flex-direction: column;">
-                                        <h6>Keanggotaan : <strong>Member</strong></h6>
-                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
-                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
-                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
-                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
-                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
-
-                                        <div class="d-flex justify-content-end mt-auto">
-                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
-                                            <button type="button" class="btn btn-danger">Batalkan</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Collapsable Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan
-                                        Futsal-Person C</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body" style="display: flex; flex-direction: column;">
-                                        <h6>Keanggotaan : <strong>Member</strong></h6>
-                                        <h6>Jumlah Lapangan : <strong>1</strong></h6>
-                                        <h6>Bagian Lapangan : <strong>Lapangan A</strong></h6>
-                                        <h6>Tanggal Pemesanan : <strong>08/09/2023</strong></h6>
-                                        <h6>Waktu Pemesanan : <strong>17:00-19:00 WIB</strong></h6>
-                                        <h6>Total Harga : <strong>Rp. 240.000</strong></h6>
-
-                                        <div class="d-flex justify-content-end mt-auto">
-                                            <button type="button" class="btn btn-success mr-2">Konfirmasi</button>
-                                            <button type="button" class="btn btn-danger">Batalkan</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                            // Close the connection when you are done
+                            $conn->close();
+                            ?>
 
                         </div>
 
