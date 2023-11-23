@@ -262,8 +262,8 @@ $email = $_SESSION['email'];
             <!-- Nav Item - Pesanan -->
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping" aria-hidden="true" id="pesanan-link">
-
+                    <i class="fa-solid fa-cart-shopping" aria-hidden="true">
+                        <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
                     </i>
                     <span>Pesanan</span></a>
             </li>

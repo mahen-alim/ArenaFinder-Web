@@ -140,16 +140,34 @@ $conn->close();
                 Notifikasi
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <!-- Nav Item - Charts -->
-            <li class="nav-item">
+           <!-- Nav Item - Pesanan -->
+           <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter">New</span>
+                        <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
                     </i>
                     <span>Pesanan</span></a>
             </li>
+
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <!-- Your Badge Script with AJAX -->
+            <script>
+                setInterval(function () {
+                    function loadDoc() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("pesanan-link").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "check_data.php", true);
+                        xhttp.send();
+                    }
+                    loadDoc();
+                }, 1000);
+            </script>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

@@ -116,7 +116,9 @@ $email = $_SESSION['email'];
             <!-- Assuming this is your navigation link HTML -->
             <li class="nav-item active">
                 <a class="nav-link" href="pesanan.php">
-                    <i class="fa-solid fa-cart-shopping" id="pesanan-link"></i>
+                    <i class="fa-solid fa-cart-shopping">
+                    <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
+                    </i>
                     <span>Pesanan</span>
                 </a>
             </li>

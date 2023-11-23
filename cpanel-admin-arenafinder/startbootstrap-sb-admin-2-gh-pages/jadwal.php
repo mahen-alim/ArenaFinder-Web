@@ -74,9 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
         $id_lapangan = $venueRow['id_lapangan'];
 
         if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
-                if ($op == 'edit') {
-                    // Perbarui data jika ini adalah operasi edit
-                    $sql1 = "UPDATE venue_price SET 
+            if ($op == 'edit') {
+                // Perbarui data jika ini adalah operasi edit
+                $sql1 = "UPDATE venue_price SET 
                                 id_venue = '$id_venue'
                                 id_lapangan = '$id_lapangan',
                                 date = '$tgl',
@@ -85,26 +85,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 price = '$harga',
                                 -- membership = '$anggota',
                             WHERE id_price = '$id'";
-                    $q1 = mysqli_query($conn, $sql1);
+                $q1 = mysqli_query($conn, $sql1);
 
-                    if ($q1) {
-                        $sukses = "Data jadwal berhasil diupdate";
-                    } else {
-                        $error = "Data jadwal gagal diupdate";
-                    }
+                if ($q1) {
+                    $sukses = "Data jadwal berhasil diupdate";
+                } else {
+                    $error = "Data jadwal gagal diupdate";
+                }
             } else {
                 // Tambahkan data jika ini adalah operasi insert
                 $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, date, start_hour, end_hour, price) 
                         VALUES ('$id_venue', '$id_lapangan', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
                 $q1 = mysqli_query($conn, $sql1);
-    
+
                 if ($q1) {
                     $sukses = "Data jadwal berhasil ditambahkan";
                 } else {
                     $error = "Data jadwal gagal ditambahkan";
                 }
             }
-        
+
         } else {
             $error = "Terdapat kesalahan input waktu";
         }
@@ -268,10 +268,30 @@ $email = $_SESSION['email'];
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter">New</span>
+                        <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
                     </i>
                     <span>Pesanan</span></a>
             </li>
+
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <!-- Your Badge Script with AJAX -->
+            <script>
+                setInterval(function () {
+                    function loadDoc() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("pesanan-link").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "check_data.php", true);
+                        xhttp.send();
+                    }
+                    loadDoc();
+                }, 1000);
+            </script>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
