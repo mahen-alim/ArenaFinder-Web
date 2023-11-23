@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -57,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $jumlah_lap = $_POST['jumlah_lap'];
     $harga_sewa = $_POST['harga_sewa'];
     $tipe_lap = $_POST['tipe_lap'];
+    $email = $_SESSION['email'];
 
 
     if (!empty($_FILES['foto']['name'])) {
@@ -71,10 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 
             if ($op == 'edit') {
                 // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE venues SET venue_name = '$nama', location = '$lokasi', total_lapangan = '$jumlah_lap', price = '$harga_sewa', sport_status = '$tipe_lap', venue_photo = '$nama_file' WHERE id_venue = '$id'";
+                $sql1 = "UPDATE venues SET email = '$email', venue_name = '$nama', location = '$lokasi', total_lapangan = '$jumlah_lap', price = '$harga_sewa', sport_status = '$tipe_lap', venue_photo = '$nama_file' WHERE id_venue = '$id'";
             } else {
                 // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO venues (venue_name, location, total_lapangan, price, sport_status, venue_photo) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap', '$nama_file')";
+                $sql1 = "INSERT INTO venues (email, venue_name, location, total_lapangan, price, sport_status, venue_photo) VALUES ('$email', '$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap', '$nama_file')";
             }
 
             $q1 = mysqli_query($koneksi, $sql1);
@@ -453,6 +455,7 @@ if ($sukses) {
                                                     <th scope="col">Jumlah Lapangan</th>
                                                     <th scope="col">Harga Sewa</th>
                                                     <th scope="col">Tipe Lapangan</th>
+                                                    <th scope="col">Foto</th>
                                                     <th scope="col">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -480,6 +483,7 @@ if ($sukses) {
                                                     $jumlah_lap = $r2['total_lapangan'];
                                                     $harga_sewa = $r2['price'];
                                                     $tipe_lap = $r2['sport_status'];
+                                                    $foto = $r2['venue_photo'];
                                                     ?>
                                                     <tr>
                                                         <th scope="row">
@@ -502,6 +506,10 @@ if ($sukses) {
                                                                     class="btn btn-info" id="editButton" disabled>
                                                                     <?php echo $tipe_lap ?>
                                                                 </button></a>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <img src="/ArenaFinder/public/img/venue/<?php echo $foto; ?>"
+                                                                alt="Image" style="width: 100px; height: 100px;">
                                                         </td>
                                                         <td scope="row">
                                                             <a href="add_referensi.php?op=edit&id=<?php echo $id ?>"><button

@@ -615,6 +615,7 @@ $email = $_SESSION['email'];
                                                     <th scope="col">Keanggotaan</th>
                                                     <th scope="col">Jam Main</th>
                                                     <th scope="col">Harga</th>
+                                                    <th scope="col">Foto</th>
                                                     <th scope="col">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -673,6 +674,7 @@ $email = $_SESSION['email'];
                                                     $anggota = $r2['membership'];
                                                     $jam = $r2['jam_main'];
                                                     $harga = $r2['price'];
+                                                    $foto = $r2['photo'];
                                                     ?>
                                                     <tr>
                                                         <th scope="row">
@@ -700,6 +702,10 @@ $email = $_SESSION['email'];
                                                         <td scope="row">
                                                             <?php echo $harga ?>
                                                         </td>
+                                                        <td scope="row">
+                                                            <img src="/ArenaFinder/public/img/venue/<?php echo $foto; ?>" alt="Image" style="width: 100px; height: 100px;">
+                                                        </td>
+
                                                         <td scope="row">
                                                             <a href="aktivitas.php?op=edit&id=<?php echo $id ?>"><button
                                                                     type="button" class="btn btn-warning">Edit</button></a>
