@@ -418,11 +418,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </li>';
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
-            echo '<li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+            echo '<li class="nav-item dropdown" id="nav-down1">
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+              <li class="nav-item dropdown" id="nav-down1">
+                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
               </li>';
           }
           ?>
