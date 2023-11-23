@@ -13,11 +13,11 @@ $email = $_SESSION['email'];
 $level = $_SESSION['level'];
 
 // Query SQL untuk menghitung jumlah baris di tabel keanggotaan
-$sql = "SELECT COUNT(*) as total_member FROM venue_membership";
+$sql = "SELECT COUNT(*) as total_member FROM venue_membership WHERE email = '$email'";
 $q2 = mysqli_query($conn, $sql);
 
 if ($q2->num_rows > 0) {
-    // Ambil hasil query
+    // Ambil hasil query`
     $row = $q2->fetch_assoc();
     $totalMember = $row["total_member"];
 
