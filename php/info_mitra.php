@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include your database connection code here
 $db_host = "localhost";
 $db_name = "arenafinderweb";
@@ -405,13 +406,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
-          <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1"
-              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
-              <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-              Panel Pengelola
-            </a>
-          </li>
+          <?php
+          // Check if the user is logged in
+          if (isset($_SESSION['email'])) {
+            // User is logged in, show the "Panel Pengelola" button
+            echo '<li class="nav-item dropdown" id="nav-down1">
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                  <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                  Panel Pengelola
+                </a>
+              </li>';
+          } else {
+            // User is not logged in, show the "Login" and "Register" buttons
+            echo '<li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+              </li>';
+          }
+          ?>
         </ul>
       </div>
     </div>
@@ -440,9 +454,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="social-buttons">
-      <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016" class="social-button facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+        class="social-button facebook"><i class="fab fa-facebook"></i></a>
       <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg==" class="social-button instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg==" class="social-button instagram"><i
+          class="fab fa-instagram"></i></a>
     </div>
 
   </div>
@@ -628,8 +644,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <section id="section3">
     <div class="tentang-con" style="margin-left: 250px;">
-      <div class="deskripsi"
-        style="width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+      <div class="deskripsi" style="width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
 
         <?php
         // Fetch and display data from keanggotaan table

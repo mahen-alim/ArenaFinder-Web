@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('database.php');
 
 $id = "";
@@ -124,7 +125,6 @@ if ($sukses) {
 <?php
 }
 
-session_start();
 if (!isset($_SESSION['email'])) {
     // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
     header("Location: login.php");
@@ -888,7 +888,7 @@ $email = $_SESSION['email'];
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>

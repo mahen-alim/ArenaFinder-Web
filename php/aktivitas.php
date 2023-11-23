@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -422,13 +423,26 @@ if (!$koneksi) {
           </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
-          <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1"
-              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
-              <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-              Panel Pengelola
-            </a>
-          </li>
+          <?php
+          // Check if the user is logged in
+          if (isset($_SESSION['email'])) {
+            // User is logged in, show the "Panel Pengelola" button
+            echo '<li class="nav-item dropdown" id="nav-down1">
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                  <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                  Panel Pengelola
+                </a>
+              </li>';
+          } else {
+            // User is not logged in, show the "Login" and "Register" buttons
+            echo '<li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+              </li>';
+          }
+          ?>
         </ul>
       </div>
     </div>

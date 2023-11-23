@@ -3,7 +3,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinderweb";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -463,15 +463,27 @@ if (!$koneksi) {
             <a class="nav-link" href="info_mitra.php">Info Mitra</a>
           </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-          <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
-          <li class="nav-item dropdown" id="nav-down1">
-            <a class="nav-link" id="nav-down-item1"
-              href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
-              <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px"></i>
-              Panel Pengelola
-            </a>
-          </li>
+        <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
+          <?php
+          // Check if the user is logged in
+          if (isset($_SESSION['email'])) {
+            // User is logged in, show the "Panel Pengelola" button
+            echo '<li class="nav-item dropdown" id="nav-down1">
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                  <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                  Panel Pengelola
+                </a>
+              </li>';
+          } else {
+            // User is not logged in, show the "Login" and "Register" buttons
+            echo '<li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+              </li>';
+          }
+          ?>
         </ul>
       </div>
     </div>
@@ -576,6 +588,11 @@ if (!$koneksi) {
           } else {
             echo '<a id="ref-btn" href="/ArenaFinder/php/add_referensi.php/" style="display: none;">Tambah Referensi +</a>';
           }
+
+          // Pesan peringatan saat logout
+          if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+            echo '<p style="color: red;">Anda telah berhasil logout. Terima kasih!</p>';
+          }
           ?>
         </div>
       </div>
@@ -586,7 +603,7 @@ if (!$koneksi) {
     <div class="card-container"
       style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
       <?php
-      $sql3 = "SELECT * FROM referensi ORDER BY id_referensi DESC";
+      $sql3 = "SELECT * FROM venues ORDER BY id_venue DESC";
       $q3 = mysqli_query($koneksi, $sql3);
       $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
       
@@ -597,18 +614,18 @@ if (!$koneksi) {
         }
 
         // Card untuk data
-        echo '<div class="card" data-tipe-lap="' . $row['tipe_lap'] . '">';
+        echo '<div class="card" data-tipe-lap="' . $row['sport_status'] . '">';
         echo '<div class="card-body">';
 
-        $namaGambar = $row['gambar'];
+        $namaGambar = $row['venue_photo'];
         $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
         echo '<img src="' . $gambarURL . '" alt="Gambar" >';
-        echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['nama_tempat'] . '</h5>';
-        echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['lokasi'] . '</span></p>';
-        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['jumlah_lap'] . ' Lapangan</p>';
-        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['harga_sewa'] . '</p>';
-        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['tipe_lap'] . '</p>';
+        echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
+        echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['location'] . '</span></p>';
+        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['total_lapangan'] . ' Lapangan</p>';
+        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['price'] . '</p>';
+        echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['sport'] . '</p>';
 
         echo '</div></div>';
 
@@ -625,8 +642,7 @@ if (!$koneksi) {
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
         <?php
         $tipe_lapangan = 'Indoor';
-        $tipe_olga = 'Badminton';
-        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan' AND tipe_olga = '$tipe_olga'";
+        $sql3 = "SELECT * FROM venues WHERE sport_status = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
         
@@ -637,18 +653,18 @@ if (!$koneksi) {
           }
 
           // Card untuk data
-          echo '<div class="card" data-tipe-lap="' . $row['tipe_lap'] . '" data-tipe-olga="' . $row['tipe_olga'] . '">';
+          echo '<div class="card" data-tipe-lap="' . $row['sport_status'] . '">';
           echo '<div class="card-body">';
 
-          $namaGambar = $row['gambar'];
+          $namaGambar = $row['venue_photo'];
           $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
           echo '<img src="' . $gambarURL . '" alt="Gambar" >';
-          echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['nama_tempat'] . '</h5>';
-          echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['lokasi'] . '</span></p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['jumlah_lap'] . ' Lapangan</p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['harga_sewa'] . '</p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['tipe_lap'] . '</p>';
+          echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
+          echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['location'] . '</span></p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['total_lapangan'] . ' Lapangan</p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['price'] . '</p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['sport_status'] . '</p>';
 
           echo '</div></div>';
 
@@ -665,7 +681,7 @@ if (!$koneksi) {
         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
         <?php
         $tipe_lapangan = 'Outdoor';
-        $sql3 = "SELECT * FROM referensi WHERE tipe_lap = '$tipe_lapangan'";
+        $sql3 = "SELECT * FROM venues WHERE sport_status = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
         
@@ -676,18 +692,18 @@ if (!$koneksi) {
           }
 
           // Card untuk data
-          echo '<div class="card" data-tipe-lap="' . $row['tipe_lap'] . '">';
+          echo '<div class="card" data-tipe-lap="' . $row['sport_status'] . '">';
           echo '<div class="card-body">';
 
-          $namaGambar = $row['gambar'];
+          $namaGambar = $row['venue_photo'];
           $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
 
           echo '<img src="' . $gambarURL . '" alt="Gambar" >';
-          echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['nama_tempat'] . '</h5>';
-          echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['lokasi'] . '</span></p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['jumlah_lap'] . ' Lapangan</p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['harga_sewa'] . '</p>';
-          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['tipe_lap'] . '</p>';
+          echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
+          echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i><span style="word-wrap: break-word; max-width: 300px; display: block;">' . $row['location'] . '</span></p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['total_lapangan'] . ' Lapangan</p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Harga : Rp ' . $row['price'] . '</p>';
+          echo '<p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;" hidden>' . $row['sport_status'] . '</p>';
 
           echo '</div></div>';
 

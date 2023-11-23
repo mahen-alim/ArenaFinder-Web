@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinderweb";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -26,7 +26,7 @@ if (isset($_GET['op'])) {
 
 if ($op == 'delete') {
     $id = $_GET['id'];
-    $sql1 = "DELETE FROM referensi WHERE id_referensi = '$id'";
+    $sql1 = "DELETE FROM venues WHERE id_venue = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Data Berhasil Dihapus";
@@ -37,14 +37,14 @@ if ($op == 'delete') {
 
 if ($op == 'edit') {
     $id = $_GET['id'];
-    $sql1 = "SELECT * FROM referensi WHERE id_referensi = '$id'";
+    $sql1 = "SELECT * FROM venues WHERE id_venue = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
-    $nama = $r1['nama_tempat'];
-    $lokasi = $r1['lokasi'];
-    $jumlah_lap = $r1['jumlah_lap'];
-    $harga_sewa = $r1['harga_sewa'];
-    $tipe_lap = $r1['tipe_lap'];
+    $nama = $r1['venue_name'];
+    $lokasi = $r1['location'];
+    $jumlah_lap = $r1['total_lapangan'];
+    $harga_sewa = $r1['price'];
+    $tipe_lap = $r1['sport_status'];
 
     if ($nama == '') {
         $error = "Data tidak ditemukan";
@@ -71,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 
             if ($op == 'edit') {
                 // Perbarui data jika ini adalah operasi edit
-                $sql1 = "UPDATE referensi SET nama_tempat = '$nama', lokasi = '$lokasi', jumlah_lap = '$jumlah_lap', harga_sewa = '$harga_sewa', tipe_lap = '$tipe_lap', gambar = '$nama_file' WHERE id_referensi = '$id'";
+                $sql1 = "UPDATE venues SET venue_name = '$nama', location = '$lokasi', total_lapangan = '$jumlah_lap', price = '$harga_sewa', sport_status = '$tipe_lap', venue_photo = '$nama_file' WHERE id_venue = '$id'";
             } else {
                 // Tambahkan data jika ini adalah operasi insert
-                $sql1 = "INSERT INTO referensi (nama_tempat, lokasi, jumlah_lap, harga_sewa, tipe_lap, gambar) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap', '$nama_file')";
+                $sql1 = "INSERT INTO venues (venue_name, location, total_lapangan, price, sport_status, venue_photo) VALUES ('$nama', '$lokasi', '$jumlah_lap', '$harga_sewa', '$tipe_lap', '$nama_file')";
             }
 
             $q1 = mysqli_query($koneksi, $sql1);
@@ -466,20 +466,20 @@ if ($sukses) {
 
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $koneksi->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM referensi WHERE nama_tempat LIKE '%$searchTerm%'";
+                                                    $sql = "SELECT * FROM venues WHERE venue_name LIKE '%$searchTerm%'";
                                                 } else {
-                                                    $sql = "SELECT * FROM referensi ORDER BY id_referensi DESC";
+                                                    $sql = "SELECT * FROM venues ORDER BY id_venue DESC";
                                                 }
 
                                                 $q2 = mysqli_query($koneksi, $sql);
                                                 $urut = 1;
                                                 while ($r2 = mysqli_fetch_array($q2)) {
-                                                    $id = $r2['id_referensi'];
-                                                    $nama = $r2['nama_tempat'];
-                                                    $lokasi = $r2['lokasi'];
-                                                    $jumlah_lap = $r2['jumlah_lap'];
-                                                    $harga_sewa = $r2['harga_sewa'];
-                                                    $tipe_lap = $r2['tipe_lap'];
+                                                    $id = $r2['id_venue'];
+                                                    $nama = $r2['venue_name'];
+                                                    $lokasi = $r2['location'];
+                                                    $jumlah_lap = $r2['total_lapangan'];
+                                                    $harga_sewa = $r2['price'];
+                                                    $tipe_lap = $r2['sport_status'];
                                                     ?>
                                                     <tr>
                                                         <th scope="row">
