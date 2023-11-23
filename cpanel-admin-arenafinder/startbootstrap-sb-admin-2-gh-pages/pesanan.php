@@ -1,4 +1,6 @@
 <?php
+use Google\Service\CloudTrace\Span;
+
 session_start();
 
 if (!isset($_SESSION['email'])) {
@@ -117,7 +119,7 @@ $email = $_SESSION['email'];
             <li class="nav-item active">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
-                    <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
+                        <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
                     </i>
                     <span>Pesanan</span>
                 </a>
@@ -280,11 +282,11 @@ $email = $_SESSION['email'];
                                     $html .= '
                                         <div class="card shadow mb-4">
                                             <!-- Card Header - Accordion -->
-                                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                                <h6 class="m-0 font-weight-bold" style="color: #02406d">Pemesanan Lapangan ' . $row['venue_sport'] . '-Person A</h6>
+                                            <div class="card-header py-1 d-flex justify-content-between align-items-center" style="background-color: #02406d">
+                                                <h6 class="m-0 font-weight-bold" style="color: white;">Pemesanan Lapangan ' . $row['venue_sport'] . '<span style="color: #a1ff9f;"> - ' . $row['nama'] . '</span></h6>
                                 
                                                 <!-- Add a dropdown button with increased size -->
-                                                <button id="toggleButton' . $row['id_membership'] . '" class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseCard' . $row['id_membership'] . '" aria-expanded="false" aria-controls="collapseCard' . $row['id_membership'] . '">
+                                                <button id="toggleButton' . $row['id_membership'] . '" class="btn btn-lg dropdown-toggle py-1" style="color: white;"type="button" data-toggle="collapse" data-target="#collapseCard' . $row['id_membership'] . '" aria-expanded="false" aria-controls="collapseCard' . $row['id_membership'] . '">
                                                    
                                                 </button>
                                             </div>
@@ -309,7 +311,16 @@ $email = $_SESSION['email'];
                                         <script>
                                             // Add a click event handler to toggle the button class
                                             $("#toggleButton' . $row['id_membership'] . '").on("click", function() {
-                                                $(this).toggleClass("btn-info btn-white");
+                                                $(this).toggleClass("btn btn-white");
+                                            
+                                                if ($(this).hasClass("btn")) {
+                                                    $(this).css("background-color", "#02406d");
+                                                    $(this).css("color", "white");
+                                                } else {
+                                                    
+                                                    $(this).css("background-color", "white");
+                                                    $(this).css("color", "#02406d");
+                                                }
                                             });
                                         </script>';
                                 }
