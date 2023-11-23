@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('database.php');
 
 $id = "";
@@ -51,32 +52,64 @@ if ($op == 'edit') {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
-    $anggota = $_POST['keanggotaan'];
+    // $anggota = $_POST['keanggotaan'];
     $jenis_lap = $_POST['jenis_lap'];
     $tgl = $_POST['tanggal'];
     $waktu_mulai = $_POST['waktu_mulai'];
     $waktu_selesai = $_POST['waktu_selesai'];
     $harga = $_POST['harga'];
-    $status = $_POST['status'];
+    // $status = $_POST['status'];
 
-    if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
-        if ($op == 'edit') {
-            // Perbarui data jika ini adalah operasi edit
-            $sql1 = "UPDATE jadwal SET keanggotaan = '$anggota', jenis_lapangan = '$jenis_lap', tanggal = '$tgl', waktu_mulai = '$waktu_mulai', waktu_selesai = '$waktu_selesai', harga = '$harga', status_pemesanan = '$status' WHERE id = '$id'";
+    // Fetch id_venue based on the user's email
+    $email = $_SESSION['email'];
+    $fetchVenueIdQuery = "SELECT v.id_venue, vl.id_lapangan
+                          FROM venues v 
+                          JOIN venue_lapangan vl ON v.id_venue = vl.id_venue
+                          WHERE v.email = '$email'";
+    $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
+
+    if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
+        $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
+        $id_venue = $venueRow['id_venue'];
+        $id_lapangan = $venueRow['id_lapangan'];
+
+        if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat") {
+                if ($op == 'edit') {
+                    // Perbarui data jika ini adalah operasi edit
+                    $sql1 = "UPDATE venue_price SET 
+                                id_venue = '$id_venue'
+                                id_lapangan = '$id_lapangan',
+                                date = '$tgl',
+                                start_hour = '$waktu_mulai',
+                                end_hour = '$waktu_selesai',
+                                price = '$harga',
+                                -- membership = '$anggota',
+                            WHERE id_price = '$id'";
+                    $q1 = mysqli_query($conn, $sql1);
+
+                    if ($q1) {
+                        $sukses = "Data jadwal berhasil diupdate";
+                    } else {
+                        $error = "Data jadwal gagal diupdate";
+                    }
+            } else {
+                // Tambahkan data jika ini adalah operasi insert
+                $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, date, start_hour, end_hour, price) 
+                        VALUES ('$id_venue', '$id_lapangan', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
+                $q1 = mysqli_query($conn, $sql1);
+    
+                if ($q1) {
+                    $sukses = "Data jadwal berhasil ditambahkan";
+                } else {
+                    $error = "Data jadwal gagal ditambahkan";
+                }
+            }
+        
         } else {
-            // Tambahkan data jika ini adalah operasi insert
-            $sql1 = "INSERT INTO jadwal (keanggotaan, jenis_lapangan, tanggal, waktu_mulai, waktu_selesai, harga, status_pemesanan) VALUES ('$anggota', '$jenis_lap', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga', '$status')";
-        }
-
-        $q1 = mysqli_query($conn, $sql1);
-
-        if ($q1) {
-            $sukses = "Data jadwal berhasil diupdate/ditambahkan";
-        } else {
-            $error = "Data jadwal gagal diupdate/ditambahkan";
+            $error = "Terdapat kesalahan input waktu";
         }
     } else {
-        $error = "Terdapat kesalahan input waktu";
+        $error = "Venue tidak ditemukan untuk email ini";
     }
 }
 
@@ -95,7 +128,6 @@ if ($sukses) {
 <?php
 }
 
-session_start();
 
 if (!isset($_SESSION['email'])) {
     // Jika pengguna belum masuk, arahkan mereka kembali ke halaman login
@@ -593,6 +625,8 @@ $email = $_SESSION['email'];
                                         // Calculate the starting data index for the current page
                                         $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
+                                        $email = $_SESSION['email'];
+
                                         if (isset($_GET['search'])) {
                                             $searchTerm = $conn->real_escape_string($_GET['search']);
                                             $sql = "SELECT vp.*, v.sport
@@ -605,6 +639,8 @@ $email = $_SESSION['email'];
                                             $sql = "SELECT vp.*, v.sport
                                                     FROM venue_price vp
                                                     JOIN venues v ON vp.id_venue = v.id_venue
+                                                    WHERE v.email = '$email'
+                                                    ORDER BY vp.id_price DESC
                                                     LIMIT $awalData, $jumlahDataPerHalaman";
                                         }
 

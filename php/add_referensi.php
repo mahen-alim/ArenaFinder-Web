@@ -41,6 +41,7 @@ if ($op == 'edit') {
     $sql1 = "SELECT * FROM venues WHERE id_venue = '$id'";
     $q1 = mysqli_query($koneksi, $sql1);
     $r1 = mysqli_fetch_array($q1);
+    $email = $r1['email'];
     $nama = $r1['venue_name'];
     $lokasi = $r1['location'];
     $jumlah_lap = $r1['total_lapangan'];
@@ -58,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $jumlah_lap = $_POST['jumlah_lap'];
     $harga_sewa = $_POST['harga_sewa'];
     $tipe_lap = $_POST['tipe_lap'];
-    $email = $_SESSION['email'];
+    $email = $_POST['email_admin'];
 
 
     if (!empty($_FILES['foto']['name'])) {
@@ -344,6 +345,28 @@ if ($sukses) {
                         <!-- Form -->
                         <form action="" method="POST" autocomplete="off" onsubmit="return validasiForm()"
                             enctype="multipart/form-data">
+                            <div class="mb-3 row">
+                                <label for="nama" class="col-sm-2 col-form-label">Email Pengelola</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="email_admin" name="email_admin" required>
+                                        <?php
+                                        // Assuming you have a database connection established
+                                        $emailQuery = "SELECT email FROM users WHERE level = 'ADMIN'";
+                                        $emailResult = mysqli_query($koneksi, $emailQuery);
+
+                                        // Check if the query was successful
+                                        if ($emailResult) {
+                                            while ($row = mysqli_fetch_assoc($emailResult)) {
+                                                $selected = ($row['email'] == $email) ? 'selected' : '';
+                                                echo "<option value='{$row['email']}' $selected>{$row['email']}</option>";
+                                            }
+                                            mysqli_free_result($emailResult);
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="mb-3 row">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Tempat</label>
                                 <div class="col-sm-10">

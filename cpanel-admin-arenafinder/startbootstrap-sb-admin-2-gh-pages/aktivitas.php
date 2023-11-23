@@ -494,6 +494,7 @@ $email = $_SESSION['email'];
                                             </div>
 
                                         </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -643,8 +644,7 @@ $email = $_SESSION['email'];
                                                 // Calculate the starting data index for the current page
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
-                                                // Perform the query to get data for the current page
-                                                $aktivitas = mysqli_query($conn, "SELECT * FROM venue_aktivitas LIMIT $awalData, $jumlahDataPerHalaman");
+                                                $email = $_SESSION['email'];
 
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $conn->real_escape_string($_GET['search']);
@@ -656,10 +656,11 @@ $email = $_SESSION['email'];
                                                             LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
                                                     $sql = "SELECT va.*, v.location
-                                                            FROM venue_aktivitas va
-                                                            JOIN venues v ON va.id_venue = v.id_venue
-                                                            ORDER BY va.id_aktivitas DESC
-                                                            LIMIT $awalData, $jumlahDataPerHalaman";
+                                                        FROM venue_aktivitas va
+                                                        JOIN venues v ON va.id_venue = v.id_venue
+                                                        WHERE v.email = '$email'
+                                                        ORDER BY va.id_aktivitas DESC
+                                                        LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
 
                                                 $aktivitas = mysqli_query($conn, $sql);

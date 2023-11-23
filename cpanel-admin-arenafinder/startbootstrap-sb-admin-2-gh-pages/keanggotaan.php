@@ -263,7 +263,7 @@ $email = $_SESSION['email'];
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping" aria-hidden="true" id="pesanan-link">
-                        
+
                     </i>
                     <span>Pesanan</span></a>
             </li>
@@ -762,11 +762,23 @@ $email = $_SESSION['email'];
                                                 // Calculate the starting data index for the current page
                                                 $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
+                                                $email = $_SESSION['email'];
+
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $conn->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT * FROM venue_membership WHERE nama LIKE '%$searchTerm%' LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $sql = "SELECT vm.*, v.location
+                                                            FROM venue_membership vm
+                                                            JOIN venues v ON vm.id_venue = v.id_venue
+                                                            WHERE vm.nama LIKE '%$searchTerm%'
+                                                            ORDER BY vm.id_membership DESC
+                                                            LIMIT $awalData, $jumlahDataPerHalaman";
                                                 } else {
-                                                    $sql = "SELECT * FROM venue_membership ORDER BY id_membership DESC LIMIT $awalData, $jumlahDataPerHalaman";
+                                                    $sql = "SELECT vm.*, v.location
+                                                        FROM venue_membership vm
+                                                        JOIN venues v ON vm.id_venue = v.id_venue
+                                                        WHERE v.email = '$email'
+                                                        ORDER BY vm.id_membership DESC
+                                                        LIMIT $awalData, $jumlahDataPerHalaman";
                                                 }
                                                 $member = mysqli_query($conn, $sql);
                                                 $urut = 1 + $awalData;
