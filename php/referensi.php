@@ -10,6 +10,7 @@ if (!$koneksi) {
   die("Tidak bisa terkoneksi");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -572,13 +573,6 @@ if (!$koneksi) {
               alt="" /></button>
 
           <?php
-          // Pastikan pengguna sudah login
-          if (!isset($_SESSION['email'])) {
-            // Redirect user to the login page if they are not logged in or level is not set
-            header("Location: login.php");
-            exit();
-          }
-
           // Ambil level pengguna dari sesi
           $userEmail = $_SESSION['email'];
 

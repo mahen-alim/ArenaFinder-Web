@@ -37,10 +37,19 @@ if (isset($_POST["login"])) {
         </script>
         <?php
         exit();
-
     }
+  } else {
+    // Email not registered
+    ?>
+    <script>
+      alert("<?php echo "Email belum terdaftar. Silakan daftar terlebih dahulu." ?>");
+      window.location.replace('register.php'); // Change 'register.php' to your registration page
+    </script>
+    <?php
+    exit();
   }
 }
+
 
 ?>
 

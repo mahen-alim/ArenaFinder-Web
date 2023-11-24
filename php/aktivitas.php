@@ -428,19 +428,19 @@ if (!$koneksi) {
           if (isset($_SESSION['email'])) {
             // User is logged in, show the "Panel Pengelola" button
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
-                  <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-                  Panel Pengelola
-                </a>
-              </li>';
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                      <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                      Panel Pengelola
+                    </a>
+                  </li>';
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
-              </li>
-              <li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
-              </li>';
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+                  </li>
+                  <li class="nav-item dropdown" id="nav-down1">
+                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+                  </li>';
           }
           ?>
         </ul>
