@@ -32,7 +32,7 @@ if (isset($_POST["login"])) {
     } else {
       ?>
         <script>
-          alert("<?php echo "Email atau Password Salah, Mohon Coba Lagi." ?>");
+          alert("<?php echo "Password Salah, Mohon Coba Lagi." ?>");
           window.location.replace('login.php');
         </script>
         <?php
