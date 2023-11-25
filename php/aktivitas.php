@@ -463,29 +463,111 @@ if (!$koneksi) {
       kategori olahraga yang anda minati
     </div>
 
+    <!-- Include jQuery library (you can download and host it locally if needed) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <div class="con-type">
-      <button class="semua">All</button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/futsal.jpg" alt="" />
-        <span>Bola Futsal</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/badmin.jpg" alt="" />
-        <span>Badminton</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/voli.jpg" alt="" />
-        <span>Bola Voli</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="" />
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="" />
-        <span>Sepak Bola</span>
-      </button>
+      <form method="post" action="" id="sportForm">
+        <div style="display: flex;">
+          <button class="semua" type="submit" name="sport" value="Semua">All</button>
+          <?php
+          // Query to get unique sports from the venue_aktivitas table
+          $sportsQuery = mysqli_query($koneksi, "SELECT DISTINCT sport FROM venue_aktivitas");
+          $sports = mysqli_fetch_all($sportsQuery, MYSQLI_ASSOC);
+
+          // Loop through each sport and generate a button
+          foreach ($sports as $sport) {
+            $sportName = $sport['sport'];
+            ?>
+
+            <button class="all" type="submit" name="sport" value="<?php echo $sportName; ?>"
+              data-sport-name="<?php echo $sportName; ?>">
+              <!-- You may want to use a more specific image for each sport -->
+              <img src="/ArenaFinder/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
+              <span>
+                <?php echo $sportName; ?>
+              </span>
+            </button>
+            <?php
+          }
+          ?>
+        </div>
+      </form>
     </div>
+
+    <?php
+    $selectedSport = 'Semua';
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      // Get the selected sport value
+      $selectedSport = isset($_POST['sport']) ? $_POST['sport'] : 'Semua';
+
+    }
+
+    // Display the selected sport in the label
+    echo '<div id="con-3">';
+    echo '<div class="semua-act">';
+   
+
+    // Adjust the label based on the selected sport
+    if ($selectedSport == 'Semua') {
+      echo '<div class="all-activity">Semua</div>';
+      echo '<div class="all-activity1">Aktivitas</div>';
+    } else {
+      echo '<div class="all-activity">Aktivitas</div>';
+      echo '<div class="all-activity1">'.$selectedSport.'</div>';
+    }
+
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+    // Modify your SQL query to filter by the selected sport
+    $sql3 = "SELECT va.*, v.location
+              FROM venue_aktivitas va
+              JOIN venues v ON va.id_venue = v.id_venue";
+
+    // Append a WHERE clause to filter by sport
+    if ($selectedSport != 'Semua') {
+      $sql3 .= " WHERE va.sport = '$selectedSport'";
+    }
+
+    // Order the results by id_aktivitas in descending order
+    $sql3 .= " ORDER BY va.id_aktivitas DESC";
+
+    // Execute the modified query
+    $q3 = mysqli_query($koneksi, $sql3);
+    $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
+    
+    echo '<div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+
+    while ($row = mysqli_fetch_array($q3)) {
+      // Membuka baris baru setiap kali 4 kartu telah ditampilkan
+      if ($count % 4 == 0) {
+        echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+      }
+
+      // Card untuk data
+      echo '<div class="card">';
+      echo '<div class="card-body">';
+
+      $namaGambar = $row['photo'];
+      $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+
+      echo '<img src="' . $gambarURL . '" alt="Gambar">';
+      echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
+      echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['location'] . '</p>';
+      echo '<p class="card-text">' . $row['date'] . '</p>';
+      echo '<p class="card-text">' . $row['jam_main'] . ' Jam</p>';
+      echo '<p class="card-text" hidden>' . $row['sport'] . '</p>';
+      echo '<p class="card-text">Harga : Rp ' . $row['price'] . '</p>';
+
+      echo '</div></div>';
+
+      $count++;
+    }
+    ?>
+
 
     <script>
       const container = document.querySelector('.con-type');
@@ -519,49 +601,7 @@ if (!$koneksi) {
 
     </script>
 
-    <div id="con-3">
-      <div class="semua-act">
-        <div class="all-activity">Semua</div>
-        <div class="all-activity1">Aktivitas</div>
-      </div>
-    </div>
 
-  </div>
-
-  <div class="cards-container">
-    <?php
-    $sql3 = "SELECT va.*, v.location
-    FROM venue_aktivitas va
-    JOIN venues v ON va.id_venue = v.id_venue
-    ORDER BY va.id_aktivitas DESC";
-    $q3 = mysqli_query($koneksi, $sql3);
-    $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-    
-    while ($row = mysqli_fetch_array($q3)) {
-      // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-      if ($count % 4 == 0) {
-        echo '</div><div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
-      }
-
-      // Card untuk data
-      echo '<div class="card">';
-      echo '<div class="card-body">';
-
-      $namaGambar = $row['photo'];
-      $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
-
-      echo '<img src="' . $gambarURL . '" alt="Gambar">';
-      echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
-      echo '<p class="card-text"><i class="fa-solid fa-location-dot"></i>' . $row['location'] . '</p>';
-      echo '<p class="card-text">' . $row['date'] . '</p>';
-      echo '<p class="card-text">' . $row['jam_main'] . ' Jam</p>';
-      echo '<p class="card-text">Harga : Rp ' . $row['price'] . '</p>';
-
-      echo '</div></div>';
-
-      $count++;
-    }
-    ?>
   </div>
 
 
