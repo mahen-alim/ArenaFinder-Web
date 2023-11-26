@@ -9,89 +9,171 @@ if (isset($_POST["register"])) {
   $level = $_POST["level"];
 
 
-  //Check if the email already exists in the database
-  $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email'");
+  //Pengecekkan email yang sudah terdaftar dan tersimpan di tabel users
+  $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email' AND username = '$username'");
   $rowCount = mysqli_num_rows($check_query);
 
-  //Cek validasi email
-  if ($rowCount > 0) {
+  // Cek apakah semua input form diisi
+  if (empty($username) && empty($email) && empty($password)) {
     ?>
     <script>
-      alert("Pengguna dengan email ini sudah terdaftar!");
+      alert("Harap isi semua kolom pada formulir pendaftaran.");
       window.location.replace('register.php');
     </script>
     <?php
+    exit();
+  } elseif (empty($username) && empty($email)) {
+    ?>
+    <script>
+      alert("Mohon isi nama pengguna dan email.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($username) && empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi nama pengguna dan sandi.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($email) && empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi email dan sandi.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($username) && empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi nama pengguna dan sandi.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($username)) {
+    ?>
+    <script>
+      alert("Mohon isi nama pengguna.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($email)) {
+    ?>
+    <script>
+      alert("Mohon isi email.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi sandi.");
+      window.location.replace('register.php');
+    </script>
+    <?php
+    exit();
   } else {
-    // Check the validity of the password
-    if (!isValidPassword($password)) {
-      // Password is not valid, display an alert or take appropriate action
+    // Cek validasi email
+    $rowCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'"));
+
+    if ($rowCount > 0) {
       ?>
       <script>
-        alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf, dan karakter khusus.");
+        alert("Pengguna dengan email ini sudah terdaftar!");
+        window.location.replace('register.php');
+      </script>
+      <?php
+    } elseif (usernameExists($conn, $username)) {
+      ?>
+      <script>
+        alert("Nama pengguna sudah terdaftar. Mohon pilih nama pengguna lain.");
         window.location.replace('register.php');
       </script>
       <?php
     } else {
+      // Cek validasi sandi akun
+      if (!isValidPassword($password)) {
+        // Notifikasi peringatan jika sandi salah
+        ?>
+        <script>
+          alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
+          window.location.replace('register.php');
+        </script>
+        <?php
+      } else {
 
-      $password_hash = password_hash($password, PASSWORD_BCRYPT);
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-      $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
+        $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
 
-      //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
-      if ($result) {
-        $otp = rand(100000, 999999);
-        $_SESSION['otp'] = $otp;
-        $_SESSION['mail'] = $email;
-        require "Mail/phpmailer/PHPMailerAutoload.php";
-        $mail = new PHPMailer;
+        //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
+        if ($result) {
+          $otp = rand(100000, 999999);
+          $_SESSION['otp'] = $otp;
+          $_SESSION['mail'] = $email;
+          require "Mail/phpmailer/PHPMailerAutoload.php";
+          $mail = new PHPMailer;
 
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->Port = 587;
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = 'tls';
+          $mail->isSMTP();
+          $mail->Host = 'smtp.gmail.com';
+          $mail->Port = 587;
+          $mail->SMTPAuth = true;
+          $mail->SMTPSecure = 'tls';
 
-        $mail->Username = 'mahennekkers27@gmail.com';
-        $mail->Password = 'fxqa zwoq vuji mhlk';
+          $mail->Username = 'mahennekkers27@gmail.com';
+          $mail->Password = 'fxqa zwoq vuji mhlk';
 
-        $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
-        $mail->addAddress($_POST["email"]);
+          $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
+          $mail->addAddress($_POST["email"]);
 
-        $mail->isHTML(true);
-        $mail->Subject = "Kode verifikasi akun anda";
-        $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
+          $mail->isHTML(true);
+          $mail->Subject = "Kode verifikasi akun anda";
+          $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
                     <br><br>
                     <p>Berikan pesan anda lewat email ini,</p>
                     <b>arenafinder.app@gmail.com</b>";
 
-        // Kondisi dimana email yang diinputkan user invalid
-        if (!$mail->send()) {
-          ?>
-          <script>
-            alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
-          </script>
-          <?php
-          // Kondisi dimana email yang diinputkan user valid
-        } else {
-          ?>
-          <script>
-            alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
-            window.location.replace('verification.php');
-          </script>
-          <?php
+          // Kondisi dimana email yang diinputkan user invalid
+          if (!$mail->send()) {
+            ?>
+            <script>
+              alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
+            </script>
+            <?php
+            // Kondisi dimana email yang diinputkan user valid
+          } else {
+            ?>
+            <script>
+              alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
+              window.location.replace('verification.php');
+            </script>
+            <?php
+          }
         }
       }
     }
   }
 }
 
+function usernameExists($conn, $username) {
+  $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+  return mysqli_num_rows($result) > 0;
+}
+
 // Function untuk mengecek kompleksitas sandi
 function isValidPassword($password)
 {
-  // Sandi skurang-kurangnya harus mengandung 8 karakter
-  $pattern = "/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d]).{8,}$/";
+  // Sandi sekurang-kurangnya harus mengandung 8 karakter, huruf besar, huruf kecil, dan karakter khusus
+  $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/";
   return preg_match($pattern, $password);
 }
+
 
 ?>
 
@@ -164,7 +246,7 @@ function isValidPassword($password)
                   <form class="user" method="POST" action="#" autocomplete="off" name="register">
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                        placeholder="Masukkan Nama Pengguna" name="username" autofocus>
+                        placeholder="Masukkan Nama Pengguna" name="username" autofocus require>
                     </div>
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" id="email-input" name="email"

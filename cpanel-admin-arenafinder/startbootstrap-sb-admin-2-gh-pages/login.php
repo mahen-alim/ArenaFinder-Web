@@ -7,6 +7,34 @@ if (isset($_POST["login"])) {
   $password = $_POST['password'];
   $level = $_POST['level'];
 
+  /// Validation: Check if email and password are not empty
+  if (empty($email) && empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi email dan sandi.");
+      window.location.replace('login.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($email)) {
+    ?>
+    <script>
+      alert("Mohon isi email.");
+      window.location.replace('login.php');
+    </script>
+    <?php
+    exit();
+  } elseif (empty($password)) {
+    ?>
+    <script>
+      alert("Mohon isi sandi.");
+      window.location.replace('login.php');
+    </script>
+    <?php
+    exit();
+  }
+
+  //Ambil data akun di tabel users berdasarkan nilai yang diambil dari inputtan email
   $sql = mysqli_query($conn, "SELECT * FROM users where email = '$email'");
   $count = mysqli_num_rows($sql);
 
@@ -49,8 +77,6 @@ if (isset($_POST["login"])) {
     exit();
   }
 }
-
-
 ?>
 
 
