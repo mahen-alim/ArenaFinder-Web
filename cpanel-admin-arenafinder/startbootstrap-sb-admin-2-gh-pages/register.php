@@ -112,11 +112,13 @@ if (isset($_POST["register"])) {
 
         $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
 
-        //Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
+        // Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
         if ($result) {
           $otp = rand(100000, 999999);
           $_SESSION['otp'] = $otp;
+          $_SESSION['otp_expiration'] = time() + (15 * 60); // Set expiration time to 15 minutes
           $_SESSION['mail'] = $email;
+
           require "Mail/phpmailer/PHPMailerAutoload.php";
           $mail = new PHPMailer;
 
@@ -135,18 +137,16 @@ if (isset($_POST["register"])) {
           $mail->isHTML(true);
           $mail->Subject = "Kode verifikasi akun anda";
           $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
-                    <br><br>
-                    <p>Berikan pesan anda lewat email ini,</p>
-                    <b>arenafinder.app@gmail.com</b>";
+              <br><br>
+              <p>Berikan pesan anda lewat email ini,</p>
+              <b>arenafinder.app@gmail.com</b>";
 
-          // Kondisi dimana email yang diinputkan user invalid
           if (!$mail->send()) {
             ?>
             <script>
               alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
             </script>
             <?php
-            // Kondisi dimana email yang diinputkan user valid
           } else {
             ?>
             <script>
@@ -156,12 +156,14 @@ if (isset($_POST["register"])) {
             <?php
           }
         }
+
       }
     }
   }
 }
 
-function usernameExists($conn, $username) {
+function usernameExists($conn, $username)
+{
   $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
   return mysqli_num_rows($result) > 0;
 }

@@ -1,5 +1,8 @@
-<?php session_start();
+<?php
+
+session_start();
 include('database.php');
+
 ?>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -40,6 +43,14 @@ include('database.php');
             color: #e7f5ff;
             border: 1px solid #e7f5ff;
         }
+
+        .message {
+            background-color: #ffdddd;
+            color: #8b0000;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -56,11 +67,80 @@ include('database.php');
                             <div class="col-lg-10 mx-auto p-2">
                                 <div class="p-3">
                                     <div class="text-center">
-                                        <h1 class="h2 text-gray-900 mb-2 ">Lupa Sandi?</h1>
-                                        <p class="mb-4">Silahkan masukkan sandi akun yang baru!</p>
+                                        <h1 class="h2 text-gray-900 mb-2 ">Ganti Sandi</h1>
+                                        <p class="mb-4">Silahkan masukkan sandi akun Anda yang baru!</p>
+                                        <?php
+                                        if (isset($_GET['token'])) {
+                                            $tokenWithExpiration = $_GET['token'];
+
+                                            // Separate the token and expiration time
+                                            list($token, $expirationTime) = explode('.', $tokenWithExpiration);
+
+                                            // Verify if the token is not expired
+                                            if ($expirationTime >= time()) {
+                                                // Token is valid; process the password reset
+                                                // ...
+                                        
+                                                if (isset($_POST["reset"])) {
+                                                    include('database.php');
+                                                    $psw = $_POST["password"];
+
+                                                    // Verify the token again (in case it was tampered with)
+                                                    if ($_SESSION['token'] === $tokenWithExpiration) {
+                                                        $Email = $_SESSION['email'];
+
+                                                        $hash = password_hash($psw, PASSWORD_DEFAULT);
+
+                                                        $sql = mysqli_query($conn, "SELECT * FROM users WHERE email='$Email'");
+                                                        $query = mysqli_num_rows($sql);
+                                                        $fetch = mysqli_fetch_assoc($sql);
+
+                                                        if ($Email) {
+                                                            $new_pass = $hash;
+                                                            mysqli_query($conn, "UPDATE users SET password='$new_pass' WHERE email='$Email'");
+                                                            ?>
+                                                            <script>
+                                                                window.location.replace("login.php");
+                                                                alert("<?php echo "Selamat, sandi akun anda berhasil diganti" ?>");
+                                                            </script>
+                                                            <?php
+                                                        } else {
+                                                            ?>
+                                                            <script>
+                                                                alert("<?php echo "Coba lagi" ?>");
+                                                            </script>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        // Token verification failed
+                                                        echo "Token verification failed.";
+                                                    }
+                                                }
+
+                                            } else {
+                                                // Link is expired, redirect to password recovery page
+                                                ?>
+                                                <script>
+                                                    window.location.replace("forgot-password.php");
+                                                </script>
+                                                <?php
+                                                $message = "Link pergantian sandi telah kadaluwarsa, coba kirim ulang.";
+                                            }
+                                        } else {
+                                            echo "Invalid request.";
+                                            // You may want to redirect or display an appropriate message
+                                        }
+                                        ?>
+                                        <?php if (isset($message)): ?>
+                                            <div class="message">
+                                                <?php echo $message; ?>
+                                            </div>
+                                        <?php endif; ?>
+
                                         <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
+
 
                                     <form class="user" method="POST" action="#" autocomplete="off" name="login">
                                         <div class="form-group">
@@ -72,6 +152,9 @@ include('database.php');
                                     </form>
 
                                     <hr />
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.php">Lupa Sandi?</a>
+                                    </div>
                                     <div class="text-center">
                                         <a class="small" href="register.php">Buat Akun Anda!</a>
                                     </div>
@@ -101,39 +184,6 @@ include('database.php');
 
 </html>
 
-<?php
-if (isset($_POST["reset"])) {
-    include('database.php');
-    $psw = $_POST["password"];
-
-    $token = $_SESSION['token'];
-    $Email = $_SESSION['email'];
-
-    $hash = password_hash($psw, PASSWORD_DEFAULT);
-
-    $sql = mysqli_query($conn, "SELECT * FROM users WHERE email='$Email'");
-    $query = mysqli_num_rows($sql);
-    $fetch = mysqli_fetch_assoc($sql);
-
-    if ($Email) {
-        $new_pass = $hash;
-        mysqli_query($conn, "UPDATE users SET password='$new_pass' WHERE email='$Email'");
-        ?>
-        <script>
-            window.location.replace("login.php");
-            alert("<?php echo "Selamat, sandi akun anda berhasil diganti" ?>");
-        </script>
-        <?php
-    } else {
-        ?>
-        <script>
-            alert("<?php echo "Coba lagi" ?>");
-        </script>
-        <?php
-    }
-}
-
-?>
 <script>
     const toggle = document.getElementById('togglePassword');
     const password = document.getElementById('password');
