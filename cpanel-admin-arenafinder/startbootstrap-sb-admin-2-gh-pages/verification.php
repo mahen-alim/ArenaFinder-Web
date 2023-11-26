@@ -1,4 +1,58 @@
-<?php session_start() ?>
+<?php
+session_start();
+include('database.php');
+
+if (isset($_POST["verify"])) {
+    $otp = $_SESSION['otp'];
+    $otpExpiration = $_SESSION['otp_expiration'];
+    $email = $_SESSION['mail'];
+    $otp_code = $_POST['otp_code'];
+
+    // Check if OTP is expired
+    if (time() > $otpExpiration) {
+        $verificationMessage = "Maaf, kode OTP sudah kadaluwarsa. Silakan daftar kembali.";
+        echo <<<EOL
+  <html>
+  <head>
+    <style>
+      .custom-alert {
+        padding: 15px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 5px;
+        margin-bottom: 15px;
+      }
+
+      .alert-container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="alert-container">
+      <div class="custom-alert">
+        $verificationMessage
+      </div>
+    </div>
+    <script>
+    // Redirect to the registration page after 3 seconds (adjust as needed)
+    setTimeout(function() {
+      window.location.href = 'register.php';
+    }, 3000);
+  </script>
+  </body>
+  </html>
+EOL;
+    } elseif ($otp != $otp_code) {
+        $verificationMessage = "Kode OTP tidak valid. Silakan coba lagi.";
+    } else {
+        mysqli_query($conn, "UPDATE users SET is_verified = 1 WHERE email = '$email'");
+        $verificationMessage = "Verifikasi akun sukses. Silahkan login sekarang!";
+        echo "<script>alert('$verificationMessage'); window.location.href = 'login.php';</script>";
+    }
+}
+?>
+
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -26,21 +80,21 @@
 
     <title>Verifikasi Akun</title>
     <style>
-    #btn-login {
-      background-color: #e7f5ff;
-      color: #02406d;
-    }
+        #btn-login {
+            background-color: #e7f5ff;
+            color: #02406d;
+        }
 
-    #btn-login:hover {
-      background-color: #02406d;
-      color: #e7f5ff;
-      border: 1px solid #e7f5ff;
-    }
+        #btn-login:hover {
+            background-color: #02406d;
+            color: #e7f5ff;
+            border: 1px solid #e7f5ff;
+        }
 
-    #card-email {
-      background-color: white;
-    }
-  </style>
+        #card-email {
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body class="bg-gradient" style="background-color: #e7f5ff">
@@ -56,6 +110,9 @@
                                 <div class="p-3">
                                     <div class="text-center">
                                         <h1 class="h2 text-gray-900 mb-2 ">Verifikasi Akun</h1>
+                                        <div class="verification-message">
+                                            <?php echo isset($verificationMessage) ? $verificationMessage : ''; ?>
+                                        </div>
                                         <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
@@ -70,7 +127,7 @@
                                                 name="verify">Verifikasi</button>
                                         </div>
                                     </form>
-                                                    
+
                                 </div>
                             </div>
                         </div>
@@ -92,30 +149,3 @@
 </body>
 
 </html>
-
-<?php
-include('database.php');
-if (isset($_POST["verify"])) {
-    $otp = $_SESSION['otp'];
-    $email = $_SESSION['mail'];
-    $otp_code = $_POST['otp_code'];
-
-    if ($otp != $otp_code) {
-        ?>
-        <script>
-            alert("Invalid OTP code");
-        </script>
-        <?php
-    } else {
-        mysqli_query($conn, "UPDATE users SET is_verified = 1 WHERE email = '$email'");
-        ?>
-        <script>
-            alert("Verifikasi akun sukses, silahkan login sekarang!");
-            window.location.replace("login.php");
-        </script>
-        <?php
-    }
-
-}
-
-?>
