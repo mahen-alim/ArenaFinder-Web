@@ -1,8 +1,9 @@
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinderweb";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -91,14 +92,14 @@ if (!$koneksi) {
             align-items: center;
             border-radius: 6px;
             color: #02406D;
-            background-color: #e7f5ff;
+            background-color: #a1ff9f;
             width: 100px;
             height: 30px;
             text-align: center;
         }
 
         #nav-down-item1:hover {
-            background-color: #e7f5ff;
+            background-color: white;
             color: #02406D;
             transition: 0.5s;
             transform: scale(1.1);
@@ -109,7 +110,7 @@ if (!$koneksi) {
         }
 
         #nav-down-item2:hover {
-            background-color: #e7f5ff;
+            background-color: #a1ff9f;
             color: #02406D;
             transition: 0.5s;
             transform: scale(1.1);
@@ -387,14 +388,26 @@ if (!$koneksi) {
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
-                    <li class="nav-item dropdown" id="nav-down1">
-                        <a class="nav-link" id="nav-down-item1"
-                            href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/"
-                            style="width: 200px;">
-                            <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
-                            Panel Pengelola
-                        </a>
-                    </li>
+                    <?php
+                    // Check if the user is logged in
+                    if (isset($_SESSION['email'])) {
+                        // User is logged in, show the "Panel Pengelola" button
+                        echo '<li class="nav-item dropdown" id="nav-down1">
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                      <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
+                      Panel Pengelola
+                    </a>
+                  </li>';
+                    } else {
+                        // User is not logged in, show the "Login" and "Register" buttons
+                        echo '<li class="nav-item dropdown" id="nav-down1">
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
+                  </li>
+                  <li class="nav-item dropdown" id="nav-down1">
+                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
+                  </li>';
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -451,7 +464,11 @@ if (!$koneksi) {
             $tanggal = $_POST['tanggal'];
 
             // Buat query untuk mencari jadwal sesuai dengan jenis lapangan dan tanggal
-            $query = "SELECT * FROM jadwal WHERE jenis_lapangan='$jenis_lapangan' AND tanggal='$tanggal'";
+            $query = "SELECT vp.*, v.sport, vb.payment_status
+            FROM venue_price vp
+            JOIN venues v ON vp.id_venue = v.id_venue
+            LEFT JOIN venue_booking vb ON vp.id_venue = vb.payment_status
+            WHERE v.sport='$jenis_lapangan' AND vp.date='$tanggal'";
             $result = mysqli_query($koneksi, $query);
             $count = 0;
 
@@ -462,20 +479,20 @@ if (!$koneksi) {
                     if ($count % 4 == 0) {
                         echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
                     }
-                    // Determine the card class based on the status
-                    $cardClass = ($row['status_pemesanan'] == 'Sudah Dipesan') ? 'card shadow gray-card' : 'card shadow';
-
+                    // // Determine the card class based on the status
+                    // $cardClass = ($row['status_pemesanan'] == 'Sudah Dipesan') ? 'card shadow gray-card' : 'card shadow';
+        
                     // Card untuk data
-                    echo '<div class="' . $cardClass . '">';
+                    echo '<div class="card">';
                     echo '<div class="card-body">';
-                    echo '<h5 class="card-title">' . $row['keanggotaan'] . '</h5>';
-                    echo '<p class="card-text" id="date-card">' . $row['tanggal'] . '</p>';
+                    echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
+                    echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
                     echo '<div class="waktu-container">';
-                    echo '<span class="card-text" id="time-card">' . $row['waktu_mulai'] . ' - </span>';
-                    echo '<span class="card-text" id="time-card">' . $row['waktu_selesai'] . '</span>';
+                    echo '<span class="card-text" id="time-card">' . $row['start_hour'] . ' - </span>';
+                    echo '<span class="card-text" id="time-card">' . $row['end_hour'] . '</span>';
                     echo '</div>';
-                    echo '<p class="card-text" id="price-card">Rp. ' . $row['harga'] . ' /Jam</p>';
-                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">' . $row['status_pemesanan'] . '</p>';
+                    echo '<p class="card-text" id="price-card">Rp. ' . $row['price'] . ' /Jam</p>';
+                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">' . $row['payment_status'] . '</p>';
 
                     echo '</div></div>';
 
@@ -486,7 +503,7 @@ if (!$koneksi) {
             }
         } else {
             // If the form is not filled, fetch and display all records
-            $queryAll = "SELECT * FROM jadwal";
+            $queryAll = "SELECT * FROM venue_price";
             $resultAll = mysqli_query($koneksi, $queryAll);
             $count = 0;
 
@@ -496,20 +513,18 @@ if (!$koneksi) {
                     if ($count % 4 == 0) {
                         echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
                     }
-                    // Determine the card class based on the status
-                    $cardClass = ($row['status_pemesanan'] == 'Sudah Dipesan') ? 'card shadow gray-card' : 'card shadow';
 
                     // Display all records
-                    echo '<div class="' . $cardClass . '">';
+                    echo '<div class="card">';
                     echo '<div class="card-body">';
-                    echo '<h5 class="card-title">' . $row['keanggotaan'] . '</h5>';
-                    echo '<p class="card-text" id="date-card">' . $row['tanggal'] . '</p>';
+                    echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
+                    echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
                     echo '<div class="waktu-container">';
-                    echo '<span class="card-text" id="time-card">' . $row['waktu_mulai'] . ' - </span>';
-                    echo '<span class="card-text" id="time-card">' . $row['waktu_selesai'] . '</span>';
+                    echo '<span class="card-text" id="time-card">' . $row['start_hour'] . ' - </span>';
+                    echo '<span class="card-text" id="time-card">' . $row['end_hour'] . '</span>';
                     echo '</div>';
-                    echo '<p class="card-text" id="price-card">Rp. ' . $row['harga'] . ' /Jam</p>';
-                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">' . $row['status_pemesanan'] . '</p>';
+                    echo '<p class="card-text" id="price-card">Rp. ' . $row['price'] . ' /Jam</p>';
+                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">Sudah Dipesan</p>';
 
                     echo '</div></div>';
 

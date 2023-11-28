@@ -4,10 +4,6 @@ session_start();
 include('database.php');
 
 ?>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 <!doctype html>
 <html lang="en">
@@ -28,6 +24,11 @@ include('database.php');
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -42,6 +43,15 @@ include('database.php');
             background-color: #02406d;
             color: #e7f5ff;
             border: 1px solid #e7f5ff;
+        }
+
+        .small {
+            color: #02406d;
+        }
+
+        .small:hover {
+            color: #02406d;
+            text-decoration: underline;
         }
 
         .message {
@@ -89,31 +99,47 @@ include('database.php');
                                                     if ($_SESSION['token'] === $tokenWithExpiration) {
                                                         $Email = $_SESSION['email'];
 
-                                                        $hash = password_hash($psw, PASSWORD_DEFAULT);
-
-                                                        $sql = mysqli_query($conn, "SELECT * FROM users WHERE email='$Email'");
-                                                        $query = mysqli_num_rows($sql);
-                                                        $fetch = mysqli_fetch_assoc($sql);
-
-                                                        if ($Email) {
-                                                            $new_pass = $hash;
-                                                            mysqli_query($conn, "UPDATE users SET password='$new_pass' WHERE email='$Email'");
+                                                        // Check if the password is empty
+                                                        if (empty($psw)) {
                                                             ?>
                                                             <script>
-                                                                window.location.replace("login.php");
-                                                                alert("<?php echo "Selamat, sandi akun anda berhasil diganti" ?>");
+                                                                alert("Password tidak boleh kosong. Silahkan masukkan sandi lagi.");
+                                                            </script>
+                                                            <?php
+                                                        } elseif (!isValidPassword($psw)) {
+                                                            ?>
+                                                            <script>
+                                                                alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus");
                                                             </script>
                                                             <?php
                                                         } else {
-                                                            ?>
-                                                            <script>
-                                                                alert("<?php echo "Coba lagi" ?>");
-                                                            </script>
-                                                            <?php
+                                                            // Retrieve the existing password from the database
+                                                            $existingPasswordQuery = mysqli_query($conn, "SELECT password FROM users WHERE email='$Email'");
+                                                            $existingPasswordData = mysqli_fetch_assoc($existingPasswordQuery);
+                                                            $existingPassword = $existingPasswordData['password'];
+
+                                                            // Check if the new password is the same as the existing one
+                                                            if (password_verify($psw, $existingPassword)) {
+                                                                ?>
+                                                                <script>
+                                                                    alert("Password baru harus berbeda dengan password yang sudah ada sebelumnya.");
+                                                                </script>
+                                                                <?php
+                                                            } else {
+                                                                // Update the password if it's different
+                                                                $hash = password_hash($psw, PASSWORD_DEFAULT);
+                                                                mysqli_query($conn, "UPDATE users SET password='$hash' WHERE email='$Email'");
+                                                                ?>
+                                                                <script>
+                                                                    window.location.replace("login.php");
+                                                                    alert("Selamat, sandi akun anda berhasil diganti");
+                                                                </script>
+                                                                <?php
+                                                            }
                                                         }
                                                     } else {
                                                         // Token verification failed
-                                                        echo "Token verification failed.";
+                                                        echo "Verifikasi token gagal.";
                                                     }
                                                 }
 
@@ -130,12 +156,20 @@ include('database.php');
                                             echo "Invalid request.";
                                             // You may want to redirect or display an appropriate message
                                         }
+                                        // Function untuk mengecek kompleksitas sandi
+                                        function isValidPassword($password)
+                                        {
+                                            // Sandi sekurang-kurangnya harus mengandung 8 karakter, huruf besar, huruf kecil, dan karakter khusus
+                                            $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/";
+                                            return preg_match($pattern, $password);
+                                        }
                                         ?>
                                         <?php if (isset($message)): ?>
                                             <div class="message">
                                                 <?php echo $message; ?>
                                             </div>
                                         <?php endif; ?>
+
 
                                         <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />

@@ -78,11 +78,15 @@ $conn->close();
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-clipboard mx-3 ml-auto"></i>
+                <div class="sidebar-brand-icon">
+                    <i class="fa-solid fa-circle-user mx-3 ml-auto"></i>
                 </div>
-                <div class="sidebar-brand-text">Arena</div>
-                <div class="sidebar-brand-text" style="color: #a1ff9f;">Finder</div>
+                <div class="sidebar-brand-text" style="text-transform: none; font-weight: 500; font-size: 20px">Arena
+                </div>
+                <div class="sidebar-brand-text"
+                    style="color: #a1ff9f; text-transform: none; font-weight: 500; font-size: 20px">Finder <span
+                        style="color: white;">|</span></div>
+
             </a>
 
             <!-- Divider -->
@@ -140,8 +144,8 @@ $conn->close();
                 Notifikasi
             </div>
 
-           <!-- Nav Item - Pesanan -->
-           <li class="nav-item">
+            <!-- Nav Item - Pesanan -->
+            <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
                         <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
@@ -346,7 +350,7 @@ $conn->close();
                             </div>
                         </div>
 
-                       
+
 
 
 

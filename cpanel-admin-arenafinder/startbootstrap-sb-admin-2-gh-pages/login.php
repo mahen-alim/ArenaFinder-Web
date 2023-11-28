@@ -98,6 +98,8 @@ if (isset($_POST["login"])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+
   <style>
     body {
       font-family: "Kanit", sans-serif;
@@ -153,8 +155,9 @@ if (isset($_POST["login"])) {
                         autofocus />
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword"
+                      <input type="password" class="form-control form-control-user" id="exampleInputEmail"
                         placeholder="Password" name="password" autocomplete="off" />
+                      
                       <input type="hidden" name="level" value="<?php echo $levelValue; ?>" id="level" />
                     </div>
                     <div class="form-group">
@@ -188,6 +191,19 @@ if (isset($_POST["login"])) {
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
+  <!-- JavaScript (tambahkan sebelum tag </body>) -->
+  <script>
+    document.getElementById('show-hide-password').addEventListener('click', function () {
+      var passwordInput = document.getElementById('exampleInputPassword');
+      var passwordFieldType = passwordInput.getAttribute('type');
+
+      if (passwordFieldType === 'password') {
+        passwordInput.setAttribute('type', 'text');
+      } else {
+        passwordInput.setAttribute('type', 'password');
+      }
+    });
+  </script>
 </body>
 
 </html>

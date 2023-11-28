@@ -185,7 +185,7 @@ if (isset($_POST["recover"])) {
             if (!$mail->send()) {
                 ?>
                     <script>
-                        alert("<?php echo "Email salah" ?>");
+                        alert("<?php echo "Email salah"?>");
                     </script>
                 <?php
             } else {

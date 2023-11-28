@@ -61,30 +61,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
 
-     // Fetch id_venue based on the user's email
-     $email = $_SESSION['email'];
-     $fetchVenueIdQuery = "SELECT id_venue FROM venues WHERE email = '$email'";
-     $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
- 
-     if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
-         $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
-         $id_venue = $venueRow['id_venue'];
- 
-         // Continue with your existing code
-         if (!empty($_FILES['foto']['name'])) {
-             $nama_file = $_FILES['foto']['name'];
-             $tmp = $_FILES['foto']['tmp_name'];
- 
-             // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
-             $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
- 
-             // Pindahkan file gambar ke folder tujuan
-             if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
-                 // Jika pengunggahan berhasil, lanjutkan dengan query SQL
-                 // Periksa apakah file gambar diunggah
-                 if ($op == 'edit') {
-                     // Perbarui data jika ini adalah operasi edit
-                     $sql1 = "UPDATE venue_aktivitas SET 
+    // Fetch id_venue based on the user's email
+    $email = $_SESSION['email'];
+    $fetchVenueIdQuery = "SELECT id_venue FROM venues WHERE email = '$email'";
+    $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
+
+    if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
+        $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
+        $id_venue = $venueRow['id_venue'];
+
+        // Continue with your existing code
+        if (!empty($_FILES['foto']['name'])) {
+            $nama_file = $_FILES['foto']['name'];
+            $tmp = $_FILES['foto']['tmp_name'];
+
+            // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
+            $upload_folder = 'C:\\xampp\\htdocs\\ArenaFinder\\public\\img\\venue\\';
+
+            // Pindahkan file gambar ke folder tujuan
+            if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
+                // Jika pengunggahan berhasil, lanjutkan dengan query SQL
+                // Periksa apakah file gambar diunggah
+                if ($op == 'edit') {
+                    // Perbarui data jika ini adalah operasi edit
+                    $sql1 = "UPDATE venue_aktivitas SET 
                                  nama_aktivitas = '$nama',
                                  sport = '$jenis',
                                  date = '$tanggal',
@@ -101,30 +101,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } else {
                         $error = "Data aktivitas gagal diupdate";
                     }
-                 
-                 } else {
-                     // Tambahkan data jika ini adalah operasi insert
-                     $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, sport, date, membership, jam_main, price, photo, id_venue) 
+
+                } else {
+                    // Tambahkan data jika ini adalah operasi insert
+                    $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, sport, date, membership, jam_main, price, photo, id_venue) 
                               VALUES ('$nama', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue')";
-                     $q1 = mysqli_query($conn, $sql1);
+                    $q1 = mysqli_query($conn, $sql1);
 
                     if ($q1) {
                         $sukses = "Data aktivitas berhasil ditambahkan";
                     } else {
                         $error = "Data aktivitas gagal ditambahkan";
                     }
-                 }
-                     
-             } else {
-                 $error = "Harap pilih gambar yang akan diunggah";
-             }
-         } else {
-             $error = "Harap pilih gambar yang akan diunggah";
-         }
-     } else {
-         $error = "Venue tidak ditemukan untuk email ini";
-     }
-    
+                }
+
+            } else {
+                $error = "Harap pilih gambar yang akan diunggah";
+            }
+        } else {
+            $error = "Harap pilih gambar yang akan diunggah";
+        }
+    } else {
+        $error = "Venue tidak ditemukan untuk email ini";
+    }
+
 }
 
 
@@ -218,11 +218,14 @@ $email = $_SESSION['email'];
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-clipboard mx-3 ml-auto"></i>
+                <div class="sidebar-brand-icon">
+                    <i class="fa-solid fa-circle-user mx-3 ml-auto"></i>
                 </div>
-                <div class="sidebar-brand-text">Arena</div>
-                <div class="sidebar-brand-text" style="color: #a1ff9f;">Finder</div>
+                <div class="sidebar-brand-text" style="text-transform: none; font-weight: 500; font-size: 20px">Arena
+                </div>
+                <div class="sidebar-brand-text"
+                    style="color: #a1ff9f; text-transform: none; font-weight: 500; font-size: 20px">Finder <span
+                        style="color: white;">|</span></div>
             </a>
 
             <!-- Divider -->
@@ -427,360 +430,363 @@ $email = $_SESSION['email'];
                                                     </div>
                                                 </div>
 
-                                                
-                                            </div>
 
-                                            <div class="mb-3 row">
-                                                <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
-                                                <div class="col-sm-10" onclick="">
-                                                    <input type="datetime-local" placeholder="-Pilih Tanggal-"
-                                                        class="form-control" id="tanggal" name="tanggal"
-                                                        value="<?php echo $tanggal ?>" required>
-                                                </div>
-                                            </div>
+                                        </div>
 
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function () {
-                                                    flatpickr("#tanggal", {
-                                                        enableTime: false, // Enable time selection
-                                                        minDate: "today", // Set the minimum date to today
-                                                        dateFormat: "Y-m-d", // Specify the date format
-                                                    });
-                                                });
-                                            </script>
-
-                                            <div class="mb-3 row">
-                                                <label for="keanggotaan"
-                                                    class="col-sm-2 col-form-label">Keanggotaan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="radio" id="member" name="keanggotaan" value="Member"
-                                                        <?php if ($anggota == "Member")
-                                                            echo "checked"; ?> required>
-                                                    <label for="member">Member</label>
-
-                                                    <input type="radio" id="nonmember" name="keanggotaan"
-                                                        value="Non Member" style="margin-left: 20px;" <?php if ($anggota == "Non Member")
-                                                            echo "checked"; ?> required>
-                                                    <label for="nonmember">Non Member</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 row">
-                                                <label for="jam main" class="col-sm-2 col-form-label"
-                                                    style="cursor: pointer">Jam Main</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control" name="jam_main" id="jam_main" required>
-                                                        <option value="">-Jam Main-</option>
-                                                        <option value="1" <?php if ($jam == "1")
-                                                            echo "selected" ?>>1 jam
-                                                            </option>
-                                                            <option value="2" <?php if ($jam == "2")
-                                                            echo "selected" ?>>2 jam
-                                                            </option>
-                                                            <option value="3" <?php if ($jam == "3")
-                                                            echo "selected" ?>>3 jam
-                                                            </option>
-                                                            <option value="4" <?php if ($jam == "4")
-                                                            echo "selected" ?>>4 jam
-                                                            </option>
-                                                            <option value="5" <?php if ($jam == "5")
-                                                            echo "selected" ?>>5 jam
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3 row">
-                                                    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="harga" name="harga"
-                                                            readonly value="<?php echo $harga ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 row">
-                                                <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
-                                                <div class="col-sm-10">
-                                                    <input class="col-xxl-8 col-12" type="file" id="foto" name="foto"
-                                                        required="required" multiple />
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-xxl-8 col-12">
-                                                    <input type="submit" name="simpan" value="Simpan Data"
-                                                        class="btn w-100 mt-5" id="save-btn">
-                                                </div>
-                                            </div>
-
-                                        </form>
+                                        <div class="mb-3 row">
+                                            <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
+                                            <div class="col-sm-10" onclick="">
+                                                <input type="datetime-local" placeholder="-Pilih Tanggal-"
+                                                    class="form-control" id="tanggal" name="tanggal"
+                                                    value="<?php echo $tanggal ?>" required>
                                         </div>
                                     </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            flatpickr("#tanggal", {
+                                                enableTime: false, // Enable time selection
+                                                minDate: "today", // Set the minimum date to today
+                                                dateFormat: "Y-m-d", // Specify the date format
+                                            });
+                                        });
+                                    </script>
+
+                                    <div class="mb-3 row">
+                                        <label for="keanggotaan" class="col-sm-2 col-form-label">Keanggotaan</label>
+                                        <div class="col-sm-10">
+                                            <input type="radio" id="member" name="keanggotaan" value="Member" <?php if ($anggota == "Member") {
+                                                echo "checked";
+                                            } ?> required>
+                                            <label for="member">Member</label>
+
+                                            <input type="radio" id="nonmember" name="keanggotaan" value="Non Member"
+                                                style="margin-left: 20px;" <?php if ($anggota == "Non Member") {
+                                                    echo "checked";
+                                                } ?> required>
+                                            <label for="nonmember">Non Member</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="jam main" class="col-sm-2 col-form-label"
+                                            style="cursor: pointer">Jam Main</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" name="jam_main" id="jam_main" required>
+                                                <option value="">-Jam Main-</option>
+                                                <option value="1" <?php if ($jam == "1")
+                                                    echo "selected" ?>>1 jam
+                                                    </option>
+                                                    <option value="2" <?php if ($jam == "2")
+                                                    echo "selected" ?>>2 jam
+                                                    </option>
+                                                    <option value="3" <?php if ($jam == "3")
+                                                    echo "selected" ?>>3 jam
+                                                    </option>
+                                                    <option value="4" <?php if ($jam == "4")
+                                                    echo "selected" ?>>4 jam
+                                                    </option>
+                                                    <option value="5" <?php if ($jam == "5")
+                                                    echo "selected" ?>>5 jam
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="harga" name="harga" readonly
+                                                    value="<?php echo $harga ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
+                                        <div class="col-sm-10">
+                                            <input class="col-xxl-8 col-12" type="file" id="foto" name="foto"
+                                                required="required" multiple />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xxl-8 col-12">
+                                            <input type="submit" name="simpan" value="Simpan Data"
+                                                class="btn w-100 mt-5" id="save-btn">
+                                        </div>
+                                    </div>
+
+                                    </form>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <script>
-                                // Mendapatkan elemen-elemen yang diperlukan
-                                var jamMainSelect = document.getElementById("jam_main");
-                                var hargaInput = document.getElementById("harga");
+                    <script>
+                        // Mendapatkan elemen-elemen yang diperlukan
+                        var jamMainSelect = document.getElementById("jam_main");
+                        var hargaInput = document.getElementById("harga");
 
-                                // Tambahkan event listener untuk memantau perubahan pada pilihan jam_main
-                                jamMainSelect.addEventListener("change", function () {
-                                    // Mendapatkan nilai yang dipilih oleh pengguna
-                                    var selectedValue = jamMainSelect.value;
+                        // Tambahkan event listener untuk memantau perubahan pada pilihan jam_main
+                        jamMainSelect.addEventListener("change", function () {
+                            // Mendapatkan nilai yang dipilih oleh pengguna
+                            var selectedValue = jamMainSelect.value;
 
-                                    // Tentukan harga berdasarkan nilai yang dipilih
-                                    var harga = 0;
-                                    if (selectedValue === "1") {
-                                        harga = 15000;
-                                    } else if (selectedValue === "2") {
-                                        harga = 30000;
-                                    } else if (selectedValue === "3") {
-                                        harga = 45000;
-                                    } else if (selectedValue === "4") {
-                                        harga = 50000;
-                                    } else if (selectedValue === "5") {
-                                        harga = 65000;
-                                    } else {
-                                        <?php echo $error ?>
-                                    }
+                            // Tentukan harga berdasarkan nilai yang dipilih
+                            var harga = 0;
+                            if (selectedValue === "1") {
+                                harga = 15000;
+                            } else if (selectedValue === "2") {
+                                harga = 30000;
+                            } else if (selectedValue === "3") {
+                                harga = 45000;
+                            } else if (selectedValue === "4") {
+                                harga = 50000;
+                            } else if (selectedValue === "5") {
+                                harga = 65000;
+                            } else {
+                                <?php echo $error ?>
+                            }
 
-                                    // Masukkan harga ke dalam input harga
-                                    hargaInput.value = harga;
-                                });
+                            // Masukkan harga ke dalam input harga
+                            hargaInput.value = harga;
+                        });
 
-                            </script>
+                    </script>
 
-                            <!-- DataTales Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-                                    style="color: white; background-color: #02406d;">
-                                    <h6 class="m-0 font-weight-bold">Tabel Aktivitas</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <form action="aktivitas.php" method="GET">
-                                            <div class="form-group" style="display: flex; gap: 10px;">
-                                                <input type="text" name="search" class="form-control" id="searchInput"
-                                                    style="width: 30%;" placeholder="Tekan / untuk Mencari Aktivitas"
-                                                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                                                <button type="submit" class="btn btn-info"
-                                                    id="searchButton">Cari</button>
-                                                <?php if (isset($_GET['search'])): ?>
-                                                    <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
-                                                <?php endif; ?>
-                                            </div>
-                                        </form>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                            style="color: white; background-color: #02406d;">
+                            <h6 class="m-0 font-weight-bold">Tabel Aktivitas</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <form action="aktivitas.php" method="GET">
+                                    <div class="form-group" style="display: flex; gap: 10px;">
+                                        <input type="text" name="search" class="form-control" id="searchInput"
+                                            style="width: 30%;" placeholder="Tekan / untuk Mencari Aktivitas"
+                                            value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                                        <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
+                                        <?php if (isset($_GET['search'])): ?>
+                                            <a href="aktivitas.php" class="btn btn-secondary">Hapus Pencarian</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </form>
 
-                                        <script>
-                                            document.getElementById('searchButton').addEventListener('click', function (event) {
-                                                var searchInput = document.getElementById('searchInput');
+                                <script>
+                                    document.getElementById('searchButton').addEventListener('click', function (event) {
+                                        var searchInput = document.getElementById('searchInput');
 
-                                                if (searchInput.value === '') {
-                                                    event.preventDefault(); // Prevent form submission if the search field is empty
-                                                    searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                                    searchInput.style.borderColor = 'red'; // Change border color to red
-                                                } else {
-                                                    // Perform AJAX request to check if the value exists in the database
-                                                    var xhr = new XMLHttpRequest();
-                                                    xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+                                        if (searchInput.value === '') {
+                                            event.preventDefault(); // Prevent form submission if the search field is empty
+                                            searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
+                                            searchInput.style.borderColor = 'red'; // Change border color to red
+                                        } else {
+                                            // Perform AJAX request to check if the value exists in the database
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
 
-                                                    xhr.onload = function () {
-                                                        if (xhr.status === 200) {
-                                                            console.log(xhr.responseText);
-                                                            var response = JSON.parse(xhr.responseText);
-                                                            if (response.count === 0) {
-                                                                // Value not found in the database
-                                                                event.preventDefault();
-                                                                searchInput.placeholder = 'Pencarian tidak ditemukan!';
-                                                                searchInput.style.borderColor = 'red';
-                                                            } else {
-                                                                // Reset styles
-                                                                searchInput.placeholder = 'Cari Aktivitas';
-                                                                searchInput.style.borderColor = '';
-                                                            }
-                                                        }
-                                                    };
-
-                                                    xhr.send();
+                                            xhr.onload = function () {
+                                                if (xhr.status === 200) {
+                                                    console.log(xhr.responseText);
+                                                    var response = JSON.parse(xhr.responseText);
+                                                    if (response.count === 0) {
+                                                        // Value not found in the database
+                                                        event.preventDefault();
+                                                        searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                        searchInput.style.borderColor = 'red';
+                                                    } else {
+                                                        // Reset styles
+                                                        searchInput.placeholder = 'Cari Aktivitas';
+                                                        searchInput.style.borderColor = '';
+                                                    }
                                                 }
-                                            });
+                                            };
 
-                                            document.getElementById('searchInput').addEventListener('click', function () {
-                                                var searchInput = document.getElementById('searchInput');
-                                                searchInput.placeholder = 'Cari Aktivitas';
-                                                searchInput.style.borderColor = '';
-                                            });
+                                            xhr.send();
+                                        }
+                                    });
 
-                                            document.addEventListener('keydown', function (event) {
-                                                var searchInput = document.getElementById('searchInput');
+                                    document.getElementById('searchInput').addEventListener('click', function () {
+                                        var searchInput = document.getElementById('searchInput');
+                                        searchInput.placeholder = 'Cari Aktivitas';
+                                        searchInput.style.borderColor = '';
+                                    });
 
-                                                // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
-                                                if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
-                                                    searchInput.placeholder = 'Cari Aktivitas';
-                                                    searchInput.style.borderColor = '';
-                                                }
-                                            });
-                                        </script>
+                                    document.addEventListener('keydown', function (event) {
+                                        var searchInput = document.getElementById('searchInput');
+
+                                        // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                        if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
+                                            searchInput.placeholder = 'Cari Aktivitas';
+                                            searchInput.style.borderColor = '';
+                                        }
+                                    });
+                                </script>
 
 
-                                        <table class="table text-nowrap table-centered table-hover" id="dataTable"
-                                            width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">No.</th>
-                                                    <th scope="col">Nama Aktivitas</th>
-                                                    <th scope="col">Jenis Olahraga</th>
-                                                    <th scope="col">Lokasi</th>
-                                                    <th scope="col">Tanggal Main</th>
-                                                    <th scope="col">Keanggotaan</th>
-                                                    <th scope="col">Jam Main</th>
-                                                    <th scope="col">Harga</th>
-                                                    <th scope="col">Foto</th>
-                                                    <th scope="col">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                if (isset($_GET['reset'])) {
-                                                    // Pengguna menekan tombol "Hapus Pencarian"
-                                                    header("Location: aktivitas.php"); // Mengarahkan ke halaman tanpa parameter pencarian
-                                                    exit();
-                                                }
+                                <table class="table text-nowrap table-centered table-hover" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Nama Aktivitas</th>
+                                            <th scope="col">Jenis Olahraga</th>
+                                            <th scope="col">Lokasi</th>
+                                            <th scope="col">Tanggal Main</th>
+                                            <th scope="col">Keanggotaan</th>
+                                            <th scope="col">Jam Main</th>
+                                            <th scope="col">Harga</th>
+                                            <th scope="col">Foto</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if (isset($_GET['reset'])) {
+                                            // Pengguna menekan tombol "Hapus Pencarian"
+                                            header("Location: aktivitas.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                            exit();
+                                        }
 
-                                                $jumlahDataPerHalaman = 10;
+                                        $jumlahDataPerHalaman = 10;
 
-                                                // Perform the query to get the total number of rows
-                                                $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_aktivitas");
-                                                $countResult = mysqli_fetch_assoc($queryCount);
-                                                $jumlahData = $countResult['total'];
+                                        // Perform the query to get the total number of rows
+                                        $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_aktivitas");
+                                        $countResult = mysqli_fetch_assoc($queryCount);
+                                        $jumlahData = $countResult['total'];
 
-                                                // Calculate the total number of pages
-                                                $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+                                        // Calculate the total number of pages
+                                        $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 
-                                                // Get the current page
-                                                $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
+                                        // Get the current page
+                                        $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
 
-                                                // Calculate the starting data index for the current page
-                                                $awalData = ($page - 1) * $jumlahDataPerHalaman;
+                                        // Calculate the starting data index for the current page
+                                        $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
-                                                $email = $_SESSION['email'];
+                                        $email = $_SESSION['email'];
 
-                                                if (isset($_GET['search'])) {
-                                                    $searchTerm = $conn->real_escape_string($_GET['search']);
-                                                    $sql = "SELECT va.*, v.location
+                                        if (isset($_GET['search'])) {
+                                            $searchTerm = $conn->real_escape_string($_GET['search']);
+                                            $sql = "SELECT va.*, v.location
                                                             FROM venue_aktivitas va
                                                             JOIN venues v ON va.id_venue = v.id_venue
                                                             WHERE va.nama_aktivitas LIKE '%$searchTerm%'
                                                             ORDER BY va.id_aktivitas DESC
                                                             LIMIT $awalData, $jumlahDataPerHalaman";
-                                                } else {
-                                                    $sql = "SELECT va.*, v.location
+                                        } else {
+                                            $sql = "SELECT va.*, v.location
                                                         FROM venue_aktivitas va
                                                         JOIN venues v ON va.id_venue = v.id_venue
                                                         WHERE v.email = '$email'
                                                         ORDER BY va.id_aktivitas DESC
                                                         LIMIT $awalData, $jumlahDataPerHalaman";
-                                                }
+                                        }
 
-                                                $aktivitas = mysqli_query($conn, $sql);
-                                                $urut = 1 + $awalData;
+                                        $aktivitas = mysqli_query($conn, $sql);
+                                        $urut = 1 + $awalData;
 
-                                                while ($r2 = mysqli_fetch_array($aktivitas)) {
-                                                    $id = $r2['id_aktivitas'];
-                                                    $nama = $r2['nama_aktivitas'];
-                                                    $jenis = $r2['sport'];
-                                                    $lokasi = $r2['location']; // Ambil data dari kolom location di tabel venues
-                                                    $tanggal = $r2['date'];
-                                                    $anggota = $r2['membership'];
-                                                    $jam = $r2['jam_main'];
-                                                    $harga = $r2['price'];
-                                                    $foto = $r2['photo'];
-                                                    ?>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <?php echo $urut++ ?>
-                                                        </th>
-                                                        <td scope="row">
-                                                            <?php echo $nama ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $jenis ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $lokasi ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $tanggal ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $anggota ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $jam ?>
-                                                            Jam
-                                                        </td>
-                                                        <td scope="row">
-                                                            <?php echo $harga ?>
-                                                        </td>
-                                                        <td scope="row">
-                                                            <img src="/ArenaFinder/public/img/venue/<?php echo $foto; ?>" alt="Image" style="width: 100px; height: 100px;">
-                                                        </td>
-
-                                                        <td scope="row">
-                                                            <a href="aktivitas.php?op=edit&id=<?php echo $id ?>"><button
-                                                                    type="button" class="btn btn-warning">Edit</button></a>
-                                                            <a href="aktivitas.php?op=delete&id=<?php echo $id ?>"
-                                                                onclick="return confirm('Yakin mau menghapus data ini?')">
-                                                                <button type="button" class="btn btn-danger">Delete</button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                        <!-- Pagination code -->
-                                        <ul class='pagination'>
-                                            <!-- Previous page link -->
-                                            <?php
-                                            if ($page > 1) {
-                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
-                                            }
-
-                                            // Numbered pagination links
-                                            for ($i = 1; $i <= $jumlahHalaman; $i++) {
-                                                echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='aktivitas.php?page=$i'>$i</a></li>";
-                                            }
-
-                                            // Next page link
-                                            if ($page < $jumlahHalaman) {
-                                                echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                            }
+                                        while ($r2 = mysqli_fetch_array($aktivitas)) {
+                                            $id = $r2['id_aktivitas'];
+                                            $nama = $r2['nama_aktivitas'];
+                                            $jenis = $r2['sport'];
+                                            $lokasi = $r2['location']; // Ambil data dari kolom location di tabel venues
+                                            $tanggal = $r2['date'];
+                                            $anggota = $r2['membership'];
+                                            $jam = $r2['jam_main'];
+                                            $harga = $r2['price'];
+                                            $foto = $r2['photo'];
                                             ?>
-                                        </ul>
-                                    </div>
-                                </div>
+                                            <tr>
+                                                <th scope="row">
+                                                    <?php echo $urut++ ?>
+                                                </th>
+                                                <td scope="row"
+                                                    style="overflow: hidden; word-wrap: break-word; white-space: normal;">
+                                                    <?php echo $nama ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $jenis ?>
+                                                </td>
+                                                <td scope="row"
+                                                    style="overflow: hidden; word-wrap: break-word; white-space: normal;">
+                                                    <?php echo $lokasi ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $tanggal ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $anggota ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $jam ?>
+                                                    Jam
+                                                </td>
+                                                <td scope="row">
+                                                    <?php echo $harga ?>
+                                                </td>
+                                                <td scope="row">
+                                                    <img src="/ArenaFinder/public/img/venue/<?php echo $foto; ?>"
+                                                        alt="Image" style="width: 100px; height: 100px;">
+                                                </td>
+
+                                                <td scope="row">
+                                                    <a href="aktivitas.php?op=edit&id=<?php echo $id ?>"><button
+                                                            type="button" class="btn btn-warning">Edit</button></a>
+                                                    <a href="aktivitas.php?op=delete&id=<?php echo $id ?>"
+                                                        onclick="return confirm('Yakin mau menghapus data ini?')">
+                                                        <button type="button" class="btn btn-danger">Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <!-- Pagination code -->
+                                <ul class='pagination'>
+                                    <!-- Previous page link -->
+                                    <?php
+                                    if ($page > 1) {
+                                        echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                    }
+
+                                    // Numbered pagination links
+                                    for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                        echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='aktivitas.php?page=$i'>$i</a></li>";
+                                    }
+
+                                    // Next page link
+                                    if ($page < $jumlahHalaman) {
+                                        echo "<li class='page-item'><a class='page-link' href='aktivitas.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                    }
+                                    ?>
+                                </ul>
                             </div>
-
-
-
                         </div>
-
-
-
-
                     </div>
 
+
+
                 </div>
-                <!-- /.container-fluid -->
+
+
+
 
             </div>
-            <!-- End of Main Content -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->

@@ -344,10 +344,10 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Login</a>
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
               </li>
               <li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Register</a>
+                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
               </li>';
           }
           ?>
@@ -363,7 +363,7 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
     <h1 id="judul" class="title">Aktivitas penunjang kehidupan yang lebih sehat dan menyenangkan</h1>
     <h1 id="judul" class="title2">Temukan Sekarang !!!</h1>
     <form method="post" action="cari_jadwal.php">
-      <select id="inputOpsi" class="input-jenis-lapangan" name="jenis_lapangan">
+      <select id="inputOpsi" class="input-jenis-lapangan" name="jenis_lapangan" required>
         <option value="">Jenis Lapangan</option>
         <option value="Futsal">Futsal</option>
         <option value="Badminton">Badminton</option>
@@ -371,7 +371,7 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
         <option value="Sepak Bola">Sepak Bola</option>
         <option value="Tenis Lapangan">Tenis Lapangan</option>
       </select>
-      <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail" name="tanggal">
+      <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail" name="tanggal" required>
       <button class="button" type="submit">Temukan</button>
     </form>
     <script>

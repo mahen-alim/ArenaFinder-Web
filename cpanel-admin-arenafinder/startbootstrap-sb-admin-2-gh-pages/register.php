@@ -102,7 +102,7 @@ if (isset($_POST["register"])) {
         // Notifikasi peringatan jika sandi salah
         ?>
         <script>
-          alert("Password harus memiliki setidaknya 8 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
+          alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
           window.location.replace('register.php');
         </script>
         <?php
@@ -172,7 +172,7 @@ function usernameExists($conn, $username)
 function isValidPassword($password)
 {
   // Sandi sekurang-kurangnya harus mengandung 8 karakter, huruf besar, huruf kecil, dan karakter khusus
-  $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/";
+  $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/";
   return preg_match($pattern, $password);
 }
 
