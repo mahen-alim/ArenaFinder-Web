@@ -113,7 +113,7 @@ if (isset($_POST["recover"])) {
     include('database.php');
     $email = $_POST["email"];
 
-    // Check if the email input is empty
+    // Pengecekkan jika email belum diisi oleh user
     if (empty($email)) {
         ?>
         <script>
@@ -139,13 +139,13 @@ if (isset($_POST["recover"])) {
                 </script>
             <?php
         } else {
-            // generate token by binaryhexa 
+            // membuat token dari binaryhexa 
             $token = bin2hex(random_bytes(50));
 
-            // set expiration time (e.g., 15 minutes)
-            $expirationTime = time() + (15 * 60); // 15 minutes in seconds
+            // atur waktu kedaluwarsa token selama 15 menit
+            $expirationTime = time() + (15 * 60); 
 
-            // concatenate token and expiration time
+            // menggabungkan token dan waktu kedaluwarsa 
             $tokenWithExpiration = $token . '.' . $expirationTime;
 
             // session_start ();
@@ -169,7 +169,6 @@ if (isset($_POST["recover"])) {
             $mail->setFrom('arenafinder.app@gmail.com', 'Password Reset');
             // get email from input
             $mail->addAddress($_POST["email"]);
-            //$mail->addReplyTo('lamkaizhe16@gmail.com');
 
             // HTML body
             $mail->isHTML(true);
@@ -177,7 +176,7 @@ if (isset($_POST["recover"])) {
             $mail->Body = "<b>Kepada Admin</b>
                         <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
                         <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
-                        http://localhost/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/reset_psw.php?token=$tokenWithExpiration
+                        https://arenafinder.tifnganjuk.com/reset_psw.php?token=$tokenWithExpiration
                         <br><br>
                         <p>Berikan pesan anda lewat email ini,</p>
                         <b>arenafinder.app@gmail.com</b>";
