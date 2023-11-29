@@ -1,4 +1,4 @@
-<?php session_start() ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,7 +135,7 @@ if (isset($_POST["recover"])) {
             ?>
                 <script>
                     alert("Maaf, akun anda harus diverifikasi terlebih dahulu sebelum mengganti sandi!");
-                    window.location.replace("index.html");
+                    window.location.replace("index.php");
                 </script>
             <?php
         } else {
@@ -185,7 +185,7 @@ if (isset($_POST["recover"])) {
             if (!$mail->send()) {
                 ?>
                     <script>
-                        alert("<?php echo "Email salah"?>");
+                        alert("<?php echo "Email salah" ?>");
                     </script>
                 <?php
             } else {

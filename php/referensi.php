@@ -511,7 +511,7 @@ if (!$koneksi) {
         <span>Bola Futsal</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/badmin.jpg" alt="" />
+        <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt="" />
         <span>Badminton</span>
       </button>
       <button class="all" type="submit">
@@ -523,7 +523,7 @@ if (!$koneksi) {
         <span>Bola Basket</span>
       </button>
       <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="" />
+        <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt="" />
         <span>Sepak Bola</span>
       </button>
     </div>
@@ -567,7 +567,7 @@ if (!$koneksi) {
 
       <div class="fourth-sep">
         <div class="tipe-lap">
-          <button id="indoorButton" onclick="showCards('Indoor')">Indoor<img src="/ArenaFinder/img_asset/badmin.jpg"
+          <button id="indoorButton" onclick="showCards('Indoor')">Indoor<img src="/ArenaFinder/img_asset/bulu tangkis.jpg"
               alt="" /></button>
           <button id="outdoorButton" onclick="showCards('Outdoor')">Outdoor<img src="/ArenaFinder/img_asset/outdoor.jpg"
               alt="" /></button>

@@ -568,7 +568,6 @@ if (!$koneksi) {
     }
     ?>
 
-
     <script>
       const container = document.querySelector('.con-type');
       let isDragging = false;

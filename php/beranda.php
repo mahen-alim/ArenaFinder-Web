@@ -292,11 +292,9 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
         width: 50%;
       }
 
-
       #card-slider .card {
         width: 100%;
       }
-
     }
   </style>
 </head>
@@ -371,7 +369,8 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
         <option value="Sepak Bola">Sepak Bola</option>
         <option value="Tenis Lapangan">Tenis Lapangan</option>
       </select>
-      <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail" name="tanggal" required>
+      <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail" name="tanggal"
+        required>
       <button class="button" type="submit">Temukan</button>
     </form>
     <script>
@@ -406,26 +405,19 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
         class="img-small"></button>
   </a>
 
-
-
-
-
-
-
   <div class="persegi2"></div>
   <div id="button-type">
     <button class="btn-4" type="button">
       <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">Futsal</button>
     <button class="btn-5" type="button">
-      <img src="/ArenaFinder/img_asset/badmin.jpg" alt="">Badminton</button>
+      <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt="">Bulu Tangkis</button>
     <button class="btn-6" type="button">
       <img src="/ArenaFinder/img_asset/voli.jpg" alt="">Bola Voli</button>
     <button class="btn-7" type="button">
       <img src="/ArenaFinder/img_asset/basket.jpg" alt="">Bola Basket</button>
     <button class="btn-8" type="button">
-      <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" alt="">Sepak Bola</button>
+      <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt="">Sepak Bola</button>
   </div>
-  <a href="" class="no-underline">Lihat lebih banyak</a>
 
   <div class="community"> Rekomendasi Komunitas </div>
   <div class="persegi3">
@@ -444,12 +436,10 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
             style="height: 500px;">
         </div>
         <div class="carousel-item">
-          <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" class="d-block w-100" alt="..."
-            style="height: 500px;">
+          <img src="/ArenaFinder/img_asset/badmin_community.jpg" class="d-block w-100" alt="..." style="height: 500px;">
         </div>
         <div class="carousel-item">
-          <img src="/ArenaFinder/img_asset/pexels-laura-rincón-16477377.jpg" class="d-block w-100" alt="..."
-            style="height: 500px;">
+          <img src="/ArenaFinder/img_asset/bg-member.png" class="d-block w-100" alt="..." style="height: 500px;">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -466,75 +456,66 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
   </div>
 
   <div class="container">
-    <div class="community" style="margin-top: 200px; margin-left: -120px;"> Rekomendasi Aktivitas </div>
-    <div class="card-slider w-60 h-60" id="cardSlider">
-      <div class="card">
-        <img src="/ArenaFinder/img_asset/pexels-laura-rincón-16477377.jpg" class="card-img-top" alt="..."
-          style="height: 300px">
-        <div class="small-box" style="margin-left: 380px; height: 50px;">2/2</div>
-        <div class="card-body">
-          <h5 class="card-title">Latihan Bersama Badminton TIF PSDKU Nganjuk</h5>
-          <h6 class="card-text">Lokasi : GOR Badminton Bung Karno Nganjuk</h6>
-          <h6 class="card-text">Hari/Tgl : Minggu, 17/09/2023</h6>
-          <h6 class="card-text">Jam : 09:00 - 13:00</h6>
-          <h6 class="card-text">Harga : 5000/orang</h6>
-          <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
-        </div>
-      </div>
-      <div class="card">
-        <img src="/ArenaFinder/img_asset/pexels-ivan-siarbolin-3787832.jpg" class="card-img-top" alt="..."
-          style="height: 300px">
-        <div class="small-box" style="margin-left: 380px; height: 50px;">2/2</div>
-        <div class="card-body">
-          <h5 class="card-title">Latihan Bersama Badminton TIF PSDKU Nganjuk</h5>
-          <h6 class="card-text">Lokasi : GOR Badminton Bung Karno Nganjuk</h6>
-          <h6 class="card-text">Hari/Tgl : Minggu, 17/09/2023</h6>
-          <h6 class="card-text">Jam : 09:00 - 13:00</h6>
-          <h6 class="card-text">Harga : 5000/orang</h6>
-          <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
-        </div>
-      </div>
-      <div class="card">
-        <img src="/ArenaFinder/img_asset/connor-coyne-OgqWLzWRSaI-unsplash.jpg" class="card-img-top" alt="..."
-          style="height: 300px">
-        <div class="small-box" style="margin-left: 380px; height: 50px;">2/2</div>
-        <div class="card-body">
-          <h5 class="card-title">Latihan Bersama Badminton TIF PSDKU Nganjuk</h5>
-          <h6 class="card-text">Lokasi : GOR Badminton Bung Karno Nganjuk</h6>
-          <h6 class="card-text">Hari/Tgl : Minggu, 17/09/2023</h6>
-          <h6 class="card-text">Jam : 09:00 - 13:00</h6>
-          <h6 class="card-text">Harga : 5000/orang</h6>
-          <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
-        </div>
-      </div>
-      <div class="card">
-        <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" class="card-img-top" alt="..."
-          style="height: 300px">
-        <div class="small-box" style="margin-left: 380px; height: 50px;">2/2</div>
-        <div class="card-body">
-          <h5 class="card-title">Latihan Bersama Badminton TIF PSDKU Nganjuk</h5>
-          <h6 class="card-text">Lokasi : GOR Badminton Bung Karno Nganjuk</h6>
-          <h6 class="card-text">Hari/Tgl : Minggu, 17/09/2023</h6>
-          <h6 class="card-text">Jam : 09:00 - 13:00</h6>
-          <h6 class="card-text">Harga : 5000/orang</h6>
-          <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
-        </div>
-      </div>
-      <div class="card">
-        <img src="/ArenaFinder/img_asset/pexels-laura-rincón-16477377.jpg" class="card-img-top" alt="..."
-          style="height: 300px">
-        <div class="small-box" style="margin-left: 380px; height: 50px;">2/2</div>
-        <div class="card-body">
-          <h5 class="card-title">Latihan Bersama Badminton TIF PSDKU Nganjuk</h5>
-          <h6 class="card-text">Lokasi : GOR Badminton Bung Karno Nganjuk</h6>
-          <h6 class="card-text">Hari/Tgl : Minggu, 17/09/2023</h6>
-          <h6 class="card-text">Jam : 09:00 - 13:00</h6>
-          <h6 class="card-text">Harga : 5000/orang</h6>
-          <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
-        </div>
-      </div>
+    <div class="community" id="r-a" style="margin-top: 150px; margin-left: -100px;"> Rekomendasi Aktivitas </div>
+    <div class="card-slider w-40 h-50" id="cardSlider">
+
+      <?php
+      // Replace 'your_database_credentials' with your actual database connection details
+      $conn = new mysqli('localhost', 'root', '', 'arenafinder');
+
+      // Check connection
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      // Assuming 'venue_aktivitas' table has columns like 'judul', 'lokasi', 'tanggal', 'jam', 'harga'
+      $sql = "SELECT va.*, v.location
+      FROM venue_aktivitas va
+      JOIN venues v ON va.id_venue = v.id_venue";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+          $namaGambar = $row['photo']; // Assuming the 'photo' column contains the image filename
+          $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+          ?>
+
+          <div class="card" style=" margin-left: 10px; height: 35rem; margin-top: -20px;">
+            <!-- Use the data from the database to populate the card -->
+            <img src="<?php echo $gambarURL; ?>" class="card-img-top" alt="..." style="height: 200px;">
+            <div class="card-body">
+              <h5 class="card-title" style="margin-top: 10px;">
+                <?php echo $row['nama_aktivitas']; ?>
+              </h5>
+              <h6 class="card-text">Lokasi :
+                <?php echo $row['location']; ?>
+              </h6>
+              <h6 class="card-text">Hari/Tgl :
+                <?php echo $row['date']; ?>
+              </h6>
+              <h6 class="card-text">Jam :
+                <?php echo $row['jam_main']; ?>
+              </h6>
+              <h6 class="card-text">Harga :
+                <?php echo $row['price']; ?>/orang
+              </h6>
+              <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
+            </div>
+          </div>
+          <?php
+        }
+      } else {
+        echo "0 results";
+      }
+
+      // Close the database connection
+      $conn->close();
+      ?>
     </div>
   </div>
+
+
 
   <script src="/ArenaFinder/js/script.js"></script>
 
