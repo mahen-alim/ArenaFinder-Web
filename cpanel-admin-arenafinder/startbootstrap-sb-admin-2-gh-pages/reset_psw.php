@@ -82,23 +82,22 @@ include('database.php');
                                         if (isset($_GET['token'])) {
                                             $tokenWithExpiration = $_GET['token'];
 
-                                            // Separate the token and expiration time
+                                            // Pisahkan token dan waktu kedaluwarsa
                                             list($token, $expirationTime) = explode('.', $tokenWithExpiration);
 
-                                            // Verify if the token is not expired
+                                            // Verifikasi jika token belum kedaluwarsa
                                             if ($expirationTime >= time()) {
-                                                // Token is valid; process the password reset
-                                                // ...
+                                                // Jika token benar, proses pergantian sandi
                                         
                                                 if (isset($_POST["reset"])) {
                                                     include('database.php');
                                                     $psw = $_POST["password"];
 
-                                                    // Verify the token again (in case it was tampered with)
+                                                    // Verifikasi token lagi (untuk menghindari pemalsuan)
                                                     if ($_SESSION['token'] === $tokenWithExpiration) {
                                                         $Email = $_SESSION['email'];
 
-                                                        // Check if the password is empty
+                                                        // Periksa apakah sandi kosong
                                                         if (empty($psw)) {
                                                             ?>
                                                             <script>
@@ -112,12 +111,12 @@ include('database.php');
                                                             </script>
                                                             <?php
                                                         } else {
-                                                            // Retrieve the existing password from the database
+                                                            // Ambil sandi yang ada dari database
                                                             $existingPasswordQuery = mysqli_query($conn, "SELECT password FROM users WHERE email='$Email'");
                                                             $existingPasswordData = mysqli_fetch_assoc($existingPasswordQuery);
                                                             $existingPassword = $existingPasswordData['password'];
 
-                                                            // Check if the new password is the same as the existing one
+                                                            // Periksa apakah sandi baru sama dengan yang sudah ada
                                                             if (password_verify($psw, $existingPassword)) {
                                                                 ?>
                                                                 <script>
@@ -125,7 +124,7 @@ include('database.php');
                                                                 </script>
                                                                 <?php
                                                             } else {
-                                                                // Update the password if it's different
+                                                                // Perbarui sandi jika berbeda
                                                                 $hash = password_hash($psw, PASSWORD_DEFAULT);
                                                                 mysqli_query($conn, "UPDATE users SET password='$hash' WHERE email='$Email'");
                                                                 ?>
@@ -137,13 +136,13 @@ include('database.php');
                                                             }
                                                         }
                                                     } else {
-                                                        // Token verification failed
+                                                        // Verifikasi token gagal
                                                         echo "Verifikasi token gagal.";
                                                     }
                                                 }
 
                                             } else {
-                                                // Link is expired, redirect to password recovery page
+                                                // Tautan sudah kedaluwarsa, redirect ke halaman pemulihan sandi
                                                 ?>
                                                 <script>
                                                     window.location.replace("forgot-password.php");
@@ -153,9 +152,10 @@ include('database.php');
                                             }
                                         } else {
                                             echo "Invalid request.";
-                                            // You may want to redirect or display an appropriate message
+                                            // Anda mungkin ingin melakukan redirect atau menampilkan pesan yang sesuai
                                         }
-                                        // Function untuk mengecek kompleksitas sandi
+
+                                        // Fungsi untuk memeriksa kompleksitas sandi
                                         function isValidPassword($password)
                                         {
                                             // Sandi sekurang-kurangnya harus mengandung 8 karakter, huruf besar, huruf kecil, dan karakter khusus
@@ -168,7 +168,6 @@ include('database.php');
                                                 <?php echo $message; ?>
                                             </div>
                                         <?php endif; ?>
-
 
                                         <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
