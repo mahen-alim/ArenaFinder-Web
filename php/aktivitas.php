@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinder";
+$user = "tifz1761_root";
+$pass = "tifnganjuk321";
+$db = "tifz1761_arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -18,7 +18,7 @@ if (!$koneksi) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aktivitas</title>
-  <link rel="stylesheet" href="/ArenaFinder/css/aktivitas.css" />
+  <link rel="stylesheet" href="css/aktivitas.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -26,7 +26,7 @@ if (!$koneksi) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-
+  <link rel="icon" href="img_asset/login.png">
   <style>
     body {
       margin-top: 130px;
@@ -124,7 +124,13 @@ if (!$koneksi) {
       /* Memberikan jarak antara logo dan teks */
     }
 
+    #title-con {
+      width: 88.5rem;
+      margin-left: 10px;
+    }
+
     .card-container {
+      width: 88.5rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -154,13 +160,13 @@ if (!$koneksi) {
     }
 
     .con-type {
-      width: 90%;
+      width: 80%;
       display: flex;
       overflow: hidden;
       white-space: nowrap;
       touch-action: cross-slide-x;
       user-select: none;
-      margin-top: 50px;
+      margin-top: 30px;
       margin-right: 20px;
       margin-left: 50px;
       position: relative;
@@ -236,7 +242,7 @@ if (!$koneksi) {
       background-color: #02406d;
       color: white;
       margin-left: 50px;
-      margin-top: 50px;
+      margin-top: 45px;
       height: 50px;
       width: fit-content;
       border-radius: 10px;
@@ -283,112 +289,16 @@ if (!$koneksi) {
       }
     }
 
-    @media (max-width: 900px) {
-      .con-type {
-        width: 85%;
-        display: flex;
-        overflow: hidden;
-        white-space: nowrap;
-        touch-action: pan-y;
-        user-select: none;
-        margin-top: 50px;
-        margin-right: 20px;
-        margin-left: 50px;
-        position: relative;
-      }
-
-      .con-type button {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: none;
-        background: none;
-        cursor: pointer;
-      }
-
-      .con-type img {
-        max-width: 100%;
-        height: auto;
-        /* Atur ukuran margin sesuai preferensi Anda */
-      }
-
-      button.semua {
-        width: 60px;
-        height: 60px;
-        margin-top: 20px;
-        margin-left: 0px;
-        margin-right: 15px;
-        border: 1px solid #02406d;
-        border-radius: 10px;
-        background-color: white;
-        color: #02406d;
-        font-size: 25px;
-        font-weight: regular;
-        animation: slideRight 2s ease-in-out;
-      }
-
-      .all img {
-        width: 60px;
-        height: 60px;
-        border: 1px solid white;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        transition: scale 1s;
-        animation: slideRight 2s ease-in-out;
-      }
-
-      .all img:hover {
-        scale: 105%;
-      }
-
-      .semua-act {
-        display: flex;
-        text-align: justify;
-        justify-content: flex-start;
-        background-color: #02406d;
-        color: white;
-        margin-left: 50px;
-        height: 50px;
-        width: fit-content;
-        border-radius: 10px;
-      }
-
-      .con-main {
-        margin-left: 10px;
-      }
-
-      .semua-act {
-        margin-left: 35px;
-      }
-
-      .footer {
-        margin-left: -100px;
-      }
-
-      #swipe-btn {
-        position: absolute;
-        right: 0;
-        margin-right: 20px;
-        margin-top: 30px;
-        font-size: 12px;
-        animation: slideRight 2s ease-in-out;
-        font-weight: lighter;
-        color: #02406d;
-      }
-
-      .footer {
-        margin-left: -100px;
-      }
-
-      .semua-act .all-activity {
-        padding: 10px;
-      }
-
-      .semua-act .all-activity1 {
-        padding: 10px;
-        margin-left: -10px;
-        color: #A1FF9F;
-      }
+    .footer {
+      height: 300px;
+      width: 88.5rem;
+      margin-left: 0px;
+      margin-top: 620px;
+      background-color: #02406d;
+      font-family: "Kanit", sans-serif;
+      color: white;
+      padding: 20px;
+      display: flex;
     }
   </style>
 </head>
@@ -410,7 +320,7 @@ if (!$koneksi) {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto my-auto">
           <li class="nav-item">
-            <a class="nav-link" href="beranda.php">Beranda</a>
+            <a class="nav-link" href="index.php">Beranda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="">Aktivitas</a>
@@ -428,7 +338,7 @@ if (!$koneksi) {
           if (isset($_SESSION['email'])) {
             // User is logged in, show the "Panel Pengelola" button
             echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -436,10 +346,10 @@ if (!$koneksi) {
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
                   </li>';
           }
           ?>
@@ -456,11 +366,13 @@ if (!$koneksi) {
   </div>
 
   <div class="con-main">
-    <div class="title_activity">Aktivitas Komunitas
-    </div>
-    <div class="sub_title_activity">Berbagai macam akitivitas olahraga yang sedang berlangsung dan
-      yang telah usai dilaksanakan, disajikan sesuai dengan
-      kategori olahraga yang anda minati
+    <div id="title-con">
+      <div class="title_activity">Aktivitas Komunitas
+      </div>
+      <div class="sub_title_activity">Berbagai macam akitivitas olahraga yang sedang berlangsung dan
+        yang telah usai dilaksanakan, disajikan sesuai dengan
+        kategori olahraga yang anda minati
+      </div>
     </div>
 
     <!-- Include jQuery library (you can download and host it locally if needed) -->
@@ -483,7 +395,7 @@ if (!$koneksi) {
             <button class="all" type="submit" name="sport" value="<?php echo $sportName; ?>"
               data-sport-name="<?php echo $sportName; ?>">
               <!-- You may want to use a more specific image for each sport -->
-              <img src="/ArenaFinder/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
+              <img src="/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
               <span>
                 <?php echo $sportName; ?>
               </span>
@@ -494,6 +406,37 @@ if (!$koneksi) {
         </div>
       </form>
     </div>
+
+    <script>
+      const container = document.querySelector(".con-type");
+      let isDragging = false;
+      let startX, currentX, scrollLeft;
+
+      container.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+        container.style.scrollBehavior = "auto";
+      });
+
+      container.addEventListener("mouseup", () => {
+        isDragging = false;
+        container.style.scrollBehavior = "smooth";
+      });
+
+      container.addEventListener("mouseleave", () => {
+        isDragging = false;
+        container.style.scrollBehavior = "smooth";
+      });
+
+      container.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.pageX - container.offsetLeft;
+        const scrollX = currentX - startX;
+        container.scrollLeft = scrollLeft - scrollX;
+      });
+    </script>
 
     <?php
     $selectedSport = 'Semua';
@@ -507,7 +450,7 @@ if (!$koneksi) {
     // Display the selected sport in the label
     echo '<div id="con-3">';
     echo '<div class="semua-act">';
-   
+
 
     // Adjust the label based on the selected sport
     if ($selectedSport == 'Semua') {
@@ -515,7 +458,7 @@ if (!$koneksi) {
       echo '<div class="all-activity1">Aktivitas</div>';
     } else {
       echo '<div class="all-activity">Aktivitas</div>';
-      echo '<div class="all-activity1">'.$selectedSport.'</div>';
+      echo '<div class="all-activity1">' . $selectedSport . '</div>';
     }
 
     echo '</div>';
@@ -539,8 +482,6 @@ if (!$koneksi) {
     $q3 = mysqli_query($koneksi, $sql3);
     $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
     
-    echo '<div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
-
     while ($row = mysqli_fetch_array($q3)) {
       // Membuka baris baru setiap kali 4 kartu telah ditampilkan
       if ($count % 4 == 0) {
@@ -552,7 +493,7 @@ if (!$koneksi) {
       echo '<div class="card-body">';
 
       $namaGambar = $row['photo'];
-      $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+      $gambarURL = "public/img/venue/" . $namaGambar;
 
       echo '<img src="' . $gambarURL . '" alt="Gambar">';
       echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
@@ -604,33 +545,32 @@ if (!$koneksi) {
   </div>
 
 
-  <div class="container">
-    <div class="footer">
-      <h1 style="font-size: 20px; color: white;">Arena</h1>
-      <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-      <div class="hierarki">
-        <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
-          <a href="" style="margin-top: 10px;">Beranda</a>
-          <a href="">Aktivitas</a>
-          <a href="">Referensi</a>
-          <a href="">Info Mitra</a>
-        </p>
-        <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
-          <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-          <a href="">Siapa target penggunanya?</a>
-          <a href="">Bagaimana sistem ini bekerja?</a>
-          <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-          <a href="">Masuk aplikasi??</a>
-          <a href="">Daftar aplikasi??</a>
-        </p>
-        <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
-          <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
-        </p>
-      </div>
-      <!-- Include Bootstrap JS and jQuery -->
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <div class="footer">
+    <h1 style="font-size: 20px; color: white;">Arena</h1>
+    <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+    <div class="hierarki">
+      <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
+        <a href="" style="margin-top: 10px;">Beranda</a>
+        <a href="">Aktivitas</a>
+        <a href="">Referensi</a>
+        <a href="">Info Mitra</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
+        <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+        <a href="">Siapa target penggunanya?</a>
+        <a href="">Bagaimana sistem ini bekerja?</a>
+        <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
+        <a href="">Masuk aplikasi??</a>
+        <a href="">Daftar aplikasi??</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
+        <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
+      </p>
+    </div>
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

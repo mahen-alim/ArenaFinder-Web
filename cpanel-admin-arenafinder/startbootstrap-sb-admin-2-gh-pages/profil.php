@@ -1,15 +1,15 @@
 <?php
 session_start();
+include('database.php'); // Include your database connection code here
 
 if (!isset($_SESSION['email'])) {
-    // Redirect user to the login page if they are not logged in
     header("Location: login.php");
     exit();
 }
 
-include('database.php'); // Include your database connection code here
-
 $email = $_SESSION['email'];
+
+$userName = $_SESSION['username'];
 
 $sql = mysqli_query($conn, "SELECT username, level FROM users WHERE email = '$email'");
 if ($sql) {
@@ -42,6 +42,7 @@ if ($sql) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="../img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -58,11 +59,15 @@ if ($sql) {
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #02406d;">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-clipboard"></i>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="profil.php">
+                <div class="sidebar-brand-icon">
+                    <i class="fa-solid fa-circle-user mx-3 ml-auto"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">ArenaFinder <sup>Admin</sup></div>
+                <div class="sidebar-brand-text" style="text-transform: none; font-weight: 500; font-size: 20px">Arena
+                </div>
+                <div class="sidebar-brand-text"
+                    style="color: #a1ff9f; text-transform: none; font-weight: 500; font-size: 20px">Finder <span
+                        style="color: white;">|</span></div>
             </a>
 
             <!-- Divider -->
@@ -77,7 +82,7 @@ if ($sql) {
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
+                <a class="nav-link" href="../index.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>
@@ -119,16 +124,40 @@ if ($sql) {
                 Notifikasi
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <!-- Nav Item - Charts -->
+            <!-- Assuming this is your navigation link HTML -->
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter">New</span>
+                        <span class="badge badge-danger badge-counter"
+                            style="background-color: #a1ff9f; color: #02406d; font-size: 15px;"
+                            id="pesanan-link"></span>
                     </i>
-                    <span>Pesanan</span></a>
+                    <span>Pesanan
+                        <?php $_SESSION['id_venue'] ?>
+                    </span>
+                </a>
             </li>
+
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <!-- Your Badge Script with AJAX -->
+            <script>
+                setInterval(function () {
+                    function loadDoc() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                console.log("Response from check_data.php:", this.responseText); // Log the response
+                                document.getElementById("pesanan-link").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET", "check_badge.php", true);
+                        xhttp.send();
+                    }
+                    loadDoc();
+                }, 1000);
+            </script>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -164,18 +193,19 @@ if ($sql) {
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    Halo, <?php echo $email ?>
+                                    Halo,
+                                    <?php echo $userName ?>
                                 </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item active" href="profil.php">
+                                <a class="dropdown-item" href="profil.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -205,9 +235,11 @@ if ($sql) {
                             <div class="col-xxl-8 col-12">
                                 <!-- Approach -->
                                 <div class="card shadow mb-4">
-                                    <div class="card-header py-3 d-flex">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 mt-2" style="color: #02406d;"></i>
-                                        <h6 class="m-0 font-weight-bold" style="color: #02406d;">Profil Akun
+                                    <div class="card-header py-3 d-flex"
+                                        style="background-color: #02406d; color: white;">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 mt-2"></i>
+                                        <h6 class="m-0 font-weight-bold">Profil <span
+                                                style="color: #a1ff9f;">Akun</span>
                                         </h6>
                                     </div>
                                     <div class="card-body">
@@ -221,11 +253,11 @@ if ($sql) {
                                                 <?php echo $level; ?>
                                             </span></p>
 
-                                        <a href="login.php">
+                                        <a href="logout.php">
                                             <button class="btn-danger"
                                                 style="border: none; border-radius: 5px; width: 70px; height: auto;">Logout</button></a>
                                     </div>
-                
+
                                 </div>
 
                             </div>

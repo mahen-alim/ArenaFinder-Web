@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" href="../img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -64,7 +65,7 @@
                                         <h1 class="h2 text-gray-900 mb-2 ">Lupa Sandi?</h1>
                                         <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kami
                                             akan kirimkan sebuah link ke email anda untuk merubah sandi!</p>
-                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
+                                        <img src="/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 
@@ -143,7 +144,7 @@ if (isset($_POST["recover"])) {
             $token = bin2hex(random_bytes(50));
 
             // atur waktu kedaluwarsa token selama 15 menit
-            $expirationTime = time() + (15 * 60); 
+            $expirationTime = time() + (15 * 60);
 
             // menggabungkan token dan waktu kedaluwarsa 
             $tokenWithExpiration = $token . '.' . $expirationTime;
@@ -176,7 +177,7 @@ if (isset($_POST["recover"])) {
             $mail->Body = "<b>Kepada Admin</b>
                         <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
                         <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
-                        https://arenafinder.tifnganjuk.com/reset_psw.php?token=$tokenWithExpiration
+                        https://arenafinder.tifnganjuk.com/boots/reset_psw.php?token=$tokenWithExpiration
                         <br><br>
                         <p>Berikan pesan anda lewat email ini,</p>
                         <b>arenafinder.app@gmail.com</b>";

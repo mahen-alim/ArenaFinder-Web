@@ -27,6 +27,7 @@ include('database.php');
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="icon" href="../img_asset/login.png">
     <!------ Include the above in your HEAD tag ---------->
     <style>
         body {
@@ -88,70 +89,47 @@ include('database.php');
                                             // Verifikasi jika token belum kedaluwarsa
                                             if ($expirationTime >= time()) {
                                                 // Jika token benar, proses pergantian sandi
-                                        
                                                 if (isset($_POST["reset"])) {
                                                     include('database.php');
                                                     $psw = $_POST["password"];
 
                                                     // Verifikasi token lagi (untuk menghindari pemalsuan)
                                                     if ($_SESSION['token'] === $tokenWithExpiration) {
-                                                        $Email = $_SESSION['email'];
+                                                        $email = $_SESSION['email'];
 
                                                         // Periksa apakah sandi kosong
                                                         if (empty($psw)) {
-                                                            ?>
-                                                            <script>
-                                                                alert("Password tidak boleh kosong. Silahkan masukkan sandi lagi.");
-                                                            </script>
-                                                            <?php
+                                                            displayAlert("Password tidak boleh kosong. Silahkan masukkan sandi lagi.");
                                                         } elseif (!isValidPassword($psw)) {
-                                                            ?>
-                                                            <script>
-                                                                alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus");
-                                                            </script>
-                                                            <?php
+                                                            displayAlert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus");
                                                         } else {
                                                             // Ambil sandi yang ada dari database
-                                                            $existingPasswordQuery = mysqli_query($conn, "SELECT password FROM users WHERE email='$Email'");
+                                                            $existingPasswordQuery = mysqli_query($conn, "SELECT password FROM users WHERE email='$email'");
                                                             $existingPasswordData = mysqli_fetch_assoc($existingPasswordQuery);
                                                             $existingPassword = $existingPasswordData['password'];
 
                                                             // Periksa apakah sandi baru sama dengan yang sudah ada
                                                             if (password_verify($psw, $existingPassword)) {
-                                                                ?>
-                                                                <script>
-                                                                    alert("Password baru harus berbeda dengan password yang sudah ada sebelumnya.");
-                                                                </script>
-                                                                <?php
+                                                                displayAlert("Password baru harus berbeda dengan password yang sudah ada sebelumnya.");
                                                             } else {
                                                                 // Perbarui sandi jika berbeda
                                                                 $hash = password_hash($psw, PASSWORD_DEFAULT);
-                                                                mysqli_query($conn, "UPDATE users SET password='$hash' WHERE email='$Email'");
-                                                                ?>
-                                                                <script>
-                                                                    window.location.replace("login.php");
-                                                                    alert("Selamat, sandi akun anda berhasil diganti");
-                                                                </script>
-                                                                <?php
+                                                                mysqli_query($conn, "UPDATE users SET password='$hash' WHERE email='$email'");
+                                                                displayAlert("Selamat, sandi akun anda berhasil diganti", "login.php");
                                                             }
                                                         }
                                                     } else {
                                                         // Verifikasi token gagal
-                                                        echo "Verifikasi token gagal.";
+                                                        displayAlert("Verifikasi token gagal.");
                                                     }
                                                 }
 
                                             } else {
                                                 // Tautan sudah kedaluwarsa, redirect ke halaman pemulihan sandi
-                                                ?>
-                                                <script>
-                                                    window.location.replace("forgot-password.php");
-                                                </script>
-                                                <?php
-                                                $message = "Link pergantian sandi telah kadaluwarsa, coba kirim ulang.";
+                                                displayAlert("Link pergantian sandi telah kadaluwarsa, coba kirim ulang.", "forgot-password.php");
                                             }
                                         } else {
-                                            echo "Invalid request.";
+                                            displayAlert("Invalid request.");
                                             // Anda mungkin ingin melakukan redirect atau menampilkan pesan yang sesuai
                                         }
 
@@ -162,14 +140,21 @@ include('database.php');
                                             $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/";
                                             return preg_match($pattern, $password);
                                         }
-                                        ?>
-                                        <?php if (isset($message)): ?>
-                                            <div class="message">
-                                                <?php echo $message; ?>
-                                            </div>
-                                        <?php endif; ?>
 
-                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
+                                        // Fungsi untuk menampilkan pesan alert
+                                        function displayAlert($message, $redirect = "")
+                                        {
+                                            echo "<script>alert('$message');";
+                                            if ($redirect) {
+                                                echo "window.location.replace('$redirect');";
+                                            }
+                                            echo "</script>";
+                                            exit();
+                                        }
+                                        ?>
+
+
+                                        <img src="/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 

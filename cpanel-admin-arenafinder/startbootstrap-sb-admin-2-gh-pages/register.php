@@ -13,71 +13,21 @@ if (isset($_POST["register"])) {
   $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email' AND username = '$username'");
   $rowCount = mysqli_num_rows($check_query);
 
-  // Cek apakah semua input form diisi
+  // Cek apakah salah satu atau semua input form tidak diisi
   if (empty($username) && empty($email) && empty($password)) {
-    ?>
-    <script>
-      alert("Harap isi semua kolom pada formulir pendaftaran.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Harap isi semua kolom pada formulir pendaftaran.";
   } elseif (empty($username) && empty($email)) {
-    ?>
-    <script>
-      alert("Mohon isi nama pengguna dan email.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi nama pengguna dan email.";
   } elseif (empty($username) && empty($password)) {
-    ?>
-    <script>
-      alert("Mohon isi nama pengguna dan sandi.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi nama pengguna dan sandi.";
   } elseif (empty($email) && empty($password)) {
-    ?>
-    <script>
-      alert("Mohon isi email dan sandi.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
-  } elseif (empty($username) && empty($password)) {
-    ?>
-    <script>
-      alert("Mohon isi nama pengguna dan sandi.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi email dan sandi.";
   } elseif (empty($username)) {
-    ?>
-    <script>
-      alert("Mohon isi nama pengguna.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi nama pengguna.";
   } elseif (empty($email)) {
-    ?>
-    <script>
-      alert("Mohon isi email.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi email.";
   } elseif (empty($password)) {
-    ?>
-    <script>
-      alert("Mohon isi sandi.");
-      window.location.replace('register.php');
-    </script>
-    <?php
-    exit();
+    $message = "Mohon isi sandi.";
   } else {
     // Cek validasi email
     $rowCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'"));
@@ -162,6 +112,17 @@ if (isset($_POST["register"])) {
   }
 }
 
+// Jika ada pesan kesalahan, tampilkan alert dan redirect
+if (isset($message)) {
+  ?>
+  <script>
+    alert("<?php echo $message; ?>");
+    window.location.replace('register.php');
+  </script>
+  <?php
+  exit();
+}
+
 function usernameExists($conn, $username)
 {
   $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
@@ -198,6 +159,7 @@ function isValidPassword($password)
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link rel="icon" href="../img_asset/login.png">
   <style>
     body {
       font-family: "Kanit", sans-serif;
@@ -242,8 +204,7 @@ function isValidPassword($password)
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Daftar Akun</h1>
-                    <img src="/ArenaFinder/img_asset/login.png" alt=""
-                      style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
                   <form class="user" method="POST" action="#" autocomplete="off" name="register">
                     <div class="form-group">

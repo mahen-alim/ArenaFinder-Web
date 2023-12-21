@@ -66,20 +66,19 @@ EOL;
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="icon" href="Favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="icon" href="../img_asset/login.png">
     <title>Verifikasi Akun</title>
     <style>
+        body {
+            font-family: "Kanit", sans-serif;
+        }
+
         #btn-login {
             background-color: #e7f5ff;
             color: #02406d;
@@ -113,7 +112,7 @@ EOL;
                                         <div class="verification-message">
                                             <?php echo isset($verificationMessage) ? $verificationMessage : ''; ?>
                                         </div>
-                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
+                                        <img src="/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 

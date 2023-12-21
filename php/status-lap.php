@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinder";
+$user = "tifz1761_root";
+$pass = "tifnganjuk321";
+$db = "tifz1761_arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -18,7 +18,7 @@ if (!$koneksi) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aktivitas</title>
-    <link rel="stylesheet" href="/ArenaFinder/css/beranda.css" />
+    <link rel="stylesheet" href="/css/beranda.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -27,7 +27,7 @@ if (!$koneksi) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-
+    <link rel="icon" href="img_asset/login.png">
     <style>
         body {
             margin-top: 150px;
@@ -126,7 +126,7 @@ if (!$koneksi) {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -80px;
+            margin-top: -115px;
         }
 
         .box .rectangle {
@@ -141,7 +141,9 @@ if (!$koneksi) {
             border-radius: 50px;
             margin-top: 100px;
             text-align: center;
+            box-shadow: 0px 5px 10px #A1FF9F;
         }
+
 
         .label {
             width: 588px;
@@ -178,6 +180,7 @@ if (!$koneksi) {
             align-items: center;
             justify-content: center;
             margin-top: 100px;
+            margin-left: 80px;
         }
 
         /* Style for the form group (containing select and date input) */
@@ -236,7 +239,7 @@ if (!$koneksi) {
             padding: 10px;
             border-radius: 5px;
             margin-top: 50px;
-            margin-left: 50px;
+            margin-left: 70px;
             width: 100%;
             /* Adjust the width as needed */
         }
@@ -266,7 +269,7 @@ if (!$koneksi) {
         }
 
         .cards-container {
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
         .card-title {
@@ -296,13 +299,31 @@ if (!$koneksi) {
         }
 
         #status-card {
+            width: 80%;
+            height: auto;
             background-color: #02406D;
             color: white;
             padding: 10px;
             margin-top: auto;
-            margin-bottom: -15.5px;
-            border-top-right-radius: 20px;
-            border-top-left-radius: 20px;
+            margin-bottom: -18px;
+            margin-left: 17px;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+
+        #card-main {
+            width: 200px;
+            height: auto;
+            margin-top: 20px;
+            display: flex;
+            transition: transform 0.2s;
+            border: none;
+            background-color: white;
+            box-shadow: 0 2px 4px #02406D;
+        }
+
+        #card-main:hover {
+            transform: translateY(-5px);
         }
 
         .card {
@@ -324,6 +345,18 @@ if (!$koneksi) {
             color: #ccc;
             /* Dark gray text color */
             /* Add any other styles you want for gray cards */
+        }
+
+        .footer {
+            height: 300px;
+            width: 88.5rem;
+            margin-left: 0px;
+            margin-top: 100px;
+            background-color: #02406d;
+            font-family: "Kanit", sans-serif;
+            color: white;
+            padding: 20px;
+            display: flex;
         }
 
         @media (max-width: 900px) {
@@ -350,10 +383,6 @@ if (!$koneksi) {
                 margin-left: 180px;
                 padding-top: 5px;
             }
-
-            .footer {
-                margin-left: -100px;
-            }
         }
     </style>
 </head>
@@ -375,7 +404,7 @@ if (!$koneksi) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto my-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="beranda.php">Beranda</a>
+                        <a class="nav-link" href="index.php">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="aktivitas.php">Aktivitas</a>
@@ -393,7 +422,7 @@ if (!$koneksi) {
                     if (isset($_SESSION['email'])) {
                         // User is logged in, show the "Panel Pengelola" button
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="/boots/index.php" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -401,10 +430,10 @@ if (!$koneksi) {
                     } else {
                         // User is not logged in, show the "Login" and "Register" buttons
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="/boots/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="/boots/register.php" style="width: 100px;">Daftar</a>
                   </li>';
                     }
                     ?>
@@ -428,7 +457,6 @@ if (!$koneksi) {
         <form method="post" action="#">
             <div class="form-group">
                 <select id="inputOpsi" class="form-control" name="jenis_lapangan">
-                    <option value="">Jenis Lapangan</option>
                     <option value="Futsal">Futsal</option>
                     <option value="Badminton">Badminton</option>
                     <option value="Voli">Voli</option>
@@ -436,11 +464,19 @@ if (!$koneksi) {
                     <option value="Tenis Lapangan">Tenis Lapangan</option>
                 </select>
                 <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail"
-                    name="tanggal">
+                    name="tanggal" required>
                 <button type="submit" id="btn-find">Temukan</button>
             </div>
-
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr("#staticEmail", {
+                    enableTime: false, // Enable time selection
+                    dateFormat: "Y-m-d", // Specify the date format
+                    defaultDate: "today",
+                });
+            });
+        </script>
     </div>
 
     <div class="label" id="label2">
@@ -463,11 +499,14 @@ if (!$koneksi) {
             $jenis_lapangan = $_POST['jenis_lapangan'];
             $tanggal = $_POST['tanggal'];
 
-            // Buat query untuk mencari jadwal sesuai dengan jenis lapangan dan tanggal
-            $query = "SELECT vp.*, v.sport, vb.payment_status
+            $query = "SELECT vp.*, v.sport, 
+            CASE 
+                WHEN vb.date_confirmed IS NOT NULL AND vb.date_confirmed <> '$tanggal' THEN 'Sudah Dipesan'
+                ELSE 'Belum Dipesan'
+            END AS payment_status
             FROM venue_price vp
             JOIN venues v ON vp.id_venue = v.id_venue
-            LEFT JOIN venue_booking vb ON vp.id_venue = vb.payment_status
+            LEFT JOIN venue_booking vb ON vp.id_price = vb.payment_status
             WHERE v.sport='$jenis_lapangan' AND vp.date='$tanggal'";
             $result = mysqli_query($koneksi, $query);
             $count = 0;
@@ -476,14 +515,12 @@ if (!$koneksi) {
                 // Tampilkan jadwal jika ditemukan
                 while ($row = mysqli_fetch_assoc($result)) {
                     // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-                    if ($count % 4 == 0) {
-                        echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+                    if ($count % 5 == 0) {
+                        echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">';
                     }
-                    // // Determine the card class based on the status
-                    // $cardClass = ($row['status_pemesanan'] == 'Sudah Dipesan') ? 'card shadow gray-card' : 'card shadow';
-        
+
                     // Card untuk data
-                    echo '<div class="card">';
+                    echo '<div class="card" id="card-main">';
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
                     echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
@@ -503,19 +540,26 @@ if (!$koneksi) {
             }
         } else {
             // If the form is not filled, fetch and display all records
-            $queryAll = "SELECT * FROM venue_price";
+            $queryAll = "SELECT vp.*, v.sport, 
+            CASE 
+                WHEN vb.date_confirmed IS NOT NULL AND vb.date_confirmed <> '$tanggal' THEN 'Sudah Dipesan'
+                ELSE 'Belum Dipesan'
+            END AS payment_status
+            FROM venue_price vp
+            JOIN venues v ON vp.id_venue = v.id_venue
+            LEFT JOIN venue_booking vb ON vp.id_price = vb.payment_status";
             $resultAll = mysqli_query($koneksi, $queryAll);
             $count = 0;
 
             if (mysqli_num_rows($resultAll) > 0) {
                 while ($row = mysqli_fetch_assoc($resultAll)) {
                     // Membuka baris baru setiap kali 4 kartu telah ditampilkan
-                    if ($count % 4 == 0) {
-                        echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">';
+                    if ($count % 5 == 0) {
+                        echo '</div><div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: start; margin-left: 40px; gap: 20px;">';
                     }
 
-                    // Display all records
-                    echo '<div class="card">';
+                    // Card untuk data
+                    echo '<div class="card" id="card-main">';
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
                     echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
@@ -524,7 +568,7 @@ if (!$koneksi) {
                     echo '<span class="card-text" id="time-card">' . $row['end_hour'] . '</span>';
                     echo '</div>';
                     echo '<p class="card-text" id="price-card">Rp. ' . $row['price'] . ' /Jam</p>';
-                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">Sudah Dipesan</p>';
+                    echo '<p class="card-text" id="status-card" style="margin-top: auto;">' . $row['payment_status'] . '</p>';
 
                     echo '</div></div>';
 
@@ -538,47 +582,42 @@ if (!$koneksi) {
         ?>
     </div>
 
-    <div class="container">
-        <div class="footer">
-            <h1 style="font-size: 20px; color: white;">Arena</h1>
-            <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-            <div class="hierarki">
-                <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
-                    <a href="" style="margin-top: 10px;">Beranda</a>
-                    <a href="">Aktivitas</a>
-                    <a href="">Referensi</a>
-                    <a href="">Info Mitra</a>
-                </p>
-                <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
-                    <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-                    <a href="">Siapa target penggunanya?</a>
-                    <a href="">Bagaimana sistem ini bekerja?</a>
-                    <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-                    <a href="">Masuk aplikasi??</a>
-                    <a href="">Daftar aplikasi??</a>
-                </p>
-                <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
-                    <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
-                </p>
-            </div>
+    <div class="footer">
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+        <div class="hierarki">
+            <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
+                <a href="" style="margin-top: 10px;">Beranda</a>
+                <a href="">Aktivitas</a>
+                <a href="">Referensi</a>
+                <a href="">Info Mitra</a>
+            </p>
+            <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
+                <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+                <a href="">Siapa target penggunanya?</a>
+                <a href="">Bagaimana sistem ini bekerja?</a>
+                <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
+                <a href="">Masuk aplikasi??</a>
+                <a href="">Daftar aplikasi??</a>
+            </p>
+            <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
+                <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
+            </p>
+        </div>
+    </div>
 
-            <!-- flatpickr -->
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-            <script>
-                flatpickr("input[type=datetime-local]", {});
-            </script>
-            <!-- Include Bootstrap JS and jQuery -->
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    flatpickr("#staticEmail", {
-                        enableTime: false, // Enable time selection
-                        dateFormat: "Y-m-d", // Specify the date format
-                    });
-                });
-            </script>
+
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("input[type=datetime-local]", {});
+    </script>
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>

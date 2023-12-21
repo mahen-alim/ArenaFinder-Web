@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinder";
+$user = "tifz1761_root";
+$pass = "tifnganjuk321";
+$db = "tifz1761_arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -18,7 +18,7 @@ if (!$koneksi) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Referensi</title>
-  <link rel="stylesheet" href="/ArenaFinder/css/referensi.css" />
+  <link rel="stylesheet" href="css/referensi.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -26,6 +26,7 @@ if (!$koneksi) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="img_asset/login.png">
   <style>
     .title_activity {
       margin-top: 0px;
@@ -113,6 +114,7 @@ if (!$koneksi) {
     }
 
     .card-container {
+      margin-top: -52px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -214,7 +216,7 @@ if (!$koneksi) {
       white-space: nowrap;
       touch-action: cross-slide-x;
       user-select: none;
-      margin-top: 50px;
+      margin-top: 30px;
       margin-right: 20px;
       margin-left: 50px;
       position: relative;
@@ -298,6 +300,10 @@ if (!$koneksi) {
       margin-left: 30px;
     }
 
+    #con-3 {
+      margin-top: -54px;
+    }
+
     #swipe-btn {
       position: absolute;
       right: 0;
@@ -307,6 +313,12 @@ if (!$koneksi) {
       animation: slideRight 2s ease-in-out;
       font-weight: lighter;
       color: #02406d;
+    }
+
+    #title-con {
+      margin-top: -5px;
+      width: 88.5rem;
+      margin-left: 10px;
     }
 
     @keyframes slideRight {
@@ -333,6 +345,18 @@ if (!$koneksi) {
     section.show {
       display: block;
       /* Tampilkan section yang memiliki kelas 'show' */
+    }
+
+    .footer {
+      height: 300px;
+      width: 100%;
+      margin-left: 0px;
+      margin-top: 250px;
+      background-color: #02406d;
+      font-family: "Kanit", sans-serif;
+      color: white;
+      padding: 20px;
+      display: flex;
     }
 
 
@@ -452,7 +476,7 @@ if (!$koneksi) {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto my-auto">
           <li class="nav-item">
-            <a class="nav-link" href="beranda.php">Beranda</a>
+            <a class="nav-link" href="index.php">Beranda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="aktivitas.php">Aktivitas</a>
@@ -470,7 +494,7 @@ if (!$koneksi) {
           if (isset($_SESSION['email'])) {
             // User is logged in, show the "Panel Pengelola" button
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                <a class="nav-link" id="nav-down-item1" href="boots/index.php" style="width: 200px;">
                   <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                   Panel Pengelola
                 </a>
@@ -478,10 +502,10 @@ if (!$koneksi) {
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
+                <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
               </li>
               <li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
+                <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
               </li>';
           }
           ?>
@@ -498,34 +522,44 @@ if (!$koneksi) {
   </div>
 
   <div class="con-main">
-    <div class="title_activity">Referensi Tempat Olahraga</div>
-    <div class="sub_title_activity">
-      Berbagai macam lapangan olahraga yang ada di Kabupaten Nganjuk baik
-      indoor maupun outdoor
+    <div id="title-con">
+      <div class="title_activity">Referensi Tempat Olahraga</div>
+      <div class="sub_title_activity">
+        Berbagai macam lapangan olahraga yang ada di Kabupaten Nganjuk baik
+        indoor maupun outdoor
+      </div>
     </div>
 
+    <!-- Include jQuery library (you can download and host it locally if needed) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <div class="con-type">
-      <button class="semua" onclick="showCards('All')">All</button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/futsal.jpg" alt="" />
-        <span>Bola Futsal</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt="" />
-        <span>Badminton</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/voli.jpg" alt="" />
-        <span>Bola Voli</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/basket.jpg" alt="" />
-        <span>Bola Basket</span>
-      </button>
-      <button class="all" type="submit">
-        <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt="" />
-        <span>Sepak Bola</span>
-      </button>
+      <form method="post" action="" id="sportForm">
+        <div style="display: flex;">
+          <button class="semua" type="submit" name="all" value="Semua">All</button>
+          <?php
+          // Query to get unique sports from the venues table
+          $sportsQuery = mysqli_query($koneksi, "SELECT DISTINCT sport FROM venues");
+          $sports = mysqli_fetch_all($sportsQuery, MYSQLI_ASSOC);
+
+          // Loop through each sport and generate a button
+          foreach ($sports as $sport) {
+            $sportName = $sport['sport'];
+            ?>
+
+            <button class="all" type="submit" name="sport" value="<?php echo $sportName; ?>"
+              data-sport-name="<?php echo $sportName; ?>">
+              <!-- You may want to use a more specific image for each sport -->
+              <img src="/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
+              <span>
+                <?php echo $sportName; ?>
+              </span>
+            </button>
+            <?php
+          }
+          ?>
+        </div>
+      </form>
     </div>
 
     <script>
@@ -567,27 +601,30 @@ if (!$koneksi) {
 
       <div class="fourth-sep">
         <div class="tipe-lap">
-          <button id="indoorButton" onclick="showCards('Indoor')">Indoor<img src="/ArenaFinder/img_asset/bulu tangkis.jpg"
+          <button id="indoorButton" onclick="showCards('Indoor')">Indoor<img src="img_asset/bulu tangkis.jpg"
               alt="" /></button>
-          <button id="outdoorButton" onclick="showCards('Outdoor')">Outdoor<img src="/ArenaFinder/img_asset/outdoor.jpg"
+          <button id="outdoorButton" onclick="showCards('Outdoor')">Outdoor<img src="img_asset/outdoor.jpg"
               alt="" /></button>
 
           <?php
           // Ambil level pengguna dari sesi
-          $userEmail = $_SESSION['email'];
+          if (isset($_SESSION['email']) && $_SESSION['email'] != null) {
+            $userEmail = $_SESSION['email'];
 
-          // Tampilkan tombol "Tambah Referensi" hanya jika level pengguna adalah "superadmin"
-          if ($userEmail == 'arenafinder.app@gmail.com') {
-            echo '<a id="ref-btn" href="/ArenaFinder/php/add_referensi.php/">Tambah Referensi +</a>';
-          } else {
-            echo '<a id="ref-btn" href="/ArenaFinder/php/add_referensi.php/" style="display: none;">Tambah Referensi +</a>';
-          }
+            // Tampilkan tombol "Tambah Referensi" hanya jika level pengguna adalah "superadmin"
+            if ($userEmail == 'arenafinder.app@gmail.com') {
+              echo '<a id="ref-btn" href="add_referensi.php">Tambah Referensi +</a>';
+            } else {
+              echo '<a id="ref-btn" href="add_referensi.php" style="display: none;">Tambah Referensi +</a>';
+            }
 
-          // Pesan peringatan saat logout
-          if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
-            echo '<p style="color: red;">Anda telah berhasil logout. Terima kasih!</p>';
-          }
+            // Pesan peringatan saat logout
+            if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+              echo '<p style="color: red;">Anda telah berhasil logout. Terima kasih!</p>';
+            }
+          } // No else block here, which means no error message will be displayed for non-logged in users
           ?>
+
         </div>
       </div>
     </div>
@@ -597,10 +634,20 @@ if (!$koneksi) {
     <div class="card-container"
       style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 50px;">
       <?php
-      $sql3 = "SELECT * FROM venues ORDER BY id_venue DESC";
-      $q3 = mysqli_query($koneksi, $sql3);
-      $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-      
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['sport'])) {
+          $selectedSport = $_POST['sport'];
+          $sqlFilter = "SELECT * FROM venues WHERE sport = '$selectedSport' ORDER BY id_venue DESC";
+        } else {
+          $sqlFilter = "SELECT * FROM venues ORDER BY id_venue DESC";
+        }
+      } else {
+        $sqlFilter = "SELECT * FROM venues ORDER BY id_venue DESC";
+      }
+
+      $q3 = mysqli_query($koneksi, $sqlFilter);
+      $count = 0;
+
       while ($row = mysqli_fetch_array($q3)) {
         // Membuka baris baru setiap kali 4 kartu telah ditampilkan
         if ($count % 4 == 0) {
@@ -612,7 +659,7 @@ if (!$koneksi) {
         echo '<div class="card-body">';
 
         $namaGambar = $row['venue_photo'];
-        $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
+        $gambarURL = "public/img/venue/" . $namaGambar;
 
         echo '<img src="' . $gambarURL . '" alt="Gambar" >';
         echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
@@ -651,7 +698,7 @@ if (!$koneksi) {
           echo '<div class="card-body">';
 
           $namaGambar = $row['venue_photo'];
-          $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
+          $gambarURL = "public/img/venue/" . $namaGambar;
 
           echo '<img src="' . $gambarURL . '" alt="Gambar" >';
           echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
@@ -690,7 +737,7 @@ if (!$koneksi) {
           echo '<div class="card-body">';
 
           $namaGambar = $row['venue_photo'];
-          $gambarURL = "http://localhost/ArenaFinder/public/img/venue/" . $namaGambar;
+          $gambarURL = "public/img/venue/" . $namaGambar;
 
           echo '<img src="' . $gambarURL . '" alt="Gambar" >';
           echo '<h5 class="card-title mt-3" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">' . $row['venue_name'] . '</h5>';
@@ -726,32 +773,30 @@ if (!$koneksi) {
     }
   </script>
 
-  <div class="container">
-    <div class="footer">
-      <h1 style="font-size: 20px; color: white">Arena</h1>
-      <h1 style="font-size: 20px; color: #a1ff9f">Finder</h1>
-      <div class="hierarki">
-        <p style="font-size: 20px; color: white; margin-left: 250px">
-          Hierarki
-          <a href="" style="margin-top: 10px">Beranda</a>
-          <a href="">Aktivitas</a>
-          <a href="">Referensi</a>
-          <a href="">Info Mitra</a>
-        </p>
-        <p style="font-size: 20px; color: white; margin-left: 120px">
-          Bantuan
-          <a href="" style="margin-top: 10px">Apa saja layanan yang disediakan?</a>
-          <a href="">Siapa target penggunanya?</a>
-          <a href="">Bagaimana sistem ini bekerja?</a>
-          <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-          <a href="">Masuk aplikasi??</a>
-          <a href="">Daftar aplikasi??</a>
-        </p>
-        <p style="font-size: 20px; color: white; margin-left: 120px">
-          Narahubung
-          <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
-        </p>
-      </div>
+  <div class="footer">
+    <h1 style="font-size: 20px; color: white">Arena</h1>
+    <h1 style="font-size: 20px; color: #a1ff9f">Finder</h1>
+    <div class="hierarki">
+      <p style="font-size: 20px; color: white; margin-left: 250px">
+        Hierarki
+        <a href="" style="margin-top: 10px">Beranda</a>
+        <a href="">Aktivitas</a>
+        <a href="">Referensi</a>
+        <a href="">Info Mitra</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 120px">
+        Bantuan
+        <a href="" style="margin-top: 10px">Apa saja layanan yang disediakan?</a>
+        <a href="">Siapa target penggunanya?</a>
+        <a href="">Bagaimana sistem ini bekerja?</a>
+        <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
+        <a href="">Masuk aplikasi??</a>
+        <a href="">Daftar aplikasi??</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 120px">
+        Narahubung
+        <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
+      </p>
     </div>
   </div>
 

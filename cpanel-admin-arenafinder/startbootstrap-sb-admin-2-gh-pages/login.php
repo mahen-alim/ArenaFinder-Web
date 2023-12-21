@@ -7,76 +7,93 @@ if (isset($_POST["login"])) {
   $password = $_POST['password'];
   $level = $_POST['level'];
 
-  /// Validation: Check if email and password are not empty
+  // Validation: Check if email and password are not empty
   if (empty($email) && empty($password)) {
     ?>
-    <script>
-      alert("Mohon isi email dan sandi.");
-      window.location.replace('login.php');
-    </script>
-    <?php
-    exit();
+        <script>
+          alert("Mohon isi email dan sandi.");
+          window.location.replace('login.php');
+        </script>
+        <?php
+        exit();
   } elseif (empty($email)) {
     ?>
-    <script>
-      alert("Mohon isi email.");
-      window.location.replace('login.php');
-    </script>
-    <?php
-    exit();
+        <script>
+          alert("Mohon isi email.");
+          window.location.replace('login.php');
+        </script>
+        <?php
+        exit();
   } elseif (empty($password)) {
     ?>
-    <script>
-      alert("Mohon isi sandi.");
-      window.location.replace('login.php');
-    </script>
-    <?php
-    exit();
+        <script>
+          alert("Mohon isi sandi.");
+          window.location.replace('login.php');
+        </script>
+        <?php
+        exit();
   }
 
-  //Ambil data akun di tabel users berdasarkan nilai yang diambil dari inputtan email
-  $sql = mysqli_query($conn, "SELECT * FROM users where email = '$email'");
+  // Fetch user data and venue data based on the email
+  $sql = mysqli_query($conn,
+    "SELECT u.*, 
+      IFNULL(v.id_venue, 0) AS id_venue, 
+      v.venue_name AS nama_venue, 
+      v.sport AS sport
+      FROM users AS u 
+      LEFT JOIN venues AS v 
+      ON u.email = v.email 
+      WHERE u.email = '$email' 
+      LIMIT 1"
+  );
+
   $count = mysqli_num_rows($sql);
 
   if ($count > 0) {
     $fetch = mysqli_fetch_assoc($sql);
     $hashpassword = $fetch["password"];
 
-    // Ambil level pengguna dari database
+    // Get user level and other details
     $userLevel = $fetch["level"];
+    $userName = $fetch["username"];
+    $sportFromDB = $fetch["sport"];
 
-    $_SESSION['level'] = $userLevel; // Setel sesi dengan level pengguna
+    $_SESSION['level'] = $userLevel; // Set session with user level
 
     if ($fetch["is_verified"] == 0) {
       $_SESSION['message'] = "Tolong Verifikasi Akun Email sebelum Login.";
       header("Location: login.php");
       exit();
-    } else if (password_verify($password, $hashpassword)) {
-      $_SESSION['user_id'] = $fetch['id']; // Simpan ID pengguna dalam session
-      $_SESSION['email'] = $email; // Simpan email dalam session
-      $_SESSION['level'] = $level;
+    } elseif (password_verify($password, $hashpassword)) {
+      $_SESSION['email'] = $email; // Save email in session
+      $_SESSION['level'] = $userLevel;
+      $_SESSION['id_venue'] = $fetch['id_venue'];
+      $_SESSION['nama_venue'] = $fetch['nama_venue'];
+      $_SESSION['username'] = $userName;
+      $_SESSION['sport'] = $sportFromDB; // Save sport in session
       header("Location: index.php");
       exit();
     } else {
       ?>
-        <script>
-          alert("<?php echo "Password Salah, Mohon Coba Lagi." ?>");
-          window.location.replace('login.php');
-        </script>
-        <?php
-        exit();
+            <script>
+              alert("<?php echo "Password Salah, Mohon Coba Lagi." ?>");
+              window.location.replace('login.php');
+            </script>
+            <?php
+            exit();
     }
   } else {
     // Email not registered
     ?>
-    <script>
-      alert("<?php echo "Email belum terdaftar. Silakan daftar terlebih dahulu." ?>");
-      window.location.replace('register.php'); // Change 'register.php' to your registration page
-    </script>
-    <?php
-    exit();
+        <script>
+          alert("<?php echo "Email belum terdaftar. Silakan daftar terlebih dahulu." ?>");
+          window.location.replace('register.php'); // Change 'register.php' to your registration page
+        </script>
+        <?php
+        exit();
   }
 }
+
 ?>
 
 
@@ -98,7 +115,7 @@ if (isset($_POST["login"])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-
+  <link rel="icon" href="../img_asset/login.png">
 
   <style>
     body {
@@ -144,8 +161,7 @@ if (isset($_POST["login"])) {
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Masuk Akun</h1>
-                    <img src="/ArenaFinder/img_asset/login.png" alt=""
-                      style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="../img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
 
                   <form class="user" method="POST" action="#" autocomplete="off" name="login">
@@ -157,7 +173,7 @@ if (isset($_POST["login"])) {
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputEmail"
                         placeholder="Password" name="password" autocomplete="off" />
-                      
+
                       <input type="hidden" name="level" value="<?php echo $levelValue; ?>" id="level" />
                     </div>
                     <div class="form-group">

@@ -11,8 +11,11 @@ if (!isset($_SESSION['email'])) {
 // Pengguna sudah masuk, Anda dapat mengakses data sesi
 $email = $_SESSION['email'];
 $level = $_SESSION['level'];
+$id_venue = $_SESSION['id_venue'];
+$userName = $_SESSION['username'];
+$sportFromDB = $_SESSION['sport'];
 
-// Query SQL untuk menghitung jumlah baris di tabel keanggotaan
+// Query SQL untuk menghitung jumlah member di tabel keanggotaan
 $sql = "SELECT COUNT(*) as total_member FROM venue_membership WHERE email = '$email'";
 $q2 = mysqli_query($conn, $sql);
 
@@ -23,6 +26,32 @@ if ($q2->num_rows > 0) {
 
 } else {
     echo "Tidak ada data keanggotaan.";
+}
+
+// Query SQL untuk menghitung jumlah jadwal yang sudah dipesan di tabel venue_booking
+$sql = "SELECT COUNT(*) as jadwal_dipesan FROM venue_booking WHERE id_venue = '$id_venue'";
+$q2 = mysqli_query($conn, $sql);
+
+if ($q2->num_rows > 0) {
+    // Ambil hasil query`
+    $row = $q2->fetch_assoc();
+    $totalPesan = $row["jadwal_dipesan"];
+
+} else {
+    echo "Data jadwal dipesan tidak ditemukan.";
+}
+
+// Query SQL untuk menghitung jumlah jadwal yang belum dipesan/kosong di tabel venue_price
+$sql = "SELECT COUNT(*) as jadwal_kosong FROM venue_price WHERE id_venue = '$id_venue'";
+$q2 = mysqli_query($conn, $sql);
+
+if ($q2->num_rows > 0) {
+    // Ambil hasil query`
+    $row = $q2->fetch_assoc();
+    $totalBelumDipesan = $row["jadwal_kosong"];
+
+} else {
+    echo "Data jadwal belum dipesan tidak ditemukan.";
 }
 
 // Tutup koneksi ke database
@@ -48,6 +77,7 @@ $conn->close();
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="../img_asset/login.png">
     <style>
         /* custom.css */
         body {
@@ -102,7 +132,7 @@ $conn->close();
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="/ArenaFinder/php/beranda.php">
+                <a class="nav-link" href="../index.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>
@@ -148,7 +178,9 @@ $conn->close();
             <li class="nav-item">
                 <a class="nav-link" href="pesanan.php">
                     <i class="fa-solid fa-cart-shopping">
-                        <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
+                        <span class="badge badge-danger badge-counter"
+                            style="background-color: #a1ff9f; color: #02406d; font-size: 15px;"
+                            id="pesanan-link"></span>
                     </i>
                     <span>Pesanan</span></a>
             </li>
@@ -166,7 +198,7 @@ $conn->close();
                                 document.getElementById("pesanan-link").innerHTML = this.responseText;
                             }
                         };
-                        xhttp.open("GET", "check_data.php", true);
+                        xhttp.open("GET", "check_badge.php", true);
                         xhttp.send();
                     }
                     loadDoc();
@@ -212,7 +244,7 @@ $conn->close();
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo,
-                                    <?php echo $email; ?>
+                                    <?php echo $userName; ?>
                                 </span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
@@ -255,7 +287,9 @@ $conn->close();
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
                                                     style="color: white;">
                                                     Jadwal <span style="color: #a1ff9f;">Dipesan</span></div>
-                                                <div class="h5 mb-0 font-weight-bold text-white">5</div>
+                                                <div class="h5 mb-0 font-weight-bold text-white">
+                                                    <?php echo $totalPesan; ?>
+                                                </div>
                                             </a>
 
                                         </div>
@@ -278,7 +312,9 @@ $conn->close();
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
                                                     style="color: white;">
                                                     Jadwal <span style="color: #a1ff9f;">Kosong</span></div>
-                                                <div class="h5 mb-0 font-weight-bold text-white">18</div>
+                                                <div class="h5 mb-0 font-weight-bold text-white">
+                                                    <?php echo $totalBelumDipesan; ?>
+                                                </div>
                                             </a>
 
                                         </div>
@@ -329,17 +365,56 @@ $conn->close();
                                                 </div>
                                             </a>
                                             <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-white">100%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar" role="progressbar"
-                                                            style="width: 100%; background-color: #a1ff9f;"
-                                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <?php
+                                                // Query SQL untuk menghitung total jadwal berdasarkan status pembayaran
+                                                // "Pending" atau "Rejected"
+                                                include("database.php");
+
+                                                // Query SQL untuk menghitung jumlah jadwal yang belum dipesan/kosong di tabel venue_price
+                                                $sqlJadwalKosong = "SELECT COUNT(*) as jadwal_kosong FROM venue_price WHERE id_venue = '$id_venue'";
+                                                $qJadwalKosong = mysqli_query($conn, $sqlJadwalKosong);
+
+                                                if ($qJadwalKosong->num_rows > 0) {
+                                                    // Ambil hasil query
+                                                    $rowJadwalKosong = $qJadwalKosong->fetch_assoc();
+                                                    $totalJadwalKosong = $rowJadwalKosong["jadwal_kosong"];
+
+                                                    // Query SQL untuk menghitung total jadwal dengan payment_status = 'Pending'
+                                                    $sqlPending = "SELECT COUNT(*) as total_pending FROM venue_booking WHERE id_venue = '$id_venue' AND payment_status = 'Pending'";
+                                                    $qPending = mysqli_query($conn, $sqlPending);
+
+                                                    // Query SQL untuk menghitung total jadwal dengan payment_status = 'Accepted'
+                                                    $sqlAccepted = "SELECT COUNT(*) as total_accepted FROM venue_booking WHERE id_venue = '$id_venue' AND payment_status = 'Accepted'";
+                                                    $qAccepted = mysqli_query($conn, $sqlAccepted);
+
+                                                    if ($qPending->num_rows > 0 && $qAccepted->num_rows > 0) {
+                                                        $rowPending = $qPending->fetch_assoc();
+                                                        $totalPending = $rowPending["total_pending"];
+
+                                                        $rowAccepted = $qAccepted->fetch_assoc();
+                                                        $totalAccepted = $rowAccepted["total_accepted"];
+
+                                                        // Hitung persentase jadwal yang masih pending
+                                                        $persentasePending = ($totalPending / ($totalPending + $totalAccepted)) * 100;
+
+                                                        // Menampilkan hasil persentase ke dalam elemen sebelumnya
+                                                        echo '<div class="col-auto">';
+                                                        echo '    <div class="h5 mb-0 mr-3 font-weight-bold text-white">' . number_format($persentasePending, 2) . '%</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="col">';
+                                                        echo '    <div class="progress progress-sm mr-2">';
+                                                        echo '        <div class="progress-bar" role="progressbar" style="width: ' . number_format($persentasePending, 2) . '%; background-color: #a1ff9f;" aria-valuenow="' . number_format($persentasePending, 2) . '" aria-valuemin="0" aria-valuemax="100">';
+                                                        echo '        </div>';
+                                                        echo '    </div>';
+                                                        echo '</div>';
+                                                    } else {
+                                                        echo "Gagal mengambil total jadwal.";
+                                                    }
+                                                } else {
+                                                    echo "Data jadwal kosong tidak ditemukan.";
+                                                }
+
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -349,14 +424,6 @@ $conn->close();
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
                     </div>
 
                     <!-- Content Row -->
@@ -412,6 +479,10 @@ $conn->close();
             </div>
         </div>
     </div>
+
+    <!-- Include Bootstrap CSS and JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

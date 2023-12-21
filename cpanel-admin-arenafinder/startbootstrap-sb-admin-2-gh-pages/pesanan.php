@@ -11,12 +11,23 @@ if (!isset($_SESSION['email'])) {
 
 // Pengguna sudah masuk, Anda dapat mengakses data sesi
 $email = $_SESSION['email'];
+$userName = $_SESSION['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap JS and Popper.js CDN -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,6 +43,7 @@ $email = $_SESSION['email'];
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="../img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -199,7 +211,7 @@ $email = $_SESSION['email'];
 
                     <!-- Nav Item - Web -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/ArenaFinder/php/beranda.php">
+                        <a class="nav-link" href="../index.php">
                             <i class="fa-brands fa-edge"></i>
                             <span>Lihat Website</span></a>
                     </li>
@@ -245,9 +257,13 @@ $email = $_SESSION['email'];
                     <li class="nav-item active">
                         <a class="nav-link" href="pesanan.php">
                             <i class="fa-solid fa-cart-shopping">
-                                <span class="badge badge-danger badge-counter" id="pesanan-link"></span>
+                                <span class="badge badge-counter"
+                                    style="background-color: #a1ff9f; color: #02406d; font-size: 15px;"
+                                    id="pesanan-link"></span>
                             </i>
-                            <span>Pesanan</span>
+                            <span>Pesanan
+                                <?php $_SESSION['id_venue'] ?>
+                            </span>
                         </a>
                     </li>
 
@@ -261,10 +277,11 @@ $email = $_SESSION['email'];
                                 var xhttp = new XMLHttpRequest();
                                 xhttp.onreadystatechange = function () {
                                     if (this.readyState == 4 && this.status == 200) {
+                                        console.log("Response from check_data.php:", this.responseText); // Log the response
                                         document.getElementById("pesanan-link").innerHTML = this.responseText;
                                     }
                                 };
-                                xhttp.open("GET", "check_data.php", true);
+                                xhttp.open("GET", "check_badge.php", true);
                                 xhttp.send();
                             }
                             loadDoc();
@@ -327,6 +344,7 @@ $email = $_SESSION['email'];
                                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                                     <i class="fa fa-bars"></i>
                                 </button>
+
 
                                 <!-- Include jQuery -->
                                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -403,7 +421,7 @@ $email = $_SESSION['email'];
                                             aria-expanded="false">
                                             <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="text-profil">
                                                 Halo,
-                                                <?php echo $email; ?>
+                                                <?php echo $userName; ?>
                                             </span>
                                             <img class="img-profile rounded-circle fixed-width-image" id="img-profile"
                                                 src="img/undraw_profile.svg">
@@ -441,34 +459,38 @@ $email = $_SESSION['email'];
 
                                     <!-- Collapsable Card Example -->
                                     <?php
-                                    $servername = "localhost";
-                                    $username = "root";
-                                    $password = "";
-                                    $database = "arenafinder";
+                                    include('database.php');
 
-                                    // Create connection
-                                    $conn = new mysqli($servername, $username, $password, $database);
-
-                                    // Check connection
-                                    if ($conn->connect_error) {
-                                        die("Connection failed: " . $conn->connect_error);
-                                    }
-
-
-                                    $sql = "SELECT vm.*, v.sport AS venue_sport
-                                    FROM venue_membership vm
-                                    JOIN venues v ON vm.id_venue = v.id_venue
-                                    ORDER BY vm.created_at DESC";
-
+                                    // $sql = "SELECT vm.*, v.sport AS venue_sport
+                                    // FROM venue_membership vm
+                                    // JOIN venues v ON vm.id_venue = v.id_venue
+                                    // ORDER BY vm.created_at DESC";
+                                    
+                                    $id_venue = $_SESSION['id_venue'];
+                                    $sql = "SELECT v.id_booking AS id_membership, v.total_price as harga, v.created_at, 
+                                    u.full_name as nama, u.no_hp, u.alamat, u.email,
+                                    CONCAT(p.start_hour, ' - ',  p.end_hour) AS waktu_main, DAYNAME(p.date) AS hari_main 
+                                    FROM venue_booking AS v
+                                    JOIN users AS u 
+                                    ON u.email = v.email
+                                    JOIN venue_booking_detail AS vb 
+                                    ON v.id_booking = vb.id_booking 
+                                    JOIN venue_price AS p  
+                                    ON p.id_price = vb.id_price 
+                                    WHERE v.id_venue = $id_venue 
+                                    AND v.payment_status = 'Pending' 
+                                    GROUP BY v.id_booking 
+                                    ORDER BY v.created_at DESC";
 
                                     // Perform the query
                                     $result = $conn->query($sql);
 
+                                    // $data = $result->fetch_assoc();
+                                    
                                     // Check if there are any results before generating HTML
                                     if ($result->num_rows > 0) {
                                         // Initialize $html variable
                                         $html = '';
-
 
                                         // Generate HTML for each venue membership entry
                                         while ($row = $result->fetch_assoc()) {
@@ -519,7 +541,6 @@ $email = $_SESSION['email'];
                                             
                                         </script>';
 
-
                                         }
                                     } else {
                                         // Output a message or handle the case when there are no results
@@ -554,7 +575,7 @@ $email = $_SESSION['email'];
                                                 // Make an AJAX request to delete_membership.php with the membershipId
                                                 $.ajax({
                                                     type: "POST",
-                                                    url: "check_data.php",
+                                                    url: "confirm_booking.php",
                                                     data: { membershipId: membershipId, action: "confirm" },
                                                     success: function (response) {
                                                         // Handle success (if needed)
@@ -564,7 +585,7 @@ $email = $_SESSION['email'];
                                                         // Update the badge count
                                                         updateBadge(response.count);
                                                         // Redirect to check_data.php
-                                                        window.location.href = "check_data.php?membershipId=" + membershipId;
+                                                        window.location.href = "confirm_booking.php?membershipId=" + membershipId;
                                                     },
                                                     error: function (error) {
                                                         // Handle error (if needed)

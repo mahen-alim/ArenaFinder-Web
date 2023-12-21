@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        background-color: #e7f5ff;
+        color: #02406d;
+        font-family: "Kanit";
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+      }
+
+      .main-con {
+        position: relative;
+      }
+
+      .breadcrumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; /* Menjadikan breadcrumb lebar 100% container */
+        padding: 10px; /* Optional: memberikan padding pada breadcrumb */
+        box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar total */
+      }
+
+      .container {
+        max-width: 950px;
+        margin: 0 auto;
+        margin-top: 40px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #02406d;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      h3 {
+        font-size: 15px;
+        font-weight: 100;
+        text-align: start;
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 10px;
+        display: block;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #e7f5ff;
+        color: #02406d;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      p:hover {
+        background-color: #02406d;
+        color: #e7f5ff;
+        cursor: pointer;
+      }
+
+      .answer {
+        display: none;
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      .answer.active {
+        display: block;
+      }
+
+      a {
+        color: #02406d;
+        text-decoration: underline;
+        text-decoration-color: #a1ff9f;
+      }
+
+      a:hover {
+        background-color: #02406d;
+        color: #a1ff9f;
+        text-decoration: none;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-con">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Bantuan</li>
+        </ol>
+      </nav>
+      <div class="container">
+        <h1>Bantuan</h1>
+
+        <p class="question" onclick="toggleAnswer(1)">
+          Apa saja layanan yang disediakan?
+        </p>
+        <div id="answer1" class="answer">
+          <h3>1. Layanan yang disediakan mencakup hal-hal seperti ...</h3>
+        </div>
+
+        <p class="question" onclick="toggleAnswer(2)">
+          Siapa target penggunanya?
+        </p>
+        <div id="answer2" class="answer">
+          <h3>2. Target pengguna kami adalah ...</h3>
+        </div>
+
+        <p class="question" onclick="toggleAnswer(3)">
+          Bagaimana sistem ini bekerja?
+        </p>
+        <div id="answer3" class="answer">
+          <h3>3. Sistem ini bekerja dengan cara ...</h3>
+        </div>
+
+        <p class="question" onclick="toggleAnswer(4)">
+          Saat kapan pengguna dapat mengetahui pesanan?
+        </p>
+        <div id="answer4" class="answer">
+          <h3>
+            4. Pengguna dapat mengetahui pesanan pada menu pesanan di panel
+            pengelola, berikut link untuk mengakses halamannya.
+            <span>
+              <a href="/boots/pesanan.php"
+                >Klik di sini untuk menu pesanan</a
+              ></span
+            >
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleAnswer(questionNumber) {
+        var answer = document.getElementById("answer" + questionNumber);
+        answer.classList.toggle("active");
+      }
+
+      document
+        .getElementById("previousPage")
+        .addEventListener("click", function () {
+          history.back(); // Kembali ke halaman sebelumnya
+        });
+    </script>
+  </body>
+</html>

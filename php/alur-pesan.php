@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db = "arenafinder";
+$user = "tifz1761_root";
+$pass = "tifnganjuk321";
+$db = "tifz1761_arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -18,7 +18,7 @@ if (!$koneksi) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aktivitas</title>
-    <link rel="stylesheet" href="/ArenaFinder/css/beranda.css" />
+    <link rel="stylesheet" href="css/beranda.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -27,7 +27,7 @@ if (!$koneksi) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-
+    <link rel="icon" href="img_asset/login.png">
     <style>
         body {
             margin-top: 150px;
@@ -397,6 +397,17 @@ if (!$koneksi) {
             }
         }
 
+        .footer {
+            height: 300px;
+            width: 88.5rem;
+            margin-left: 0px;
+            margin-top: 100px;
+            background-color: #02406d;
+            font-family: "Kanit", sans-serif;
+            color: white;
+            padding: 20px;
+            display: flex;
+        }
 
         @media (max-width: 900px) {
             #typing-text {
@@ -449,9 +460,6 @@ if (!$koneksi) {
                 padding-top: 5px;
             }
 
-            .footer {
-                margin-left: -100px;
-            }
         }
     </style>
 </head>
@@ -473,7 +481,7 @@ if (!$koneksi) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto my-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="beranda.php">Beranda</a>
+                        <a class="nav-link" href="index.php">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="aktivitas.php">Aktivitas</a>
@@ -491,7 +499,7 @@ if (!$koneksi) {
                     if (isset($_SESSION['email'])) {
                         // User is logged in, show the "Panel Pengelola" button
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -499,10 +507,10 @@ if (!$koneksi) {
                     } else {
                         // User is not logged in, show the "Login" and "Register" buttons
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
                   </li>';
                     }
                     ?>
@@ -606,47 +614,48 @@ if (!$koneksi) {
     </div>
 
 
-    <div class="container">
-        <div class="footer">
-            <h1 style="font-size: 20px; color: white;">Arena</h1>
-            <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-            <div class="hierarki">
-                <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
-                    <a href="" style="margin-top: 10px;">Beranda</a>
-                    <a href="">Aktivitas</a>
-                    <a href="">Referensi</a>
-                    <a href="">Info Mitra</a>
-                </p>
-                <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
-                    <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-                    <a href="">Siapa target penggunanya?</a>
-                    <a href="">Bagaimana sistem ini bekerja?</a>
-                    <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-                    <a href="">Masuk aplikasi??</a>
-                    <a href="">Daftar aplikasi??</a>
-                </p>
-                <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
-                    <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
-                </p>
-            </div>
 
-            <!-- flatpickr -->
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-            <script>
-                flatpickr("input[type=datetime-local]", {});
-            </script>
-            <!-- Include Bootstrap JS and jQuery -->
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    flatpickr("#staticEmail", {
-                        enableTime: false, // Enable time selection
-                        dateFormat: "Y-m-d", // Specify the date format
-                    });
-                });
-            </script>
+    <div class="footer">
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+        <div class="hierarki">
+            <p style="font-size: 20px; color: white; margin-left: 250px;">Hierarki
+                <a href="" style="margin-top: 10px;">Beranda</a>
+                <a href="">Aktivitas</a>
+                <a href="">Referensi</a>
+                <a href="">Info Mitra</a>
+            </p>
+            <p style="font-size: 20px; color: white; margin-left: 120px;">Bantuan
+                <a href="" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+                <a href="">Siapa target penggunanya?</a>
+                <a href="">Bagaimana sistem ini bekerja?</a>
+                <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
+                <a href="">Masuk aplikasi??</a>
+                <a href="">Daftar aplikasi??</a>
+            </p>
+            <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
+                <a href="">https://chat.whatsapp.com/DycWLfU9nt40BIjERofIrq</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("input[type=datetime-local]", {});
+    </script>
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#staticEmail", {
+                enableTime: false, // Enable time selection
+                dateFormat: "Y-m-d", // Specify the date format
+            });
+        });
+    </script>
 </body>
 
 </html>
