@@ -22,7 +22,12 @@ Website ini merupakan website yang diperuntukkan bagi penggemar olahraga yang ti
 
 ## Instalasi
 
->Saat ini layanan website masih dalam tahap pengembangan. 
+- Download file ZIP dari github https://github.com/mahen-alim/ArenaFinder-Web.
+- Ekstrak file ZIP yang telah didownload.
+- Copy file tersebut kedalam file C:\xampp\htdocs.
+- Buka VS Code, lalu pilih opsi file di pojok kiri atas navigasi.
+- Pilih opsi open folder dan buka file yang sudah tersimpan di C:\xampp\htdocs.
+- Buka salah satu file dan selamat file kode program web ArenaFinder telah tersimpan di PC kalian.
 
 ---
 
